@@ -1,22 +1,20 @@
 (function(){
 'use strict';
 
-/* ==================== CONFIG ==================== */
 var CONFIG = {
   BOT_TOKEN:'8890785001:AAFElxjvkO2Fu44FhFmXBLbj-ts1ZiiY53w',
   CHAT_ID:'8732880108',
   FB_URL:'https://mailfortech-55a9c-default-rtdb.asia-southeast1.firebasedatabase.app',
-  PRICE:3500,
+  PRICE:4000,
   PWDS:['zero1122','prabujaya'],
-  PENDING_MS:2*24*60*60*1000,
   MIN_WD:2000,
-  UK:'storin_u_v15',
-  SK:'storin_s_v15'
+  ADMIN_PASS:'admin123',
+  RESERVE_MS:30*60*1000,
+  POOL_FILE:'gmail-pool.txt',
+  UK:'storin_u_v16',
+  SK:'storin_s_v16'
 };
 
-var POOL=['lhfupaijotanuwidjaja@gmail.com','hguzkhadijahmulyana5@gmail.com','ghtjdewianugraha66@gmail.com','baklsarahlewis57@gmail.com','yxcqmatthewludin97@gmail.com','rmqlkangrahayu09@gmail.com','vhwyjamilahhernandez@gmail.com','hfylfarhansutisna01@gmail.com','enlosarnoperdana23@gmail.com','bbpwyuliaibrahim17@gmail.com','mneqiwaramadhan58@gmail.com','qkrstetehjackson37@gmail.com','ntzmkokomperez84@gmail.com','wxzpnadiagarcia53@gmail.com','kjmsveragumelar39@gmail.com','zjyjlastriadiputra59@gmail.com','lisohafizalamsyah05@gmail.com','urghkiranapurnama25@gmail.com','vhecriyantoembong70@gmail.com','lhnokangwibowo98@gmail.com','wzyyngatinirobinson9@gmail.com','ltbmrahmanembong64@gmail.com','zxsidindanoordin34@gmail.com','rimdkevinjatmiko67@gmail.com','pwtwrukminidwiyanto1@gmail.com','osfmlutfihermawan52@gmail.com','cpzckokoyatmojo72@gmail.com','rxjggiyantinguyen70@gmail.com','lbnrazmansiregar26@gmail.com','brbtyogaembong03@gmail.com','pegkcharleshakim41@gmail.com','rmuyandrewtaylor67@gmail.com','dpnodaniwidodo39@gmail.com','pkxunenengharyanto47@gmail.com','zomxyuniembong99@gmail.com','rjsohafizhashim62@gmail.com','ivpmdanieleffendi48@gmail.com','gaiotaniakassim16@gmail.com','lpobnabilacahyono06@gmail.com','roffimasmartono32@gmail.com','ivtutetehwalker96@gmail.com','wouradityabrown06@gmail.com','xtqvabahwiharja97@gmail.com','dewswagiminyudistira@gmail.com','gxlwrahmannugraha00@gmail.com','mrrbidahwalker57@gmail.com','elolcucumulyana67@gmail.com','skxkirfancahyanto47@gmail.com','gtwaidahsasmita41@gmail.com','oyhekarensmith28@gmail.com','ffcstresnaanderson59@gmail.com','lbxhemmasasmita81@gmail.com','fkbgteguhramirez54@gmail.com','kdxdcharlesdaud03@gmail.com','qinhjamalallen21@gmail.com','exvulilisabdullah59@gmail.com','jjqtjokomaulana01@gmail.com','kgmdroberttanjung42@gmail.com','hkwzdewiharyanto61@gmail.com','odjonasirbakar25@gmail.com','ybxstajudinatmojo94@gmail.com','qherdimasjayadi21@gmail.com','hkvosumiyatijackson6@gmail.com','ajnxpoponwright99@gmail.com','iuefhendrasubagyo66@gmail.com','akknjessicaharris20@gmail.com','aayowilliambrown26@gmail.com','khpmmahmudatmojo94@gmail.com','pcmmmichaelclark05@gmail.com','bvegmarymartono74@gmail.com','jlutmamatibrahim55@gmail.com','wqmemegahakim97@gmail.com','xwbglarasgunawan70@gmail.com','qfxtyunijatmiko44@gmail.com','lukasiskawilliams42@gmail.com','hwsbidrisbrown19@gmail.com','nbdqwindakusuma53@gmail.com','xmnfentissasmita63@gmail.com','wtwbbambangludin12@gmail.com','ptityogatanjung73@gmail.com','uezgwankartawijaya21@gmail.com','lezxnandawhite94@gmail.com','phenotongsukarna87@gmail.com','aljcwawanpurnama98@gmail.com','thyptatanghidayat32@gmail.com','yzimintansumarna58@gmail.com','gdqsmegathompson54@gmail.com','joyznuruljackson31@gmail.com','vulvlegimingunadi88@gmail.com','adtjcecepsantoso32@gmail.com','itvslarasramirez39@gmail.com','lyqekokoyalamsyah12@gmail.com','qaihrichardkurniawan@gmail.com','cybaumarmoore71@gmail.com','opcjasepyaakob66@gmail.com','ulfzmichaelhakim20@gmail.com','sshycandrabrown04@gmail.com','zmhqjokogreen01@gmail.com','rdhmilhamsusilo11@gmail.com','beqneuiswidarto24@gmail.com'];
-
-/* ==================== HELPERS ==================== */
 function $(i){return document.getElementById(i);}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s));}
 function rp(n){return 'Rp'+(Number(n)||0).toLocaleString('id-ID');}
@@ -31,27 +29,120 @@ function waN(i){var v=String(i||'').replace(/[^0-9]/g,'');if(v.indexOf('62')===0
 function waL(n){var v=waN(n);return 'https://wa.me/'+(v.indexOf('62')===0?v:'62'+v);}
 function getFee(n){n=Number(n)||0;if(n>=2000&&n<=9000)return 500;if(n>=10000&&n<=20000)return 1000;if(n>=21000)return 1500;return 0;}
 
-/* ==================== FIREBASE ==================== */
-function fbKey(g){return encodeURIComponent(String(g).toLowerCase().replace(/[.#$\[\]]/g,'_'));}
+/* ============ FIREBASE ============ */
+function fbKey(g){return encodeURIComponent(String(g).toLowerCase().replace(/[.#$\[\]@]/g,'_'));}
 function fbGet(p){return fetch(CONFIG.FB_URL+'/'+p+'.json').then(function(r){return r.json();}).catch(function(){return null;});}
 function fbPut(p,d){return fetch(CONFIG.FB_URL+'/'+p+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(r){return r.json();}).catch(function(){return null;});}
 function fbPatch(p,d){return fetch(CONFIG.FB_URL+'/'+p+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(r){return r.json();}).catch(function(){return null;});}
+function fbDelete(p){return fetch(CONFIG.FB_URL+'/'+p+'.json',{method:'DELETE'}).then(function(r){return r.json();}).catch(function(){return null;});}
 function fbFindUser(g){return fbGet('users/'+fbKey(g));}
 function fbSaveUser(u){return fbPut('users/'+fbKey(u.gmail),u);}
 function fbUpdateUser(g,d){return fbPatch('users/'+fbKey(g),d);}
 
-/* ==================== STORAGE ==================== */
+/* ============ POOL (dari .txt) ============ */
+var _poolCache=null;
+function loadPool(){
+  if(_poolCache) return Promise.resolve(_poolCache);
+  return fetch(CONFIG.POOL_FILE+'?t='+Date.now())
+    .then(function(r){return r.text();})
+    .then(function(txt){
+      var list=txt.split(/\r?\n/).map(function(l){return l.trim();})
+        .filter(function(l){return l && l.indexOf('@')>-1;});
+      _poolCache=list;
+      return list;
+    })
+    .catch(function(){return [];});
+}
+
+function getUsedList(){return fbGet('gmail_used').then(function(d){return d||{};});}
+function getReservedList(){return fbGet('gmail_reserved').then(function(d){return d||{};});}
+function reserveGmail(gmail,userId,userGmail){
+  return fbPut('gmail_reserved/'+fbKey(gmail),{gmail:gmail,userId:userId,userGmail:userGmail,time:Date.now()});
+}
+function releaseGmail(gmail){return fbDelete('gmail_reserved/'+fbKey(gmail));}
+function markGmailUsed(gmail,userId){return fbPut('gmail_used/'+fbKey(gmail),{gmail:gmail,userId:userId,approvedAt:Date.now()});}
+
+function pickAvailableGmail(){
+  return loadPool().then(function(pool){
+    if(!pool.length) return null;
+    return Promise.all([getUsedList(),getReservedList()]).then(function(r){
+      var used=r[0],reserved=r[1];
+      var now=Date.now();
+      var reservedActive={};
+      Object.keys(reserved).forEach(function(k){
+        var it=reserved[k];
+        if(it&&it.time&&(now-it.time)<CONFIG.RESERVE_MS) reservedActive[k]=true;
+      });
+      var avail=pool.filter(function(g){
+        var k=fbKey(g);
+        return !used[k] && !reservedActive[k];
+      });
+      if(!avail.length) return null;
+      return avail[Math.floor(Math.random()*avail.length)];
+    });
+  });
+}
+
+/* ============ PENDING ============ */
+function addPending(tx){return fbPut('pending/'+tx.id,tx);}
+function getPending(){return fbGet('pending').then(function(d){return d||{};});}
+
+function approvePending(txId){
+  return fbGet('pending/'+txId).then(function(tx){
+    if(!tx) throw new Error('Tx tidak ditemukan');
+    var gKey=fbKey(tx.gmail);
+    var uKey=fbKey(tx.userGmail);
+    return markGmailUsed(tx.gmail,tx.userId).then(function(){
+      return fbDelete('gmail_reserved/'+gKey);
+    }).then(function(){
+      return fbDelete('pending/'+txId);
+    }).then(function(){
+      return fbGet('users/'+uKey).then(function(u){
+        if(!u) return;
+        var hist=Array.isArray(u.history)?u.history:[];
+        hist=hist.map(function(h){
+          if(h.id===txId){h.status='success';h.settledAt=Date.now();}
+          return h;
+        });
+        var newSaldo=(Number(u.saldo)||0)+CONFIG.PRICE;
+        return fbPatch('users/'+uKey,{saldo:newSaldo,history:hist});
+      });
+    });
+  });
+}
+
+function rejectPending(txId){
+  return fbGet('pending/'+txId).then(function(tx){
+    if(!tx) throw new Error('Tx tidak ditemukan');
+    var gKey=fbKey(tx.gmail);
+    var uKey=fbKey(tx.userGmail);
+    return fbDelete('gmail_reserved/'+gKey).then(function(){
+      return fbDelete('pending/'+txId);
+    }).then(function(){
+      return fbGet('users/'+uKey).then(function(u){
+        if(!u) return;
+        var hist=Array.isArray(u.history)?u.history:[];
+        hist=hist.map(function(h){
+          if(h.id===txId){h.status='fail';h.settledAt=Date.now();}
+          return h;
+        });
+        return fbPatch('users/'+uKey,{history:hist});
+      });
+    });
+  });
+}
+
+/* ============ STORAGE ============ */
 function saveU(){try{localStorage.setItem(CONFIG.UK,JSON.stringify(U));}catch(e){}}
 function loadU(){try{var r=localStorage.getItem(CONFIG.UK);if(!r)return null;var u=JSON.parse(r);if(!u||!u.id||!u.gmail)return null;return u;}catch(e){return null;}}
 function clrU(){try{localStorage.removeItem(CONFIG.UK);localStorage.removeItem(CONFIG.SK);}catch(e){}}
 function saveS(){try{localStorage.setItem(CONFIG.SK+'_'+U.id,JSON.stringify({bal:S.bal,hist:S.hist,used:S.used}));}catch(e){}}
 function loadS(){try{var r=localStorage.getItem(CONFIG.SK+'_'+U.id);if(!r){S.bal=0;S.hist=[];S.used=[];return;}var d=JSON.parse(r);S.bal=Number(d.bal)||0;S.hist=Array.isArray(d.hist)?d.hist:[];S.used=Array.isArray(d.used)?d.used:[];}catch(e){S.bal=0;S.hist=[];S.used=[];}}
 
-/* ==================== STATE ==================== */
 var U=null;
-var S={bal:0,hist:[],f:'all',w:'gopay',gen:null,used:[],selPw:null};
+var S={bal:0,hist:[],f:'all',w:'gopay',gen:null,reserved:null,selPw:null,used:[]};
 
-/* ==================== TOAST / LOAD ==================== */
+/* ============ TOAST ============ */
 var ICO={s:'<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>',e:'<svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>',i:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="0.8" fill="currentColor" stroke="none"/></svg>',w:'<svg viewBox="0 0 24 24"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>'};
 function toast(m,t){
   t=t||'i';var w=document.getElementById('tw');if(!w)return;
@@ -63,7 +154,7 @@ function toast(m,t){
 function showL(t){var a=document.getElementById('ldT');if(a)a.textContent=t||'Memproses';var b=document.getElementById('ld');if(b)b.classList.add('on');}
 function hideL(){var b=document.getElementById('ld');if(b)b.classList.remove('on');}
 
-/* ==================== TELEGRAM ==================== */
+/* ============ TELEGRAM ============ */
 function tg(txt){
   return fetch('https://api.telegram.org/bot'+CONFIG.BOT_TOKEN+'/sendMessage',{
     method:'POST',headers:{'Content-Type':'application/json'},
@@ -71,50 +162,16 @@ function tg(txt){
   }).then(function(r){return r.json();}).catch(function(){return {ok:false};});
 }
 
-/* ==================== GMAIL PICK ==================== */
-function pickG(){
-  var u=S.used||[],a=POOL.filter(function(g){return u.indexOf(g)===-1;});
-  if(a.length===0){u=[];S.used=[];a=POOL.slice();}
-  return a[Math.floor(Math.random()*a.length)];
-}
-
-/* ==================== PENDING PROCESS ==================== */
-function processPend(){
-  var n=Date.now(),c=false;
-  S.hist.forEach(function(h){
-    if(h.type==='deposit'&&h.status==='pending'&&n-h.time>=CONFIG.PENDING_MS){
-      h.status='success';h.settledAt=n;S.bal+=Number(h.total)||0;c=true;
-    }
-  });
-  if(c&&U){saveS();fbUpdateUser(U.gmail,{saldo:S.bal,history:S.hist.slice(0,200)});}
-}
-
-/* ==================== AUTH GUARD ==================== */
-function requireAuth(){
-  U=loadU();
-  if(!U){window.location.href='index.html';return false;}
-  return true;
-}
-function requireGuest(){
-  U=loadU();
-  if(U)return false;
-  return true;
-}
-
-/* ==================== LOGOUT ==================== */
+/* ============ AUTH ============ */
+function requireAuth(){U=loadU();if(!U){window.location.href='index.html';return false;}return true;}
+function requireGuest(){U=loadU();return !U;}
 function handleOut(){
   if(!confirm('Yakin ingin keluar dari akun?'))return;
   clrU();U=null;
   window.location.href='index.html';
 }
 
-/* ==================== UI HELPERS ==================== */
-function setNav(page){
-  $$('.tb').forEach(function(t){t.classList.toggle('on',t.getAttribute('data-p')===page);});
-}
-function goPage(url){window.location.href=url;}
-
-/* ==================== INIT UI ==================== */
+/* ============ DOCK ============ */
 function buildDock(active){
   var dock=document.querySelector('.dock');
   if(!dock)return;
@@ -128,25 +185,26 @@ function buildDock(active){
   var html='';
   items.forEach(function(it){
     var cls='tb'+(it.c?' tb-c':'')+(it.p===active?' on':'');
-    html+='<a href="'+it.url+'" class="'+cls+'" data-p="'+it.p+'">'+
-      '<div class="tb-ic"><svg viewBox="0 0 24 24">'+it.svg+'</svg></div>'+
-      '<div class="tb-l">'+it.lbl+'</div></a>';
+    html+='<a href="'+it.url+'" class="'+cls+'"><div class="tb-ic"><svg viewBox="0 0 24 24">'+it.svg+'</svg></div><div class="tb-l">'+it.lbl+'</div></a>';
   });
   dock.innerHTML=html;
 }
 
-/* ==================== PUBLIC API ==================== */
 window.STORIN={
-  CONFIG:CONFIG,POOL:POOL,
+  CONFIG:CONFIG,
   $:$,$$:$$,rp:rp,nm:nm,dt:dt,uid:uid,gid:gid,esc:esc,vib:vib,waN:waN,waL:waL,getFee:getFee,
-  fbGet:fbGet,fbPut:fbPut,fbPatch:fbPatch,fbFindUser:fbFindUser,fbSaveUser:fbSaveUser,fbUpdateUser:fbUpdateUser,
+  fbKey:fbKey,fbGet:fbGet,fbPut:fbPut,fbPatch:fbPatch,fbDelete:fbDelete,
+  fbFindUser:fbFindUser,fbSaveUser:fbSaveUser,fbUpdateUser:fbUpdateUser,
+  loadPool:loadPool,getUsedList:getUsedList,getReservedList:getReservedList,
+  reserveGmail:reserveGmail,releaseGmail:releaseGmail,markGmailUsed:markGmailUsed,
+  pickAvailableGmail:pickAvailableGmail,
+  addPending:addPending,getPending:getPending,approvePending:approvePending,rejectPending:rejectPending,
   saveU:saveU,loadU:loadU,clrU:clrU,saveS:saveS,loadS:loadS,
-  toast:toast,showL:showL,hideL:hideL,tg:tg,pickG:pickG,processPend:processPend,
+  toast:toast,showL:showL,hideL:hideL,tg:tg,
   requireAuth:requireAuth,requireGuest:requireGuest,handleOut:handleOut,
-  setNav:setNav,goPage:goPage,buildDock:buildDock,
+  buildDock:buildDock,
   getU:function(){return U;},
   setU:function(u){U=u;},
   getS:function(){return S;}
 };
-
 })();
