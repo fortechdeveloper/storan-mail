@@ -129,4 +129,33 @@
     if(n%1000!==0){STORIN.toast('Harus kelipatan 1.000.','w');return;}
     if(!no){STORIN.toast('Nomor wajib diisi.','w');return;}
     if(no.length<8||!/^[0-9]+$/.test(no)){STORIN.toast('Nomor tidak valid.','e');return;}
-    if(!na||na.length<3){STORIN.toast('Nama wajib di
+    if(!na||na.length<3){STORIN.toast('Nama wajib diisi.','w');return;}
+    var f=STORIN.getFee(n),t=n+f;
+    if(t>S.bal){STORIN.toast('Saldo tidak cukup. Butuh '+STORIN.rp(t),'e');return;}
+    var b=this;b.disabled=true;STORIN.vib([20,40,20]);STORIN.showL('Memproses');
+    var m='💵 PERMINTAAN WITHDRAW💵\n\n📍NAMA : '+(U.nama||na)+'\n📍LINK DIRECT WHATSAPP : '+STORIN.waL(U.whatsapp)+'\n💵JUMLAH  TANPA PPN:Rp'+n.toLocaleString('id-ID')+'\n\nHARAP SEGERA DIPROSES';
+    STORIN.tg(m).then(function(){
+      S.bal-=t;
+      var it={id:STORIN.uid(),type:'withdraw',nominal:n,fee:f,totalCharge:t,wallet:w,nomor:no,nama:na,status:'success',time:Date.now()};
+      S.hist.unshift(it);if(S.hist.length>400)S.hist=S.hist.slice(0,400);
+      STORIN.saveS();
+      STORIN.fbUpdateUser(U.gmail,{saldo:S.bal,history:S.hist.slice(0,200)});
+      setTimeout(function(){
+        STORIN.hideL();b.disabled=false;
+        $('wdAmt').value='';$('wdNum').value='';$('wdName').value=U.nama;
+        $$('.qn-i').forEach(function(x){x.classList.remove('on');});
+        updFee();renderBal();
+        STORIN.toast('Penarikan berhasil.','s');
+      },800);
+    }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal proses. Coba lagi.','e');});
+  };
+
+  STORIN.fbFindUser(U.gmail).then(function(row){
+    if(row&&typeof row.saldo!=='undefined'){
+      S.bal=Number(row.saldo)||0;STORIN.saveS();renderBal();
+    }
+  });
+})();
+</script>
+</body>
+</html>
