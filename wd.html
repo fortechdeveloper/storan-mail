@@ -26,10 +26,7 @@
       </div>
 
       <div class="cd">
-        <div class="cd-hd">
-          <div class="cd-ic t"><svg viewBox="0 0 24 24"><path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/></svg></div>
-          <div><div class="cd-t">Form Penarikan</div><div class="cd-s">Data otomatis dari akun</div></div>
-        </div>
+        <div class="cd-hd"><div class="cd-ic t"><svg viewBox="0 0 24 24"><path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/></svg></div><div><div class="cd-t">Form Penarikan</div><div class="cd-s">Data otomatis dari akun</div></div></div>
 
         <div class="fld2"><div class="fld2-lbl">Nominal <span class="h">Kelipatan 1.000</span></div>
           <input type="number" class="inp2" id="wdAmt" placeholder="Contoh: 5000" inputmode="numeric" step="1000" min="2000"></div>
@@ -73,10 +70,8 @@
 </div>
 
 <div class="mb" id="mp">
-  <div class="mdl">
-    <div class="mdl-gr"></div>
-    <div class="mdl-h"><h3><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg>Panduan</h3>
-      <button class="mdl-x" onclick="document.getElementById('mp').classList.remove('on')"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+  <div class="mdl"><div class="mdl-gr"></div>
+    <div class="mdl-h"><h3><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg>Panduan</h3><button class="mdl-x" onclick="document.getElementById('mp').classList.remove('on')"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
     <div class="mdl-b">
       <div class="stp"><div class="stp-n">1</div><div class="stp-b"><h5>Pilih Nominal</h5><p>Minimal Rp2.000, kelipatan 1.000.</p></div></div>
       <div class="stp"><div class="stp-n">2</div><div class="stp-b"><h5>Pilih Metode</h5><p>Gopay atau Dana.</p></div></div>
@@ -96,9 +91,7 @@
   var $=STORIN.$,$$=STORIN.$$,S=STORIN.getS(),U=STORIN.getU();
   STORIN.buildDock('withdraw');
 
-  function renderBal(){
-    $('wdBalV').textContent=STORIN.nm(S.bal);
-  }
+  function renderBal(){$('wdBalV').textContent=STORIN.nm(S.bal);}
   renderBal();
   $('wdName').value=U.nama;
 
@@ -136,37 +129,4 @@
     if(n%1000!==0){STORIN.toast('Harus kelipatan 1.000.','w');return;}
     if(!no){STORIN.toast('Nomor wajib diisi.','w');return;}
     if(no.length<8||!/^[0-9]+$/.test(no)){STORIN.toast('Nomor tidak valid.','e');return;}
-    if(!na||na.length<3){STORIN.toast('Nama wajib diisi.','w');return;}
-    var f=STORIN.getFee(n),t=n+f;
-    if(t>S.bal){STORIN.toast('Saldo tidak cukup. Butuh '+STORIN.rp(t),'e');return;}
-    var b=this;b.disabled=true;STORIN.vib([20,40,20]);STORIN.showL('Memproses');
-    var m='💵 PERMINTAAN WITHDRAW💵\n\n📍NAMA : '+(U.nama||na)+'\n📍LINK DIRECT WHATSAPP : '+STORIN.waL(U.whatsapp)+'\n💵JUMLAH  TANPA PPN:Rp'+n.toLocaleString('id-ID')+'\n\nHARAP SEGERA DIPROSES';
-    STORIN.tg(m).then(function(){
-      S.bal-=t;
-      var it={id:STORIN.uid(),type:'withdraw',nominal:n,fee:f,totalCharge:t,wallet:w,nomor:no,nama:na,status:'success',time:Date.now()};
-      S.hist.unshift(it);if(S.hist.length>400)S.hist=S.hist.slice(0,400);
-      STORIN.saveS();
-      STORIN.fbUpdateUser(U.gmail,{saldo:S.bal,history:S.hist.slice(0,200)});
-      setTimeout(function(){
-        STORIN.hideL();b.disabled=false;
-        $('wdAmt').value='';$('wdNum').value='';$('wdName').value=U.nama;
-        $$('.qn-i').forEach(function(x){x.classList.remove('on');});
-        updFee();renderBal();
-        STORIN.toast('Penarikan berhasil.','s');
-      },800);
-    }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal proses. Coba lagi.','e');});
-  };
-
-  // Sync saldo dari cloud
-  STORIN.fbFindUser(U.gmail).then(function(row){
-    if(row&&typeof row.saldo!=='undefined'){
-      S.bal=Number(row.saldo)||0;
-      STORIN.saveS();
-      STORIN.processPend();
-      renderBal();
-    }
-  });
-})();
-</script>
-</body>
-</html>
+    if(!na||na.length<3){STORIN.toast('Nama wajib di
