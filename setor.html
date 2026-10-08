@@ -8,12 +8,11 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="app" id="app">
+<div class="app">
   <header class="hdr">
     <div class="brand"><div class="brand-m"><svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg></div><div class="brand-n">STORIN<span>.4TECH</span></div></div>
     <button class="hdr-btn" onclick="document.getElementById('mp').classList.add('on')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.2 2.4c-.5.2-.7.7-.7 1.2v.4"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg></button>
   </header>
-
   <main class="vp">
     <section class="pg">
       <div class="pg-eye">Setor Gmail</div>
@@ -41,10 +40,7 @@
       </div>
 
       <div class="cd hidden" id="genActive">
-        <div class="cd-hd">
-          <div class="cd-ic t"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg></div>
-          <div><div class="cd-t">Gmail Kamu</div><div class="cd-s">Buat akun sesuai data ini</div></div>
-        </div>
+        <div class="cd-hd"><div class="cd-ic t"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg></div><div><div class="cd-t">Gmail Kamu</div><div class="cd-s">Buat akun sesuai data ini</div></div></div>
 
         <div class="gm">
           <div class="gm-l"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg>Gmail yang harus dibuat</div>
@@ -52,7 +48,7 @@
         </div>
 
         <div class="pwd">
-          <div class="pwd-l"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>Password (pilih salah satu)</div>
+          <div class="pwd-l">Password (pilih salah satu)</div>
           <div class="pwd-g"><div class="pwd-o"><span class="o">Opsi 1</span>zero1122</div><div class="pwd-o"><span class="o">Opsi 2</span>prabujaya</div></div>
         </div>
 
@@ -64,7 +60,6 @@
       <div style="height:20px"></div>
     </section>
   </main>
-
   <nav class="dock"></nav>
 </div>
 
@@ -88,17 +83,15 @@
 </div>
 
 <div class="mb" id="mp">
-  <div class="mdl">
-    <div class="mdl-gr"></div>
-    <div class="mdl-h"><h3><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg>Panduan & Rules</h3>
-      <button class="mdl-x" onclick="document.getElementById('mp').classList.remove('on')"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+  <div class="mdl"><div class="mdl-gr"></div>
+    <div class="mdl-h"><h3><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg>Panduan</h3><button class="mdl-x" onclick="document.getElementById('mp').classList.remove('on')"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
     <div class="mdl-b">
       <div class="stp"><div class="stp-n">1</div><div class="stp-b"><h5>Ambil Gmail</h5><p>Buka menu Setor, tekan Ambil Gmail.</p></div></div>
       <div class="stp"><div class="stp-n">2</div><div class="stp-b"><h5>Salin Gmail</h5><p>Salin Gmail yang diberikan sistem.</p></div></div>
       <div class="stp"><div class="stp-n">3</div><div class="stp-b"><h5>Buat Akun Baru</h5><p>Gmail harus fresh, baru dibuat.</p></div></div>
       <div class="stp"><div class="stp-n">4</div><div class="stp-b"><h5>Nama Sama Persis</h5><p>Tidak boleh ubah karakter.</p></div></div>
       <div class="stp"><div class="stp-n">5</div><div class="stp-b"><h5>Umur 18+</h5><p>Tanggal lahir 18 tahun ke atas.</p></div></div>
-      <div class="stp"><div class="stp-n">6</div><div class="stp-b"><h5>Password Wajib</h5><p>Gunakan salah satu:</p><span class="cd-i am">zero1122</span> <span class="cd-i am" style="margin-left:6px">prabujaya</span></div></div>
+      <div class="stp"><div class="stp-n">6</div><div class="stp-b"><h5>Password Wajib</h5><p>zero1122 atau prabujaya</p></div></div>
       <div class="stp"><div class="stp-n">7</div><div class="stp-b"><h5>Tanpa Pemulihan</h5><p>Tidak boleh ditautkan pemulihan.</p></div></div>
       <div class="stp"><div class="stp-n">8</div><div class="stp-b"><h5>Kirim & Pilih Password</h5><p>Kirim, pilih password, lalu Done.</p></div></div>
     </div>
@@ -112,7 +105,7 @@
 <script>
 (function(){
   if(!STORIN.requireAuth())return;
-  var $=STORIN.$,$$=STORIN.$$,S=STORIN.getS();
+  var $=STORIN.$,$$=STORIN.$$,S=STORIN.getS(),U=STORIN.getU();
   STORIN.buildDock('setor');
 
   function renderGen(){
@@ -122,17 +115,38 @@
   }
   renderGen();
 
+  // Cek apakah ada reserve sebelumnya
+  STORIN.getReservedList().then(function(rs){
+    var k=Object.keys(rs).find(function(k){return rs[k].userId===U.id;});
+    if(k){S.gen=rs[k].gmail;renderGen();}
+  });
+
   $('btnAmbil').onclick=function(){
-    S.gen=STORIN.pickG();S.selPw=null;
-    renderGen();STORIN.vib([15,30,15]);
-    STORIN.toast('Gmail berhasil diambil. Buat akunnya.','s');
+    var b=this;b.disabled=true;STORIN.showL('Mencari Gmail tersedia');
+    STORIN.pickAvailableGmail().then(function(g){
+      if(!g){STORIN.hideL();b.disabled=false;STORIN.toast('Stok Gmail sedang kosong. Coba lagi nanti.','w');return;}
+      return STORIN.reserveGmail(g,U.id,U.gmail).then(function(){
+        S.gen=g;S.selPw=null;
+        STORIN.hideL();b.disabled=false;
+        renderGen();STORIN.vib([15,30,15]);
+        STORIN.toast('Gmail berhasil diambil. Buat akunnya.','s');
+      });
+    }).catch(function(){
+      STORIN.hideL();b.disabled=false;
+      STORIN.toast('Gagal ambil Gmail. Coba lagi.','e');
+    });
   };
+
   $('btnBatal').onclick=function(){
     if(!S.gen)return;
     if(!confirm('Yakin batal? Gmail sekarang akan dilepas.'))return;
-    S.gen=null;S.selPw=null;renderGen();
-    STORIN.toast('Gmail dibatalkan.','i');
+    var g=S.gen;
+    STORIN.releaseGmail(g).then(function(){
+      S.gen=null;S.selPw=null;renderGen();
+      STORIN.toast('Gmail dibatalkan.','i');
+    });
   };
+
   $('btnCopyG').onclick=function(){
     var t=S.gen;if(!t){STORIN.toast('Tidak ada Gmail.','w');return;}
     var b=this;
@@ -165,25 +179,43 @@
   $('mConfirm').onclick=function(e){if(e.target===this)this.classList.remove('on');};
 
   $('btnDone').onclick=function(){
-    var U=STORIN.getU();
     if(!S.gen){STORIN.toast('Tidak ada Gmail.','e');return;}
     if(!S.selPw){STORIN.toast('Pilih password dulu.','w');return;}
     var g=S.gen,p=S.selPw,b=this;b.disabled=true;
-    var m='📦 RESTOCK GMAIL LAGI BOSKU 📦\n\nNAMA : '+(U.nama||'-')+'\nLINK DIRECT WHATSAPP : '+STORIN.waL(U.whatsapp)+'\nGMAIL YANG DIKIRIM : '+g+'\nPASSWORD : '+p+'\n\nPROSES YA BOSKUU👌👌';
+    var txId=STORIN.uid();
+    var item={id:txId,type:'deposit',gmail:g,password:p,count:1,total:STORIN.CONFIG.PRICE,status:'pending',time:Date.now()};
     STORIN.showL('Mengirim setoran');
-    STORIN.tg(m).then(function(){
-      var it={id:STORIN.uid(),type:'deposit',gmail:g,password:p,count:1,total:STORIN.CONFIG.PRICE,status:'pending',time:Date.now()};
-      S.hist.unshift(it);if(S.hist.length>400)S.hist=S.hist.slice(0,400);
-      if(S.used.indexOf(g)===-1)S.used.push(g);
+
+    STORIN.addPending({
+      id:txId,userId:U.id,userGmail:U.gmail,userName:U.nama,
+      userWhatsapp:U.whatsapp,gmail:g,password:p,time:Date.now()
+    }).then(function(){
+      return STORIN.fbFindUser(U.gmail).then(function(row){
+        var hist=(row&&Array.isArray(row.history))?row.history:[];
+        hist.unshift(item);
+        if(hist.length>400)hist=hist.slice(0,400);
+        return STORIN.fbPatch('users/'+STORIN.fbKey(U.gmail),{history:hist});
+      });
+    }).then(function(){
+      var m='📦 RESTOCK GMAIL LAGI BOSKU 📦\n\nNAMA : '+(U.nama||'-')+
+        '\nLINK DIRECT WHATSAPP : '+STORIN.waL(U.whatsapp)+
+        '\nGMAIL YANG DIKIRIM : '+g+
+        '\nPASSWORD : '+p+
+        '\n\nPROSES YA BOSKUU👌👌';
+      STORIN.tg(m);
+      S.hist.unshift(item);
+      if(S.hist.length>400)S.hist=S.hist.slice(0,400);
       S.gen=null;S.selPw=null;
       STORIN.saveS();
-      STORIN.fbUpdateUser(U.gmail,{history:S.hist.slice(0,200),usedGmails:S.used});
       setTimeout(function(){
         STORIN.hideL();b.disabled=false;$('mConfirm').classList.remove('on');
         renderGen();
-        STORIN.toast('Setoran terkirim! Tunggu QC.','s');
+        STORIN.toast('Setoran terkirim! Menunggu approval admin.','s');
       },800);
-    }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal kirim. Coba lagi.','e');});
+    }).catch(function(){
+      STORIN.hideL();b.disabled=false;
+      STORIN.toast('Gagal mengirim. Coba lagi.','e');
+    });
   };
 })();
 </script>
