@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0f1115">
+<title>STORIN.4TECH — Riwayat</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="hdr">
+    <div class="brand"><div class="brand-m"><svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg></div><div class="brand-n">STORIN<span>.4TECH</span></div></div>
+    <button class="hdr-btn" onclick="document.getElementById('mp').classList.add('on')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.2 2.4c-.5.2-.7.7-.7 1.2v.4"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg></button>
+  </header>
+  <main class="vp">
+    <section class="pg">
+      <div class="pg-eye">Riwayat</div>
+      <div class="pg-t">Transaksi</div>
+      <div class="pg-d">Semua aktivitas setor dan penarikan kamu.</div>
+      <div class="ch">
+        <button class="ch-i on" data-f="all">Semua</button>
+        <button class="ch-i" data-f="deposit">Setor</button>
+        <button class="ch-i" data-f="withdraw">Withdraw</button>
+        <button class="ch-i" data-f="pending">Pending</button>
+        <button class="ch-i" data-f="success">Sukses</button>
+      </div>
+      <div id="histBox"></div>
+      <div style="height:20px"></div>
+    </section>
+  </main>
+  <nav class="dock"></nav>
+</div>
+
+<div class="mb" id="mp">
+  <div class="mdl"><div class="mdl-gr"></div>
+    <div class="mdl-h"><h3><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg>Panduan</h3><button class="mdl-x" onclick="document.getElementById('mp').classList.remove('on')"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+    <div class="mdl-b">
+      <div class="stp"><div class="stp-n">1</div><div class="stp-b"><h5>Ambil Gmail</h5><p>Buka Setor, tekan Ambil Gmail.</p></div></div>
+      <div class="stp"><div class="stp-n">2</div><div class="stp-b"><h5>Buat Akun Fresh</h5><p>Nama sama persis, 18+.</p></div></div>
+      <div class="stp"><div class="stp-n">3</div><div class="stp-b"><h5>Password</h5><p>zero1122 atau prabujaya</p></div></div>
+      <div class="stp"><div class="stp-n">4</div><div class="stp-b"><h5>Kirim & Withdraw</h5><p>Pantau Riwayat untuk status.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="tw" id="tw"></div>
+<div class="ld" id="ld"><div class="ld-s"></div><p id="ldT">Memproses</p></div>
+
+<script src="app.js"></script>
+<script>
+(function(){
+  if(!STORIN.requireAuth())return;
+  var $=STORIN.$,$$=STORIN.$$,S=STORIN.getS();
+  STORIN.buildDock('riwayat');
+  function render(){
+    var c=$('histBox'),L=S.hist.slice(),f=S.f;
+    if(f==='deposit')L=L.filter(function(h){return h.type==='deposit';});
+    else if(f==='withdraw')L=L.filter(function(h){return h.type==='withdraw';});
+    else if(f==='pending')L=L.filter(function(h){return h.status==='pending';});
+    else if(f==='success')L=L.filter(function(h){return h.status==='success';});
+    if(!L.length){c.innerHTML='<div class="emp"><div class="emp-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div><h4>Belum Ada Transaksi</h4><p>Aktivitas setor dan penarikan akan muncul di sini.</p></div>';return;}
+    var H='<div class="hs">';
+    L.forEach(function(h){
+      var d=h.type==='deposit';
+      var ic=d?'<svg viewBox="0 0 24 24"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg>':'<svg viewBox="0 0 24 24"><path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/></svg>';
+      var t=d?'Setor Gmail':'Withdraw '+(h.wallet?h.wallet.toUpperCase():'');
+      var s=d?(h.gmail||'-')+(h.password?' · '+h.password:''):((h.wallet?h.wallet.toUpperCase():'')+' · '+(h.nomor||'-'));
+      var ac=d?'p':'m',am=d?'+'+STORIN.rp(h.total):'-'+STORIN.rp(h.totalCharge||h.nominal),pl='';
+      if(h.status==='pending')pl='<span class="pl pd">Pending</span>';
+      else if(h.status==='success')pl='<span class="pl sc">Sukses</span>';
+      else pl='<span class="pl fl">Gagal</span>';
+      H+='<div class="hs-i"><div class="hs-ic '+(d?'d':'w')+'">'+ic+'</div><div class="hs-m"><div class="hs-t">'+STORIN.esc(t)+'</div><div class="hs-s">'+STORIN.esc(s)+'</div><div class="hs-d">'+STORIN.dt(h.time)+'</div></div><div class="hs-r"><div class="hs-a '+ac+'">'+am+'</div>'+pl+'</div></div>';
+    });
+    H+='</div>';c.innerHTML=H;
+  }
+  render();
+  $$('.ch-i').forEach(function(c){
+    c.onclick=function(){
+      $$('.ch-i').forEach(function(x){x.classList.remove('on');});
+      c.classList.add('on');S.f=c.getAttribute('data-f');render();STORIN.vib(8);
+    };
+  });
+  var U=STORIN.getU();
+  STORIN.fbFindUser(U.gmail).then(function(row){if(row&&Array.isArray(row.history)){S.hist=row.history;STORIN.saveS();render();}});
+})();
+</script>
+</body>
+</html>
