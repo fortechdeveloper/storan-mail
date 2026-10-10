@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#06060c">
-<title>STORIN.4TECH — Setor</title>
+<title>GMAILCUAN 4DEV — Setor</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,7 +26,7 @@
           <polyline points="9 12 11.5 14.5 15.5 10"/>
         </svg>
       </div>
-      <div class="brand-n">STORIN<span>.4TECH</span></div>
+      <div class="brand-n">GMAILCUAN<span> 4DEV</span></div>
     </div>
     <button class="hdr-btn" onclick="document.getElementById('mp').classList.add('on')">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.2 2.4c-.5.2-.7.7-.7 1.2v.4"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg>
@@ -176,64 +175,165 @@
 <script>
 (function(){
 'use strict';
-if(!STORIN.requireAuth())return;
+
+var LOG=function(){try{console.log.apply(console,['[SETOR]'].concat(Array.prototype.slice.call(arguments)));}catch(e){}};
+var ERR=function(){try{console.error.apply(console,['[SETOR]'].concat(Array.prototype.slice.call(arguments)));}catch(e){}};
+
+LOG('init start');
+
+if(typeof STORIN==='undefined'){
+  ERR('STORIN tidak ada. app.js gagal load?');
+  document.body.innerHTML='<div style="padding:40px;color:#fff;font-family:sans-serif">Sistem gagal dimuat. Refresh halaman.</div>';
+  return;
+}
+
+if(!STORIN.requireAuth()){LOG('requireAuth false, redirect');return;}
+
 var $=STORIN.$,$$=STORIN.$$,S=STORIN.getS(),U=STORIN.getU();
+
+if(!U||!U.gmail){
+  ERR('User tidak valid', U);
+  window.location.href='index.html';
+  return;
+}
+
+LOG('user', U.gmail, 'id', U.id);
 STORIN.buildDock('setor');
 
 function renderGen(){
   var e=$('genEmpty'),a=$('genActive');
-  if(S.gen){e.classList.add('hidden');a.classList.remove('hidden');$('genGmail').textContent=S.gen;}
-  else{e.classList.remove('hidden');a.classList.add('hidden');}
+  if(!e||!a){ERR('element genEmpty/genActive hilang');return;}
+  if(S.gen){
+    e.classList.add('hidden');
+    a.classList.remove('hidden');
+    $('genGmail').textContent=S.gen;
+    LOG('renderGen: ada gmail', S.gen);
+  }else{
+    e.classList.remove('hidden');
+    a.classList.add('hidden');
+    LOG('renderGen: kosong');
+  }
 }
 renderGen();
 
+/* cek reserve di firebase dengan aman */
 STORIN.getReservedList().then(function(rs){
-  var k=Object.keys(rs).find(function(k){return rs[k].userId===U.id;});
-  if(k){S.gen=rs[k].gmail;renderGen();}
-});
+  try{
+    if(!rs||typeof rs!=='object')return;
+    var keys=Object.keys(rs);
+    for(var i=0;i<keys.length;i++){
+      var it=rs[keys[i]];
+      if(it&&it.userId===U.id&&it.gmail){
+        var age=Date.now()-(it.time||0);
+        if(age<STORIN.CONFIG.RESERVE_MS){
+          S.gen=it.gmail;
+          LOG('restore reserve', it.gmail);
+          renderGen();
+        }
+      }
+    }
+  }catch(e){ERR('getReservedList parse error',e);}
+}).catch(function(e){ERR('getReservedList fail',e);});
 
-$('btnAmbil').onclick=function(){
-  var b=this;b.disabled=true;STORIN.showL('Mencari Gmail tersedia');
-  STORIN.pickAvailableGmail().then(function(g){
-    if(!g){STORIN.hideL();b.disabled=false;STORIN.toast('Stok Gmail kosong. Coba lagi nanti.','w');return;}
-    return STORIN.reserveGmail(g,U.id,U.gmail).then(function(){
-      S.gen=g;S.selPw=null;
-      STORIN.hideL();b.disabled=false;
-      renderGen();
-      STORIN.vib([15,30,15]);
-      STORIN.toast('Gmail berhasil diambil. Buat akunnya.','s');
+/* ---------- AMBIL GMAIL ---------- */
+var btnAmbil=$('btnAmbil');
+if(!btnAmbil){ERR('btnAmbil tidak ada');}
+else{
+  btnAmbil.onclick=function(){
+    var b=this;
+    if(b.disabled){LOG('btnAmbil disabled, skip');return;}
+    b.disabled=true;
+    LOG('btnAmbil clicked');
+    STORIN.showL('Mencari Gmail tersedia');
+
+    STORIN.pickAvailableGmail().then(function(g){
+      LOG('pickAvailableGmail result:', g);
+      if(!g){
+        STORIN.hideL();
+        b.disabled=false;
+        STORIN.toast('Stok Gmail kosong. Coba lagi nanti.','w');
+        return null;
+      }
+      return STORIN.reserveGmail(g,U.id,U.gmail).then(function(){
+        S.gen=g;
+        S.selPw=null;
+        STORIN.saveS();
+        STORIN.hideL();
+        b.disabled=false;
+        renderGen();
+        STORIN.vib([15,30,15]);
+        STORIN.toast('Gmail berhasil diambil. Buat akunnya.','s');
+      });
+    }).catch(function(err){
+      ERR('btnAmbil error', err);
+      STORIN.hideL();
+      b.disabled=false;
+      STORIN.toast('Gagal ambil Gmail. Cek koneksi.','e');
     });
-  }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal ambil Gmail.','e');});
-};
+  };
+}
 
-$('btnBatal').onclick=function(){
-  if(!S.gen)return;
-  if(!confirm('Yakin batal? Gmail akan dilepas.'))return;
-  var g=S.gen;
-  STORIN.releaseGmail(g).then(function(){
-    S.gen=null;S.selPw=null;renderGen();
-    STORIN.toast('Gmail dibatalkan.','i');
-  });
-};
+/* ---------- BATAL ---------- */
+var btnBatal=$('btnBatal');
+if(btnBatal){
+  btnBatal.onclick=function(){
+    if(!S.gen){STORIN.toast('Tidak ada Gmail.','w');return;}
+    if(!confirm('Yakin batal? Gmail akan dilepas.'))return;
+    var g=S.gen;
+    STORIN.releaseGmail(g).then(function(){
+      S.gen=null;
+      S.selPw=null;
+      STORIN.saveS();
+      renderGen();
+      STORIN.toast('Gmail dibatalkan.','i');
+    }).catch(function(){STORIN.toast('Gagal batal.','e');});
+  };
+}
 
-$('btnCopyG').onclick=function(){
-  var t=S.gen;if(!t){STORIN.toast('Tidak ada Gmail.','w');return;}
-  var b=this;
-  function d(){b.classList.add('ok');STORIN.toast('Tersalin.','s');setTimeout(function(){b.classList.remove('ok');},1400);}
-  if(navigator.clipboard)navigator.clipboard.writeText(t).then(d).catch(function(){fb(t);d();});
-  else{fb(t);d();}
-};
-function fb(t){var a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(a);}
+/* ---------- COPY ---------- */
+var btnCopyG=$('btnCopyG');
+if(btnCopyG){
+  btnCopyG.onclick=function(){
+    var t=S.gen;
+    if(!t){STORIN.toast('Tidak ada Gmail.','w');return;}
+    var b=this;
+    function done(){
+      b.classList.add('ok');
+      STORIN.toast('Tersalin.','s');
+      setTimeout(function(){b.classList.remove('ok');},1400);
+    }
+    function fallback(txt){
+      var a=document.createElement('textarea');
+      a.value=txt;
+      a.style.position='fixed';
+      a.style.opacity='0';
+      document.body.appendChild(a);
+      a.select();
+      try{document.execCommand('copy');}catch(e){}
+      document.body.removeChild(a);
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(done).catch(function(){fallback(t);done();});
+    }else{
+      fallback(t);done();
+    }
+  };
+}
 
-$('btnKirim').onclick=function(){
-  if(!S.gen){STORIN.toast('Belum ada Gmail.','w');return;}
-  S.selPw=null;
-  $('confG').textContent=S.gen;
-  $$('.pw').forEach(function(b){b.classList.remove('on');});
-  $('pwHint').textContent='Wajib pilih salah satu password.';
-  $('btnDone').disabled=true;
-  $('mConfirm').classList.add('on');
-};
+/* ---------- KIRIM ---------- */
+var btnKirim=$('btnKirim');
+if(btnKirim){
+  btnKirim.onclick=function(){
+    if(!S.gen){STORIN.toast('Belum ada Gmail.','w');return;}
+    S.selPw=null;
+    $('confG').textContent=S.gen;
+    $$('.pw').forEach(function(b){b.classList.remove('on');});
+    $('pwHint').textContent='Wajib pilih salah satu password.';
+    $('btnDone').disabled=true;
+    $('mConfirm').classList.add('on');
+    LOG('open confirm modal');
+  };
+}
 
 $$('.pw').forEach(function(b){
   b.onclick=function(){
@@ -246,49 +346,70 @@ $$('.pw').forEach(function(b){
   };
 });
 
-$('btnCancel').onclick=function(){$('mConfirm').classList.remove('on');};
-$('mConfirm').onclick=function(e){if(e.target===this)this.classList.remove('on');};
+var btnCancel=$('btnCancel');
+if(btnCancel)btnCancel.onclick=function(){$('mConfirm').classList.remove('on');};
 
-$('btnDone').onclick=function(){
-  if(!S.gen){STORIN.toast('Tidak ada Gmail.','e');return;}
-  if(!S.selPw){STORIN.toast('Pilih password dulu.','w');return;}
-  var g=S.gen,p=S.selPw,b=this;b.disabled=true,txId=STORIN.uid();
-  var item={
-    id:txId,type:'deposit',gmail:g,password:p,count:1,
-    total:STORIN.CONFIG.PRICE,status:'pending',time:Date.now()
-  };
-  STORIN.showL('Mengirim setoran');
-  STORIN.addPending({
-    id:txId,userId:U.id,userGmail:U.gmail,userName:U.nama,
-    userWhatsapp:U.whatsapp,gmail:g,password:p,time:Date.now()
-  }).then(function(){
-    return STORIN.fbFindUser(U.gmail).then(function(row){
-      var hist=(row&&Array.isArray(row.history))?row.history:[];
-      hist.unshift(item);
-      if(hist.length>400)hist=hist.slice(0,400);
-      return STORIN.fbPatch('users/'+STORIN.fbKey(U.gmail),{history:hist});
+var mConfirm=$('mConfirm');
+if(mConfirm)mConfirm.onclick=function(e){if(e.target===this)this.classList.remove('on');};
+
+var btnDone=$('btnDone');
+if(btnDone){
+  btnDone.onclick=function(){
+    if(!S.gen){STORIN.toast('Tidak ada Gmail.','e');return;}
+    if(!S.selPw){STORIN.toast('Pilih password dulu.','w');return;}
+    var g=S.gen,p=S.selPw,b=this;
+    b.disabled=true;
+    var txId=STORIN.uid();
+    var item={
+      id:txId,type:'deposit',gmail:g,password:p,count:1,
+      total:STORIN.CONFIG.PRICE,status:'pending',time:Date.now()
+    };
+    LOG('submit tx', txId, g, p);
+    STORIN.showL('Mengirim setoran');
+
+    STORIN.addPending({
+      id:txId,userId:U.id,userGmail:U.gmail,userName:U.nama,
+      userWhatsapp:U.whatsapp,gmail:g,password:p,time:Date.now()
+    }).then(function(res){
+      LOG('addPending ok', res);
+      return STORIN.fbFindUser(U.gmail).then(function(row){
+        var hist=(row&&Array.isArray(row.history))?row.history:[];
+        hist.unshift(item);
+        if(hist.length>400)hist=hist.slice(0,400);
+        return STORIN.fbPatch('users/'+STORIN.fbKey(U.gmail),{history:hist});
+      });
+    }).then(function(){
+      LOG('patch history ok');
+      STORIN.tg(
+        '📦 RESTOCK GMAIL LAGI BOSKU 📦\n\n'+
+        'NAMA : '+(U.nama||'-')+'\n'+
+        'LINK DIRECT WHATSAPP : '+STORIN.waL(U.whatsapp)+'\n'+
+        'GMAIL YANG DIKIRIM : '+g+'\n'+
+        'PASSWORD : '+p+'\n\n'+
+        'PROSES YA BOSKUU👌👌'
+      );
+      S.hist.unshift(item);
+      if(S.hist.length>400)S.hist=S.hist.slice(0,400);
+      S.gen=null;
+      S.selPw=null;
+      STORIN.saveS();
+      setTimeout(function(){
+        STORIN.hideL();
+        b.disabled=false;
+        $('mConfirm').classList.remove('on');
+        renderGen();
+        STORIN.toast('Setoran terkirim! Menunggu approval.','s');
+      },800);
+    }).catch(function(err){
+      ERR('submit error', err);
+      STORIN.hideL();
+      b.disabled=false;
+      STORIN.toast('Gagal kirim setoran. Coba lagi.','e');
     });
-  }).then(function(){
-    STORIN.tg(
-      '📦 RESTOCK GMAIL LAGI BOSKU 📦\n\n'+
-      'NAMA : '+(U.nama||'-')+'\n'+
-      'LINK DIRECT WHATSAPP : '+STORIN.waL(U.whatsapp)+'\n'+
-      'GMAIL YANG DIKIRIM : '+g+'\n'+
-      'PASSWORD : '+p+'\n\n'+
-      'PROSES YA BOSKUU👌👌'
-    );
-    S.hist.unshift(item);
-    if(S.hist.length>400)S.hist=S.hist.slice(0,400);
-    S.gen=null;S.selPw=null;
-    STORIN.saveS();
-    setTimeout(function(){
-      STORIN.hideL();b.disabled=false;
-      $('mConfirm').classList.remove('on');
-      renderGen();
-      STORIN.toast('Setoran terkirim! Menunggu approval.','s');
-    },800);
-  }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal kirim.','e');});
-};
+  };
+}
+
+LOG('init done');
 })();
 </script>
 </body>
