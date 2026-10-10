@@ -1,7 +1,6 @@
 /* =========================================================
    STORIN.4TECH — LIQUID GLASS + VIDEO WALLPAPER EDITION
-   PERF-TUNED v17 (Mobile First / GPU Friendly)
-   Video wallpaper WAJIB JALAN di semua device
+   v18 — Video Wallpaper Fixed Position + Perf Layer
    ========================================================= */
 
 /* ---------- ROOT TOKENS ---------- */
@@ -37,11 +36,12 @@
 
 /* ---------- RESET ---------- */
 *,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-html,body{margin:0;padding:0;height:100%;}
+html,body{margin:0;padding:0;}
 html{
   -webkit-text-size-adjust:100%;
   text-size-adjust:100%;
-  background:var(--bg);
+  background:#06060c;
+  min-height:100%;
   overscroll-behavior-y:none;
 }
 body{
@@ -49,8 +49,11 @@ body{
   font-size:14px;
   line-height:1.5;
   color:var(--txt);
-  background:var(--bg);
+  background:transparent !important;
+  min-height:100vh;
+  min-height:100dvh;
   overflow-x:hidden;
+  position:relative;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   touch-action:manipulation;
@@ -59,7 +62,7 @@ body.lock{overflow:hidden;}
 input,button,select,textarea{font-family:inherit;font-size:inherit;color:inherit;}
 button{border:0;background:none;cursor:pointer;padding:0;}
 a{color:inherit;text-decoration:none;}
-img,video,svg{display:block;max-width:100%;}
+img,svg{display:block;max-width:100%;}
 ::selection{background:var(--gold);color:#0b0b10;}
 svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 
@@ -67,32 +70,61 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 
 /* =========================================================
-   BACKGROUND — VIDEO WALLPAPER (SELALU JALAN)
+   BACKGROUND — VIDEO WALLPAPER (POSISI BENER)
+   Stacking order:
+   -10 : video
+   -9  : shade
+   -8  : tint
+   -7  : grain
+   -6  : vignette
+    0  : konten app
    ========================================================= */
-.bg-video,
+
+/* Video fullscreen fixed, di belakang semua */
+.bg-video{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  height:100dvh;
+  object-fit:cover;
+  object-position:center center;
+  z-index:-10;
+  pointer-events:none;
+  background:#06060c;
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  margin:0;
+  padding:0;
+  border:0;
+  max-width:none;
+  max-height:none;
+  min-width:100vw;
+  min-height:100vh;
+  display:block;
+}
+
+/* Overlay layers di atas video, di bawah konten */
 .bg-shade,
 .bg-tint,
 .bg-grain,
 .bg-vignette{
   position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  height:100dvh;
   pointer-events:none;
-  z-index:0;
-}
-
-.bg-video{
-  object-fit:cover;
-  object-position:center;
-  z-index:-1;
-  transform:translateZ(0);
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-  background:#06060c;
+  margin:0;
+  padding:0;
+  border:0;
 }
 
 .bg-shade{
+  z-index:-9;
   background:linear-gradient(180deg,
     rgba(6,6,12,.72) 0%,
     rgba(6,6,12,.82) 40%,
@@ -100,6 +132,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 .bg-tint{
+  z-index:-8;
   background:
     radial-gradient(120% 80% at 20% 0%, rgba(201,169,97,.10), transparent 60%),
     radial-gradient(100% 70% at 100% 100%, rgba(96,165,250,.08), transparent 60%);
@@ -107,6 +140,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 .bg-grain{
+  z-index:-7;
   opacity:.045;
   background-image:
     radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px),
@@ -116,6 +150,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 .bg-vignette{
+  z-index:-6;
   background:radial-gradient(120% 100% at 50% 50%,
     transparent 45%,
     rgba(0,0,0,.35) 75%,
@@ -1563,11 +1598,8 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .hidden{display:none !important;}
 
 /* =========================================================
-   PERF LAYER — VIDEO TETAP JALAN
-   Yang dioptimasi cuma CSS effect, bukan video
+   PERF LAYER — Video TETAP JALAN
    ========================================================= */
-
-/* ---- MID TIER: kurangi shadow & blur dikit ---- */
 .perf-mid .cd,
 .perf-mid .qm-i,
 .perf-mid .st-i,
@@ -1578,13 +1610,9 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .perf-mid .rules,
 .perf-mid .pf,
 .perf-mid .as-i,
-.perf-mid .fee{
-  box-shadow:none;
-}
+.perf-mid .fee{box-shadow:none;}
 .perf-mid .auth-card,
-.perf-mid .adm-login{
-  box-shadow:0 4px 14px rgba(0,0,0,.35);
-}
+.perf-mid .adm-login{box-shadow:0 4px 14px rgba(0,0,0,.35);}
 .perf-mid .bg-grain{opacity:.03;}
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
   .perf-mid .hdr,
@@ -1600,7 +1628,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   }
 }
 
-/* ---- LOW TIER: matiin blur/shadow/gradient mahal, TAPI video tetap ON ---- */
 .perf-low .bg-grain{display:none;}
 .perf-low .bg-tint{display:none;}
 .perf-low .bg-vignette{
@@ -1611,8 +1638,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     rgba(6,6,12,.78) 0%,
     rgba(6,6,12,.88) 100%);
 }
-
-/* Kill backdrop-filter di low-end — paling berat buat GPU */
 .perf-low .hdr,
 .perf-low .dock,
 .perf-low .mdl,
@@ -1624,8 +1649,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   backdrop-filter:none !important;
   background:rgba(14,14,24,.88) !important;
 }
-
-/* Kill shadow di low-end */
 .perf-low .cd,
 .perf-low .qm-i,
 .perf-low .st-i,
@@ -1640,15 +1663,9 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .perf-low .auth-card,
 .perf-low .adm-login,
 .perf-low .dock,
-.perf-low .tst{
-  box-shadow:none !important;
-}
-
-/* Ganti gradient mahal jadi flat */
+.perf-low .tst{box-shadow:none !important;}
 .perf-low .bal,
-.perf-low .pf{
-  background:rgba(22,22,34,.9);
-}
+.perf-low .pf{background:rgba(22,22,34,.9);}
 .perf-low .btn-p,
 .perf-low .tab-b.on,
 .perf-low .ch-i.on,
@@ -1659,13 +1676,10 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   background:#c9a961;
   box-shadow:none;
 }
-
-/* Matiin animasi transisi di low-end */
 .perf-low .tst{animation:none;opacity:1;transform:none;}
 .perf-low .tst.out{opacity:0;transition:opacity .2s linear;}
 .perf-low .bal-ref.spin svg{animation:none;}
 .perf-low .ld-s{animation:spin .8s linear infinite;}
-
 .perf-low *,
 .perf-low *::before,
 .perf-low *::after{
@@ -1675,8 +1689,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   REDUCED MOTION — user preferensi OS
-   Video tetap jalan, tapi animasi UI dimatiin
+   REDUCED MOTION — animasi UI mati, video tetap
    ========================================================= */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
@@ -1710,7 +1723,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   HOVER (hanya device pointer:fine)
+   HOVER (pointer:fine only)
    ========================================================= */
 @media (hover:hover) and (pointer:fine){
   .qm-i:hover{background:rgba(255,255,255,.08);transform:translateY(-1px);}
