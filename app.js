@@ -10,8 +10,8 @@ var CONFIG = {
   MIN_WD:2000,
   RESERVE_MS:30*60*1000,
   POOL_FILE:'gmail-pool.txt',
-  UK:'storin_u_v16',
-  SK:'storin_s_v16'
+  UK:'gmailcuan_u_v16',
+  SK:'gmailcuan_s_v16'
 };
 
 /* ================= HELPERS ================= */
@@ -61,7 +61,7 @@ function fbKey(g){
   return encodeURIComponent(String(g).toLowerCase().replace(/[.#$\[\]@]/g,'_'));
 }
 function fbGet(p){
-  return fetch(CONFIG.FB_URL+'/'+p+'.json')
+  return fetch(CONFIG.FB_URL+'/'+p+'.json',{cache:'no-store'})
     .then(function(r){return r.json();})
     .catch(function(){return null;});
 }
@@ -90,17 +90,49 @@ function fbUpdateUser(g,d){return fbPatch('users/'+fbKey(g),d);}
 /* ================= GMAIL POOL ================= */
 var _poolCache=null;
 function loadPool(){
-  if(_poolCache) return Promise.resolve(_poolCache);
-  return fetch(CONFIG.POOL_FILE+'?t='+Date.now())
-    .then(function(r){return r.text();})
-    .then(function(txt){
-      var list=txt.split(/\r?\n/)
-        .map(function(l){return l.trim();})
-        .filter(function(l){return l && l.indexOf('@')>-1;});
-      _poolCache=list;
-      return list;
-    })
-    .catch(function(){return [];});
+  if(_poolCache&&_poolCache.length) return Promise.resolve(_poolCache);
+  var urls=[
+    CONFIG.POOL_FILE,
+    './'+CONFIG.POOL_FILE,
+    '/gmail-pool.txt',
+    CONFIG.POOL_FILE+'?t='+Date.now()
+  ];
+  function tryFetch(i){
+    if(i>=urls.length){
+      try{
+        var emb=window.__GMAIL_POOL_EMBED__;
+        if(Array.isArray(emb)&&emb.length){
+          _poolCache=emb;
+          return Promise.resolve(emb);
+        }
+      }catch(e){}
+      console.error('[STORIN] gmail-pool.txt gagal dibaca semua path');
+      return Promise.resolve([]);
+    }
+    return fetch(urls[i],{cache:'no-store'})
+      .then(function(r){
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        return r.text();
+      })
+      .then(function(txt){
+        var list=String(txt||'').split(/\r?\n/)
+          .map(function(l){return l.replace(/^\uFEFF/,'').trim();})
+          .filter(function(l){return l&&l.indexOf('@')>-1;});
+        if(!list.length) throw new Error('empty pool');
+        _poolCache=list;
+        console.log('[STORIN] pool loaded:',list.length,'gmail');
+        return list;
+      })
+      .catch(function(err){
+        console.warn('[STORIN] pool fetch gagal',urls[i],err.message);
+        return tryFetch(i+1);
+      });
+  }
+  return tryFetch(0);
+}
+function reloadPool(){
+  _poolCache=null;
+  return loadPool();
 }
 function getUsedList(){
   return fbGet('gmail_used').then(function(d){return d||{};});
@@ -109,8 +141,19 @@ function getReservedList(){
   return fbGet('gmail_reserved').then(function(d){return d||{};});
 }
 function reserveGmail(gmail,userId,userGmail){
-  return fbPut('gmail_reserved/'+fbKey(gmail),{
+  var payload={
     gmail:gmail,userId:userId,userGmail:userGmail,time:Date.now()
+  };
+  return fetch(CONFIG.FB_URL+'/gmail_reserved/'+fbKey(gmail)+'.json',{
+    method:'PUT',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(function(r){
+    if(!r.ok) throw new Error('reserve failed HTTP '+r.status);
+    return r.json();
+  }).catch(function(err){
+    console.error('[STORIN] reserve error',err);
+    throw err;
   });
 }
 function releaseGmail(gmail){
@@ -123,17 +166,22 @@ function markGmailUsed(gmail,userId){
 }
 function pickAvailableGmail(){
   return loadPool().then(function(pool){
-    if(!pool.length) return null;
+    if(!pool||!pool.length){
+      console.warn('[STORIN] pool kosong');
+      return null;
+    }
     return Promise.all([getUsedList(),getReservedList()]).then(function(r){
-      var used=r[0],reserved=r[1],now=Date.now(),reservedActive={};
+      var used=r[0]||{},reserved=r[1]||{},now=Date.now(),reservedActive={};
       Object.keys(reserved).forEach(function(k){
         var it=reserved[k];
         if(it&&it.time&&(now-it.time)<CONFIG.RESERVE_MS) reservedActive[k]=true;
       });
-      var avail=pool.filter(function(g){
-        var k=fbKey(g);
-        return !used[k] && !reservedActive[k];
-      });
+      var avail=[];
+      for(var i=0;i<pool.length;i++){
+        var g=pool[i],k=fbKey(g);
+        if(!used[k]&&!reservedActive[k]) avail.push(g);
+      }
+      console.log('[STORIN] pool:',pool.length,'used:',Object.keys(used).length,'reserved:',Object.keys(reservedActive).length,'avail:',avail.length);
       if(!avail.length) return null;
       return avail[Math.floor(Math.random()*avail.length)];
     });
@@ -315,7 +363,7 @@ window.STORIN={
   $:$,$$:$$,rp:rp,nm:nm,dt:dt,uid:uid,gid:gid,esc:esc,vib:vib,waN:waN,waL:waL,getFee:getFee,
   fbKey:fbKey,fbGet:fbGet,fbPut:fbPut,fbPatch:fbPatch,fbDelete:fbDelete,
   fbFindUser:fbFindUser,fbSaveUser:fbSaveUser,fbUpdateUser:fbUpdateUser,
-  loadPool:loadPool,getUsedList:getUsedList,getReservedList:getReservedList,
+  loadPool:loadPool,reloadPool:reloadPool,getUsedList:getUsedList,getReservedList:getReservedList,
   reserveGmail:reserveGmail,releaseGmail:releaseGmail,markGmailUsed:markGmailUsed,
   pickAvailableGmail:pickAvailableGmail,
   addPending:addPending,getPending:getPending,approvePending:approvePending,rejectPending:rejectPending,
