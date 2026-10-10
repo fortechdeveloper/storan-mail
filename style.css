@@ -1,6 +1,7 @@
 /* =========================================================
    STORIN.4TECH — LIQUID GLASS + VIDEO WALLPAPER EDITION
-   PERF-TUNED v16 (Mobile First / GPU Friendly)
+   PERF-TUNED v17 (Mobile First / GPU Friendly)
+   Video wallpaper WAJIB JALAN di semua device
    ========================================================= */
 
 /* ---------- ROOT TOKENS ---------- */
@@ -26,7 +27,6 @@
   --r-xl:26px;
   --sh-1:0 2px 8px rgba(0,0,0,.35);
   --sh-2:0 8px 24px rgba(0,0,0,.45);
-  --sh-glow:0 0 0 1px rgba(201,169,97,.15), 0 8px 30px rgba(201,169,97,.08);
   --ease:cubic-bezier(.22,.61,.36,1);
   --ease-out:cubic-bezier(.16,1,.3,1);
   --safe-t:env(safe-area-inset-top,0px);
@@ -53,7 +53,6 @@ body{
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  text-rendering:optimizeSpeed;
   touch-action:manipulation;
 }
 body.lock{overflow:hidden;}
@@ -64,15 +63,11 @@ img,video,svg{display:block;max-width:100%;}
 ::selection{background:var(--gold);color:#0b0b10;}
 svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 
-/* Focus visibility only for keyboard */
 :focus{outline:none;}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 
 /* =========================================================
-   BACKGROUND LAYERS (VIDEO + OVERLAYS)
-   - pointer-events:none biar gak ganggu tap
-   - all overlays fixed + promoted ke layer sendiri
-   - will-change HANYA di video (biar compositor handle)
+   BACKGROUND — VIDEO WALLPAPER (SELALU JALAN)
    ========================================================= */
 .bg-video,
 .bg-shade,
@@ -91,9 +86,9 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   object-fit:cover;
   object-position:center;
   z-index:-1;
-  will-change:transform;
   transform:translateZ(0);
   backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
   background:#06060c;
 }
 
@@ -208,9 +203,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border:1px solid rgba(201,169,97,.35);
 }
 .brand-m svg{width:18px;height:18px;stroke:var(--gold);}
-.brand-n{
-  font-size:14px;font-weight:700;letter-spacing:.02em;
-}
+.brand-n{font-size:14px;font-weight:700;letter-spacing:.02em;}
 .brand-n span{color:var(--gold);}
 
 .hdr-btn{
@@ -226,7 +219,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 
 /* =========================================================
    GLASS CARDS
-   - contain:content supaya browser gak recalc layout luar
    ========================================================= */
 .cd{
   position:relative;
@@ -235,7 +227,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border-radius:var(--r-lg);
   padding:16px;
   margin-bottom:14px;
-  contain:content;
+  contain:layout style;
   box-shadow:var(--sh-1);
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
@@ -372,7 +364,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border-radius:var(--r-md);
   background:var(--glass);
   border:1px solid var(--glass-line);
-  contain:content;
+  contain:layout style;
   transition:transform .15s var(--ease), background .15s var(--ease);
   text-align:center;
 }
@@ -418,7 +410,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   background:var(--glass);
   border:1px solid var(--glass-line);
   text-align:center;
-  contain:content;
+  contain:layout style;
 }
 .st-i .n{
   font-size:20px;font-weight:800;
@@ -536,7 +528,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .fld-ic svg{width:16px;height:16px;stroke:var(--mut);}
 
 /* =========================================================
-   TABS (LOGIN/REGISTER)
+   TABS
    ========================================================= */
 .tabs{
   display:grid;
@@ -575,10 +567,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   padding:calc(var(--safe-t) + 30px) 16px calc(var(--safe-b) + 30px);
 }
 .auth.hide{display:none;}
-.auth-scroll{
-  width:100%;
-  max-width:420px;
-}
+.auth-scroll{width:100%;max-width:420px;}
 .auth-head{text-align:center;margin-bottom:22px;}
 .auth-logo{
   width:64px;height:64px;
@@ -604,7 +593,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border-radius:var(--r-xl);
   padding:20px;
   box-shadow:var(--sh-2);
-  contain:content;
+  contain:layout style;
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
   .auth-card{
@@ -632,7 +621,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   background:rgba(10,10,18,.7);
   border:1px solid var(--glass-line);
   box-shadow:var(--sh-2);
-  contain:content;
+  contain:layout style;
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
   .dock{
@@ -699,7 +688,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border-top-right-radius:24px;
   border-top:1px solid var(--glass-line);
   padding:10px 18px calc(var(--safe-b) + 20px);
-  contain:content;
+  contain:layout style;
   -webkit-overflow-scrolling:touch;
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
@@ -735,7 +724,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .mdl-x svg{width:16px;height:16px;stroke:var(--txt-2);}
 .mdl-b{padding-bottom:8px;}
 
-/* STEPS */
 .stp{
   display:flex;
   gap:12px;
@@ -744,7 +732,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   background:rgba(255,255,255,.03);
   border:1px solid var(--glass-line);
   margin-bottom:8px;
-  contain:content;
+  contain:layout style;
 }
 .stp-n{
   width:26px;height:26px;flex:0 0 26px;
@@ -771,7 +759,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border-top:1px solid var(--glass-line);
   padding:24px 20px calc(var(--safe-b) + 20px);
   text-align:center;
-  contain:content;
+  contain:layout style;
 }
 .conf-ic{
   width:56px;height:56px;
@@ -871,12 +859,10 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   transform:translateY(-8px);
   opacity:0;
   animation:tin .28s var(--ease-out) forwards;
-  contain:content;
+  contain:layout style;
 }
 .tst.out{animation:tout .3s var(--ease) forwards;}
-@keyframes tin{
-  to{transform:translateY(0);opacity:1;}
-}
+@keyframes tin{to{transform:translateY(0);opacity:1;}}
 @keyframes tout{
   from{transform:translateY(0);opacity:1;}
   to{transform:translateY(-8px);opacity:0;}
@@ -887,11 +873,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   display:grid;place-items:center;
 }
 .tst-ic svg{width:14px;height:14px;}
-.tst-m{
-  flex:1;
-  font-size:13px;
-  line-height:1.4;
-}
+.tst-m{flex:1;font-size:13px;line-height:1.4;}
 .tst.s .tst-ic{background:rgba(74,222,128,.15);}
 .tst.s .tst-ic svg{stroke:var(--green);}
 .tst.e .tst-ic{background:rgba(248,113,113,.15);}
@@ -940,7 +922,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   background:var(--glass);
   border:1px solid var(--glass-line);
   margin-bottom:14px;
-  contain:content;
+  contain:layout style;
 }
 .rules-h{
   display:flex;align-items:center;gap:8px;
@@ -974,10 +956,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 /* =========================================================
    GMAIL GENERATOR PANEL
    ========================================================= */
-.gen{
-  text-align:center;
-  padding:20px 8px 16px;
-}
+.gen{text-align:center;padding:20px 8px 16px;}
 .gen-ic{
   width:56px;height:56px;
   margin:0 auto 12px;
@@ -1093,7 +1072,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 
 /* =========================================================
    HISTORY LIST
-   - content-visibility:auto buat item offscreen di-skip render
    ========================================================= */
 .hs{display:flex;flex-direction:column;gap:8px;}
 .hs-i{
@@ -1103,7 +1081,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border-radius:var(--r-md);
   background:var(--glass);
   border:1px solid var(--glass-line);
-  contain:content;
+  contain:layout style;
   content-visibility:auto;
   contain-intrinsic-size:auto 76px;
 }
@@ -1150,11 +1128,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .pl.sc{background:rgba(74,222,128,.15);color:var(--green);}
 .pl.fl{background:rgba(248,113,113,.15);color:var(--red);}
 
-/* EMPTY STATE */
-.emp{
-  text-align:center;
-  padding:40px 20px;
-}
+.emp{text-align:center;padding:40px 20px;}
 .emp-ic{
   width:64px;height:64px;
   margin:0 auto 14px;
@@ -1294,7 +1268,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   background:linear-gradient(135deg,rgba(201,169,97,.12),rgba(201,169,97,0)),var(--glass);
   border:1px solid rgba(201,169,97,.2);
   margin-bottom:14px;
-  contain:content;
+  contain:layout style;
 }
 .pf-av{
   width:56px;height:56px;flex:0 0 56px;
@@ -1335,7 +1309,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   background:var(--glass);
   border:1px solid var(--glass-line);
   text-align:center;
-  contain:content;
+  contain:layout style;
 }
 .as-i .n{
   font-size:18px;
@@ -1358,7 +1332,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border:1px solid var(--glass-line);
   overflow:hidden;
   margin-bottom:14px;
-  contain:content;
+  contain:layout style;
 }
 .pfr{
   display:flex;
@@ -1379,12 +1353,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   flex:0 0 auto;
 }
 .pfl-l svg{width:14px;height:14px;stroke:var(--mut);}
-.pfl-w{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  min-width:0;
-}
+.pfl-w{display:flex;align-items:center;gap:6px;min-width:0;}
 .pfl-v{
   font-size:13px;
   font-weight:600;
@@ -1423,7 +1392,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border:1px solid var(--glass-line);
   box-shadow:var(--sh-2);
   text-align:center;
-  contain:content;
+  contain:layout style;
 }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
   .adm-login{
@@ -1431,18 +1400,9 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     backdrop-filter:blur(20px) saturate(150%);
   }
 }
-.adm-login h2{
-  margin:0 0 6px;
-  font-size:20px;
-  font-weight:800;
-  letter-spacing:.04em;
-}
+.adm-login h2{margin:0 0 6px;font-size:20px;font-weight:800;letter-spacing:.04em;}
 .adm-login h2 span{color:var(--gold);}
-.adm-login > p{
-  margin:0 0 18px;
-  font-size:12px;
-  color:var(--mut);
-}
+.adm-login > p{margin:0 0 18px;font-size:12px;color:var(--mut);}
 
 .adm-hdr{
   position:sticky;
@@ -1461,12 +1421,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     backdrop-filter:blur(14px) saturate(140%);
   }
 }
-.adm-hdr h1{
-  margin:0;
-  font-size:15px;
-  font-weight:800;
-  letter-spacing:.06em;
-}
+.adm-hdr h1{margin:0;font-size:15px;font-weight:800;letter-spacing:.06em;}
 .adm-hdr h1 span{color:var(--gold);}
 .adm-logout{
   font-size:12px;
@@ -1497,7 +1452,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   background:var(--glass);
   border:1px solid var(--glass-line);
   text-align:center;
-  contain:content;
+  contain:layout style;
 }
 .adm-stat .n{
   font-size:24px;
@@ -1520,7 +1475,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   background:var(--glass);
   border:1px solid var(--glass-line);
   margin-bottom:10px;
-  contain:content;
+  contain:layout style;
   content-visibility:auto;
   contain-intrinsic-size:auto 200px;
 }
@@ -1608,10 +1563,11 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .hidden{display:none !important;}
 
 /* =========================================================
-   PERF LAYER — DEVICE TIER OVERRIDES
+   PERF LAYER — VIDEO TETAP JALAN
+   Yang dioptimasi cuma CSS effect, bukan video
    ========================================================= */
 
-/* ---- MID TIER: kurangi blur & shadow ---- */
+/* ---- MID TIER: kurangi shadow & blur dikit ---- */
 .perf-mid .cd,
 .perf-mid .qm-i,
 .perf-mid .st-i,
@@ -1630,9 +1586,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   box-shadow:0 4px 14px rgba(0,0,0,.35);
 }
 .perf-mid .bg-grain{opacity:.03;}
-.perf-mid .bg-vignette{
-  background:radial-gradient(120% 100% at 50% 50%, transparent 55%, rgba(0,0,0,.4) 90%);
-}
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
   .perf-mid .hdr,
   .perf-mid .dock,
@@ -1647,8 +1600,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   }
 }
 
-/* ---- LOW TIER: kill blur, kill video, kill grain, kill animasi ---- */
-.perf-low .bg-video{display:none !important;}
+/* ---- LOW TIER: matiin blur/shadow/gradient mahal, TAPI video tetap ON ---- */
 .perf-low .bg-grain{display:none;}
 .perf-low .bg-tint{display:none;}
 .perf-low .bg-vignette{
@@ -1656,11 +1608,11 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .perf-low .bg-shade{
   background:linear-gradient(180deg,
-    rgba(6,6,12,.85) 0%,
-    rgba(6,6,12,.92) 100%);
+    rgba(6,6,12,.78) 0%,
+    rgba(6,6,12,.88) 100%);
 }
 
-/* Hapus semua backdrop-filter di low-end */
+/* Kill backdrop-filter di low-end — paling berat buat GPU */
 .perf-low .hdr,
 .perf-low .dock,
 .perf-low .mdl,
@@ -1670,10 +1622,10 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .perf-low .cd{
   -webkit-backdrop-filter:none !important;
   backdrop-filter:none !important;
-  background:rgba(14,14,24,.92) !important;
+  background:rgba(14,14,24,.88) !important;
 }
 
-/* Hapus semua shadow berat di low-end */
+/* Kill shadow di low-end */
 .perf-low .cd,
 .perf-low .qm-i,
 .perf-low .st-i,
@@ -1695,7 +1647,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 /* Ganti gradient mahal jadi flat */
 .perf-low .bal,
 .perf-low .pf{
-  background:rgba(22,22,34,.92);
+  background:rgba(22,22,34,.9);
 }
 .perf-low .btn-p,
 .perf-low .tab-b.on,
@@ -1708,11 +1660,11 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   box-shadow:none;
 }
 
-/* Matikan animasi transisi */
+/* Matiin animasi transisi di low-end */
 .perf-low .tst{animation:none;opacity:1;transform:none;}
 .perf-low .tst.out{opacity:0;transition:opacity .2s linear;}
 .perf-low .bal-ref.spin svg{animation:none;}
-.perf-low .ld-s{animation:spin .8s linear infinite;} /* loader tetap, ini 1-satunya */
+.perf-low .ld-s{animation:spin .8s linear infinite;}
 
 .perf-low *,
 .perf-low *::before,
@@ -1722,11 +1674,9 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   animation-iteration-count:1 !important;
 }
 
-/* Batasi penggunaan filter/mix-blend di low-end */
-.perf-low .bg-tint{mix-blend-mode:normal;}
-
 /* =========================================================
    REDUCED MOTION — user preferensi OS
+   Video tetap jalan, tapi animasi UI dimatiin
    ========================================================= */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
@@ -1735,9 +1685,8 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     transition-duration:.01ms !important;
     scroll-behavior:auto !important;
   }
-  .bg-video{display:none;}
+  .ld-s{animation:spin .8s linear infinite;}
   .bg-grain{display:none;}
-  .bg-tint{display:none;}
 }
 
 /* =========================================================
@@ -1776,7 +1725,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   SCROLLBAR (desktop)
+   SCROLLBAR
    ========================================================= */
 ::-webkit-scrollbar{width:8px;height:8px;}
 ::-webkit-scrollbar-track{background:transparent;}
@@ -1787,7 +1736,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2);}
 
 /* =========================================================
-   PRINT (mematikan background)
+   PRINT
    ========================================================= */
 @media print{
   .bg-video,.bg-shade,.bg-tint,.bg-grain,.bg-vignette,
