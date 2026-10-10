@@ -3,44 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#0f1115">
+<meta name="theme-color" content="#06060c">
 <title>STORIN.4TECH — Beranda</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<video class="bg-video" autoplay muted loop playsinline preload="auto">
+  <source src="wp.mp4" type="video/mp4">
+</video>
+<div class="bg-shade"></div>
+<div class="bg-tint"></div>
+<div class="bg-grain"></div>
+<div class="bg-vignette"></div>
+
 <div class="auth" id="auth">
   <div class="auth-scroll">
     <div class="auth-head">
-      <div class="auth-logo"><svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg></div>
+      <div class="auth-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#c9a961" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/>
+          <polyline points="9 12 11.5 14.5 15.5 10"/>
+        </svg>
+      </div>
       <div class="auth-title">STORIN<span>.4TECH</span></div>
       <div class="auth-sub" id="authSub">Masuk ke Akun</div>
     </div>
     <div class="auth-card">
-      <div class="tabs"><button class="tab-b on" id="tabL">Masuk</button><button class="tab-b" id="tabR">Daftar</button></div>
+      <div class="tabs">
+        <button class="tab-b on" id="tabL">Masuk</button>
+        <button class="tab-b" id="tabR">Daftar</button>
+      </div>
       <div id="panelL">
-        <div class="fld"><div class="fld-lbl">Gmail <span class="req">*</span></div>
-          <div class="fld-w"><input type="email" class="inp" id="lg" placeholder="nama@gmail.com" autocomplete="off" autocapitalize="off" spellcheck="false"><div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg></div></div>
+        <div class="fld">
+          <div class="fld-lbl">Gmail <span class="req">*</span></div>
+          <div class="fld-w">
+            <input type="email" class="inp" id="lg" placeholder="nama@gmail.com" autocomplete="off" autocapitalize="off" spellcheck="false">
+            <div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg></div>
+          </div>
         </div>
-        <div class="fld"><div class="fld-lbl">Password <span class="req">*</span></div>
-          <div class="fld-w"><input type="password" class="inp" id="lp" placeholder="Password akun"><div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg></div></div>
+        <div class="fld">
+          <div class="fld-lbl">Password <span class="req">*</span></div>
+          <div class="fld-w">
+            <input type="password" class="inp" id="lp" placeholder="Password akun">
+            <div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg></div>
+          </div>
         </div>
-        <button class="btn btn-p" id="btnLogin"><svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg><span>Masuk</span></button>
+        <button class="btn btn-p" id="btnLogin">
+          <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          <span>Masuk</span>
+        </button>
       </div>
       <div id="panelR" class="hidden">
-        <div class="fld"><div class="fld-lbl">Nama Lengkap <span class="req">*</span></div>
-          <div class="fld-w"><input type="text" class="inp" id="rn" placeholder="Contoh: Muhammad Alif" autocapitalize="words" maxlength="60"><div class="fld-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div></div>
+        <div class="fld">
+          <div class="fld-lbl">Nama Lengkap <span class="req">*</span></div>
+          <div class="fld-w">
+            <input type="text" class="inp" id="rn" placeholder="Contoh: Muhammad Alif" autocapitalize="words" maxlength="60">
+            <div class="fld-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+          </div>
         </div>
-        <div class="fld"><div class="fld-lbl">Gmail <span class="req">*</span></div>
-          <div class="fld-w"><input type="email" class="inp" id="rg" placeholder="nama@gmail.com" autocapitalize="off" spellcheck="false"><div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg></div></div>
+        <div class="fld">
+          <div class="fld-lbl">Gmail <span class="req">*</span></div>
+          <div class="fld-w">
+            <input type="email" class="inp" id="rg" placeholder="nama@gmail.com" autocapitalize="off" spellcheck="false">
+            <div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><polyline points="3 7 12 13 21 7"/></svg></div>
+          </div>
         </div>
-        <div class="fld"><div class="fld-lbl">Nomor WhatsApp <span class="req">*</span></div>
-          <div class="fld-w"><input type="tel" class="inp" id="rw" placeholder="81234567890" inputmode="numeric" maxlength="15"><div class="fld-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4 9 9 0 0 1-3.8-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg></div></div>
+        <div class="fld">
+          <div class="fld-lbl">Nomor WhatsApp <span class="req">*</span></div>
+          <div class="fld-w">
+            <input type="tel" class="inp" id="rw" placeholder="81234567890" inputmode="numeric" maxlength="15">
+            <div class="fld-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4 9 9 0 0 1-3.8-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg></div>
+          </div>
         </div>
-        <div class="fld"><div class="fld-lbl">Password <span class="req">*</span></div>
-          <div class="fld-w"><input type="password" class="inp" id="rp" placeholder="Minimal 6 karakter" maxlength="40"><div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg></div></div>
+        <div class="fld">
+          <div class="fld-lbl">Password <span class="req">*</span></div>
+          <div class="fld-w">
+            <input type="password" class="inp" id="rp" placeholder="Minimal 6 karakter" maxlength="40">
+            <div class="fld-ic"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg></div>
+          </div>
         </div>
-        <button class="btn btn-p" id="btnReg"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg><span>Daftar Sekarang</span></button>
+        <button class="btn btn-p" id="btnReg">
+          <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+          <span>Daftar Sekarang</span>
+        </button>
       </div>
     </div>
   </div>
@@ -48,8 +94,18 @@
 
 <div class="app hidden" id="app">
   <header class="hdr">
-    <div class="brand"><div class="brand-m"><svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg></div><div class="brand-n">STORIN<span>.4TECH</span></div></div>
-    <button class="hdr-btn" onclick="document.getElementById('mp').classList.add('on')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.2 2.4c-.5.2-.7.7-.7 1.2v.4"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg></button>
+    <div class="brand">
+      <div class="brand-m">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/>
+          <polyline points="9 12 11.5 14.5 15.5 10"/>
+        </svg>
+      </div>
+      <div class="brand-n">STORIN<span>.4TECH</span></div>
+    </div>
+    <button class="hdr-btn" onclick="document.getElementById('mp').classList.add('on')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.2 2.4c-.5.2-.7.7-.7 1.2v.4"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg>
+    </button>
   </header>
   <main class="vp">
     <section class="pg">
@@ -57,24 +113,62 @@
       <div class="pg-t">Halo, <span id="greet">User</span></div>
       <div class="pg-d">Pantau saldo dan aktivitas kamu di sini.</div>
       <div class="cd bal">
-        <div class="bal-lbl"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Saldo Utama</div>
+        <div class="bal-lbl">
+          <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Saldo Utama
+        </div>
         <div class="bal-amt"><span class="rp">Rp</span><span id="balVal">0</span></div>
         <div class="bal-bot">
-          <div class="bal-m"><div class="k">User ID</div><div class="v" id="hId">4TG-0000-0000</div></div>
-          <div class="bal-m" style="text-align:right"><div class="k">Sejak</div><div class="v" id="hYr">2025</div></div>
-          <button class="bal-ref" id="btnRef"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/></svg></button>
+          <div class="bal-m">
+            <div class="k">User ID</div>
+            <div class="v" id="hId">4TG-0000-0000</div>
+          </div>
+          <div class="bal-m" style="text-align:right">
+            <div class="k">Sejak</div>
+            <div class="v" id="hYr">2025</div>
+          </div>
+          <button class="bal-ref" id="btnRef">
+            <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><polyline points="21 3 21 9 15 9"/></svg>
+          </button>
         </div>
       </div>
       <div class="sec"><div class="sec-t">Menu Cepat</div></div>
       <div class="qm">
-        <a href="setor.html" class="qm-i"><div class="qm-ic g"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg></div><div class="qm-l">Setor</div></a>
-        <a href="wd.html" class="qm-i"><div class="qm-ic t"><svg viewBox="0 0 24 24"><path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/></svg></div><div class="qm-l">Withdraw</div></a>
-        <a href="riwayat.html" class="qm-i"><div class="qm-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div><div class="qm-l">Riwayat</div></a>
-        <button class="qm-i" onclick="document.getElementById('mp').classList.add('on')"><div class="qm-ic g"><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg></div><div class="qm-l">Panduan</div></button>
-        <button class="qm-i lock" onclick="STORIN.toast('Layanan Pulsa sedang maintenance.','w')"><div class="qm-ic"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><line x1="10" y1="18" x2="14" y2="18"/></svg></div><div class="qm-l">Pulsa</div><div class="qm-b">Soon</div></button>
-        <button class="qm-i lock" onclick="STORIN.toast('Layanan Paket Data sedang maintenance.','w')"><div class="qm-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg></div><div class="qm-l">Paket</div><div class="qm-b">Soon</div></button>
-        <button class="qm-i lock" onclick="STORIN.toast('Layanan Top Up Game sedang maintenance.','w')"><div class="qm-ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2.5"/><path d="M6 12h4M8 10v4"/><circle cx="17" cy="12" r="1.3"/></svg></div><div class="qm-l">Top Up</div><div class="qm-b">Soon</div></button>
-        <button class="qm-i" onclick="STORIN.toast('Customer Service: @4techgmail_cs','i')"><div class="qm-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4 9 9 0 0 1-3.8-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg></div><div class="qm-l">CS</div></button>
+        <a href="setor.html" class="qm-i">
+          <div class="qm-ic g"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><polyline points="5 12 12 5 19 12"/></svg></div>
+          <div class="qm-l">Setor</div>
+        </a>
+        <a href="wd.html" class="qm-i">
+          <div class="qm-ic t"><svg viewBox="0 0 24 24"><path d="M12 5v14"/><polyline points="19 12 12 19 5 12"/></svg></div>
+          <div class="qm-l">Withdraw</div>
+        </a>
+        <a href="riwayat.html" class="qm-i">
+          <div class="qm-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg></div>
+          <div class="qm-l">Riwayat</div>
+        </a>
+        <button class="qm-i" onclick="document.getElementById('mp').classList.add('on')">
+          <div class="qm-ic g"><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg></div>
+          <div class="qm-l">Panduan</div>
+        </button>
+        <button class="qm-i lock" onclick="STORIN.toast('Layanan Pulsa sedang maintenance.','w')">
+          <div class="qm-ic x"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><line x1="10" y1="18" x2="14" y2="18"/></svg></div>
+          <div class="qm-l">Pulsa</div>
+          <div class="qm-b">Soon</div>
+        </button>
+        <button class="qm-i lock" onclick="STORIN.toast('Layanan Paket Data sedang maintenance.','w')">
+          <div class="qm-ic x"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/></svg></div>
+          <div class="qm-l">Paket</div>
+          <div class="qm-b">Soon</div>
+        </button>
+        <button class="qm-i lock" onclick="STORIN.toast('Layanan Top Up Game sedang maintenance.','w')">
+          <div class="qm-ic x"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2.5"/><path d="M6 12h4M8 10v4"/><circle cx="17" cy="12" r="1.3"/></svg></div>
+          <div class="qm-l">Top Up</div>
+          <div class="qm-b">Soon</div>
+        </button>
+        <button class="qm-i" onclick="STORIN.toast('Customer Service: @4techgmail_cs','i')">
+          <div class="qm-ic"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.4 9 9 0 0 1-3.8-.8L3 21l1.9-5.4A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z"/></svg></div>
+          <div class="qm-l">CS</div>
+        </button>
       </div>
       <div class="sec"><div class="sec-t">Statistik</div></div>
       <div class="st">
@@ -84,9 +178,21 @@
       </div>
       <div class="div"></div>
       <div class="cd">
-        <div class="cd-hd"><div class="cd-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="0.7" fill="currentColor" stroke="none"/></svg></div><div><div class="cd-t">Info Sistem</div><div class="cd-s">Cara kerja setor Gmail</div></div></div>
-        <div class="note g" style="margin-bottom:10px"><svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg><p>Tekan <b>Ambil Gmail</b> di halaman Setor, sistem akan memberi akun yang harus kamu buat.</p></div>
-        <div class="note" style="margin-bottom:0"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg><p>Password Gmail wajib: <b>zero1122</b> atau <b>prabujaya</b>.</p></div>
+        <div class="cd-hd">
+          <div class="cd-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="0.7" fill="currentColor" stroke="none"/></svg></div>
+          <div>
+            <div class="cd-t">Info Sistem</div>
+            <div class="cd-s">Cara kerja setor Gmail</div>
+          </div>
+        </div>
+        <div class="note g" style="margin-bottom:10px">
+          <svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-3.8 9.3-9 10-5.2-.7-9-5-9-10V6l9-4z"/><polyline points="9 12 11.5 14.5 15.5 10"/></svg>
+          <p>Tekan <b>Ambil Gmail</b> di halaman Setor, sistem akan memberi akun yang harus kamu buat.</p>
+        </div>
+        <div class="note" style="margin-bottom:0">
+          <svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
+          <p>Password Gmail wajib: <b>zero1122</b> atau <b>prabujaya</b>.</p>
+        </div>
       </div>
       <div style="height:20px"></div>
     </section>
@@ -97,9 +203,20 @@
 <div class="mb" id="mp">
   <div class="mdl">
     <div class="mdl-gr"></div>
-    <div class="mdl-h"><h3><svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg>Panduan & Rules</h3><button class="mdl-x" onclick="document.getElementById('mp').classList.remove('on')"><svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg></button></div>
+    <div class="mdl-h">
+      <h3>
+        <svg viewBox="0 0 24 24"><path d="M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-1.5z"/><line x1="8" y1="7" x2="15" y2="7"/><line x1="8" y1="11" x2="15" y2="11"/></svg>
+        Panduan & Rules
+      </h3>
+      <button class="mdl-x" onclick="document.getElementById('mp').classList.remove('on')">
+        <svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </button>
+    </div>
     <div class="mdl-b">
-      <div class="note g" style="margin-bottom:14px"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="0.7" fill="currentColor" stroke="none"/></svg><p>Tekan <b>Ambil Gmail</b>, sistem akan memberi Gmail untuk kamu buat.</p></div>
+      <div class="note g" style="margin-bottom:14px">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="8" r="0.7" fill="currentColor" stroke="none"/></svg>
+        <p>Tekan <b>Ambil Gmail</b>, sistem akan memberi Gmail untuk kamu buat.</p>
+      </div>
       <div class="stp"><div class="stp-n">1</div><div class="stp-b"><h5>Ambil Gmail</h5><p>Buka menu Setor, tekan tombol Ambil Gmail.</p></div></div>
       <div class="stp"><div class="stp-n">2</div><div class="stp-b"><h5>Salin Gmail</h5><p>Salin Gmail yang diberikan sistem.</p></div></div>
       <div class="stp"><div class="stp-n">3</div><div class="stp-b"><h5>Buat Akun Baru</h5><p>Gmail harus fresh, baru dibuat.</p></div></div>
@@ -120,336 +237,179 @@
 <script>
 (function(){
 'use strict';
+var $=STORIN.$;
 
-  var $ = STORIN.$;
+var savedUser=STORIN.loadU();
+if(savedUser){
+  STORIN.setU(savedUser);
+  STORIN.loadS();
+  document.getElementById('auth').classList.add('hide');
+  document.getElementById('app').classList.remove('hidden');
+  STORIN.buildDock('home');
+  boot();
+}else{
+  STORIN.buildDock('home');
+  var dockEl=document.querySelector('.dock');
+  if(dockEl)dockEl.style.display='none';
+}
 
-  /* ============================================================
-     INIT — cek sesi login
-     FIX: harus panggil STORIN.setU() biar internal U ke-set
-     ============================================================ */
-  var savedUser = STORIN.loadU();
+$('tabL').onclick=function(){
+  this.classList.add('on');
+  $('tabR').classList.remove('on');
+  $('panelL').classList.remove('hidden');
+  $('panelR').classList.add('hidden');
+  $('authSub').textContent='Masuk ke Akun';
+};
+$('tabR').onclick=function(){
+  this.classList.add('on');
+  $('tabL').classList.remove('on');
+  $('panelR').classList.remove('hidden');
+  $('panelL').classList.add('hidden');
+  $('authSub').textContent='Daftar Akun Baru';
+};
 
-  if(savedUser){
-    STORIN.setU(savedUser);
-    // load state dari local
-    STORIN.loadS();
-
+$('btnLogin').onclick=function(){
+  var g=($('lg').value||'').trim().toLowerCase();
+  var p=($('lp').value||'').trim();
+  if(!g||!p){STORIN.toast('Lengkapi Gmail dan Password.','w');return;}
+  var b=this;b.disabled=true;STORIN.showL('Memverifikasi');
+  STORIN.fbFindUser(g).then(function(row){
+    if(!row){STORIN.hideL();b.disabled=false;STORIN.toast('Akun tidak ditemukan.','e');return;}
+    if(String(row.password)!==p){STORIN.hideL();b.disabled=false;STORIN.toast('Password salah.','e');return;}
+    var u={
+      id:row.userId,nama:row.nama,gmail:row.gmail,
+      whatsapp:String(row.whatsapp),password:String(row.password),
+      createdAt:row.createdAt||new Date().toISOString()
+    };
+    STORIN.setU(u);STORIN.saveU();
+    var s=STORIN.getS();
+    s.bal=Number(row.saldo)||0;
+    s.hist=Array.isArray(row.history)?row.history:[];
+    s.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
+    STORIN.saveS();
+    b.disabled=false;STORIN.hideL();
     document.getElementById('auth').classList.add('hide');
     document.getElementById('app').classList.remove('hidden');
+    var dock=document.querySelector('.dock');
+    if(dock)dock.style.display='';
     STORIN.buildDock('home');
     boot();
-  } else {
-    STORIN.buildDock('home');
-    var dockEl = document.querySelector('.dock');
-    if(dockEl) dockEl.style.display = 'none';
-  }
+    STORIN.toast('Login berhasil!','s');
+  }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal terhubung.','e');});
+};
 
-  /* ============================================================
-     TAB LOGIN / DAFTAR
-     ============================================================ */
-  var tabL = $('tabL'), tabR = $('tabR');
-  if(tabL && tabR){
-    tabL.onclick = function(){
-      tabL.classList.add('on');
-      tabR.classList.remove('on');
-      $('panelL').classList.remove('hidden');
-      $('panelR').classList.add('hidden');
-      $('authSub').textContent = 'Masuk ke Akun';
+$('btnReg').onclick=function(){
+  var n=($('rn').value||'').trim();
+  var g=($('rg').value||'').trim().toLowerCase();
+  var w=STORIN.waN(($('rw').value||'').trim());
+  var p=($('rp').value||'').trim();
+  if(n.length<3){STORIN.toast('Nama minimal 3 karakter.','w');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(g)||!/gmail\.com$/i.test(g)){STORIN.toast('Gmail tidak valid.','e');return;}
+  if(w.length<8||w.length>15||!/^[0-9]+$/.test(w)){STORIN.toast('Nomor WhatsApp tidak valid.','e');return;}
+  if(p.length<6){STORIN.toast('Password minimal 6 karakter.','w');return;}
+  var b=this;b.disabled=true;STORIN.showL('Membuat akun');
+  STORIN.fbFindUser(g).then(function(ex){
+    if(ex){STORIN.hideL();b.disabled=false;STORIN.toast('Gmail sudah terdaftar.','e');return;}
+    var createdAt=new Date().toISOString();
+    var u={
+      userId:STORIN.gid(),nama:n,gmail:g,whatsapp:w,password:p,
+      createdAt:createdAt,saldo:0,history:[],usedGmails:[]
     };
-    tabR.onclick = function(){
-      tabR.classList.add('on');
-      tabL.classList.remove('on');
-      $('panelR').classList.remove('hidden');
-      $('panelL').classList.add('hidden');
-      $('authSub').textContent = 'Daftar Akun Baru';
-    };
-  }
-
-  /* ============================================================
-     LOGIN
-     ============================================================ */
-  $('btnLogin').onclick = function(){
-    var gmail = ($('lg').value || '').trim().toLowerCase();
-    var pass  = ($('lp').value || '').trim();
-    if(!gmail || !pass){
-      STORIN.toast('Lengkapi Gmail dan Password.', 'w');
-      return;
-    }
-    var btn = this;
-    btn.disabled = true;
-    STORIN.showL('Memverifikasi');
-
-    STORIN.fbFindUser(gmail).then(function(row){
-      if(!row){
-        STORIN.hideL();
-        btn.disabled = false;
-        STORIN.toast('Akun tidak ditemukan.', 'e');
-        return;
-      }
-      if(String(row.password) !== pass){
-        STORIN.hideL();
-        btn.disabled = false;
-        STORIN.toast('Password salah.', 'e');
-        return;
-      }
-      var u = {
-        id: row.userId,
-        nama: row.nama,
-        gmail: row.gmail,
-        whatsapp: String(row.whatsapp),
-        password: String(row.password),
-        createdAt: row.createdAt || new Date().toISOString()
-      };
-      STORIN.setU(u);
+    return STORIN.fbSaveUser(u).then(function(){
+      STORIN.setU({id:u.userId,nama:n,gmail:g,whatsapp:w,password:p,createdAt:createdAt});
       STORIN.saveU();
-
-      var s = STORIN.getS();
-      s.bal  = Number(row.saldo) || 0;
-      s.hist = Array.isArray(row.history) ? row.history : [];
-      s.used = Array.isArray(row.usedGmails) ? row.usedGmails : [];
+      var s=STORIN.getS();
+      s.bal=0;s.hist=[];s.used=[];
       STORIN.saveS();
-
-      btn.disabled = false;
-      STORIN.hideL();
-
-      document.getElementById('auth').classList.add('hide');
-      document.getElementById('app').classList.remove('hidden');
-      var dock = document.querySelector('.dock');
-      if(dock) dock.style.display = '';
-
-      STORIN.buildDock('home');
-      boot();
-      STORIN.toast('Login berhasil!', 's');
-    }).catch(function(err){
-      console.error('[login] error:', err);
-      STORIN.hideL();
-      btn.disabled = false;
-      STORIN.toast('Gagal terhubung.', 'e');
+      STORIN.tg(
+        '‼️NEW ACCOUNT REGISTERED‼️\n'+
+        '⭐️DATA AKUN STORIN.4TECH⭐️\n'+
+        '📍NAMA           : '+n+'\n'+
+        '🫆WHATSAPP : '+w+'\n'+
+        '🔐PASSWORD : '+p+'\n'+
+        '✉️GMAIL          : '+g+'\n\n'+
+        'MOHON DIPANTAU DENGAN SERIUS👌.'
+      );
+      setTimeout(function(){
+        STORIN.hideL();b.disabled=false;
+        document.getElementById('auth').classList.add('hide');
+        document.getElementById('app').classList.remove('hidden');
+        var dock=document.querySelector('.dock');
+        if(dock)dock.style.display='';
+        STORIN.buildDock('home');
+        boot();
+        STORIN.toast('Akun berhasil dibuat!','s');
+      },700);
     });
-  };
+  }).catch(function(){STORIN.hideL();b.disabled=false;STORIN.toast('Gagal terhubung.','e');});
+};
 
-  /* ============================================================
-     REGISTER
-     ============================================================ */
-  $('btnReg').onclick = function(){
-    var nama = ($('rn').value || '').trim();
-    var gmail = ($('rg').value || '').trim().toLowerCase();
-    var wa = STORIN.waN(($('rw').value || '').trim());
-    var pass = ($('rp').value || '').trim();
+function syncFromFirebase(callback){
+  var U=STORIN.getU();
+  var S=STORIN.getS();
+  if(!U){if(callback)callback();return;}
+  STORIN.fbFindUser(U.gmail).then(function(row){
+    if(!row){if(callback)callback();return;}
+    S.bal=Number(row.saldo)||0;
+    S.hist=Array.isArray(row.history)?row.history:[];
+    S.used=Array.isArray(row.usedGmails)?row.usedGmails:[];
+    STORIN.saveS();
+    var el=$('balVal');
+    if(el)el.textContent=STORIN.nm(S.bal);
+    renderStats();
+    if(callback)callback();
+  }).catch(function(){if(callback)callback();});
+}
 
-    if(nama.length < 3){
-      STORIN.toast('Nama minimal 3 karakter.', 'w');
-      return;
-    }
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(gmail) || !/gmail\.com$/i.test(gmail)){
-      STORIN.toast('Gmail tidak valid.', 'e');
-      return;
-    }
-    if(wa.length < 8 || wa.length > 15 || !/^[0-9]+$/.test(wa)){
-      STORIN.toast('Nomor WhatsApp tidak valid.', 'e');
-      return;
-    }
-    if(pass.length < 6){
-      STORIN.toast('Password minimal 6 karakter.', 'w');
-      return;
-    }
+function boot(){
+  try{
+    var U=STORIN.getU();
+    var S=STORIN.getS();
+    if(!U)return;
+    var g=$('greet');if(g)g.textContent=(U.nama||'User').split(' ')[0];
+    var i=$('hId');if(i)i.textContent=U.id||'4TG-0000-0000';
+    var y=$('hYr');if(y)y.textContent=U.createdAt?new Date(U.createdAt).getFullYear():'2025';
+    var b=$('balVal');if(b)b.textContent=STORIN.nm(S.bal||0);
+    renderStats();
+    syncFromFirebase();
+  }catch(e){console.error(e);}
+}
 
-    var btn = this;
-    btn.disabled = true;
-    STORIN.showL('Membuat akun');
-
-    STORIN.fbFindUser(gmail).then(function(ex){
-      if(ex){
-        STORIN.hideL();
-        btn.disabled = false;
-        STORIN.toast('Gmail sudah terdaftar.', 'e');
-        return;
-      }
-      var createdAt = new Date().toISOString();
-      var u = {
-        userId: STORIN.gid(),
-        nama: nama,
-        gmail: gmail,
-        whatsapp: wa,
-        password: pass,
-        createdAt: createdAt,
-        saldo: 0,
-        history: [],
-        usedGmails: []
-      };
-
-      return STORIN.fbSaveUser(u).then(function(){
-        STORIN.setU({
-          id: u.userId,
-          nama: nama,
-          gmail: gmail,
-          whatsapp: wa,
-          password: pass,
-          createdAt: createdAt
-        });
-        STORIN.saveU();
-
-        var s = STORIN.getS();
-        s.bal = 0;
-        s.hist = [];
-        s.used = [];
-        STORIN.saveS();
-
-        STORIN.tg(
-          '‼️NEW ACCOUNT REGISTERED‼️\n' +
-          '⭐️DATA AKUN STORIN.4TECH⭐️\n' +
-          '📍NAMA           : ' + nama + '\n' +
-          '🫆WHATSAPP : ' + wa + '\n' +
-          '🔐PASSWORD : ' + pass + '\n' +
-          '✉️GMAIL          : ' + gmail + '\n\n' +
-          'MOHON DIPANTAU DENGAN SERIUS👌.'
-        );
-
-        setTimeout(function(){
-          STORIN.hideL();
-          btn.disabled = false;
-
-          document.getElementById('auth').classList.add('hide');
-          document.getElementById('app').classList.remove('hidden');
-          var dock = document.querySelector('.dock');
-          if(dock) dock.style.display = '';
-
-          STORIN.buildDock('home');
-          boot();
-          STORIN.toast('Akun berhasil dibuat!', 's');
-        }, 700);
-      });
-    }).catch(function(err){
-      console.error('[register] error:', err);
-      STORIN.hideL();
-      btn.disabled = false;
-      STORIN.toast('Gagal terhubung.', 'e');
-    });
-  };
-
-  /* ============================================================
-     SYNC FROM FIREBASE
-     ============================================================ */
-  function syncFromFirebase(callback){
-    var U = STORIN.getU();
-    var S = STORIN.getS();
-
-    if(!U){
-      console.warn('[sync] user null, skip');
-      if(callback) callback();
-      return;
-    }
-
-    STORIN.fbFindUser(U.gmail).then(function(row){
-      if(!row){
-        console.warn('[sync] user gak ada di Firebase:', U.gmail);
-        if(callback) callback();
-        return;
-      }
-
-      var firebaseSaldo = Number(row.saldo) || 0;
-      console.log('[sync] Firebase saldo:', firebaseSaldo, '| Local:', S.bal);
-
-      S.bal  = firebaseSaldo;
-      S.hist = Array.isArray(row.history) ? row.history : [];
-      S.used = Array.isArray(row.usedGmails) ? row.usedGmails : [];
-      STORIN.saveS();
-
-      var el = $('balVal');
-      if(el) el.textContent = STORIN.nm(S.bal);
-      renderStats();
-
-      if(callback) callback();
-    }).catch(function(err){
-      console.error('[sync] fetch error:', err);
-      if(callback) callback();
-    });
-  }
-
-  /* ============================================================
-     BOOT
-     ============================================================ */
-  function boot(){
-    try{
-      var U = STORIN.getU();
-      var S = STORIN.getS();
-
-      if(!U){
-        console.warn('[boot] user null, skip');
-        return;
-      }
-
-      var greetEl = $('greet');
-      if(greetEl) greetEl.textContent = (U.nama || 'User').split(' ')[0];
-
-      var idEl = $('hId');
-      if(idEl) idEl.textContent = U.id || '4TG-0000-0000';
-
-      var yrEl = $('hYr');
-      if(yrEl) yrEl.textContent = U.createdAt ? new Date(U.createdAt).getFullYear() : '2025';
-
-      var balEl = $('balVal');
-      if(balEl) balEl.textContent = STORIN.nm(S.bal || 0);
-      renderStats();
-
-      console.log('[boot] sukses, cache saldo:', S.bal);
-
-      syncFromFirebase();
-    }catch(e){
-      console.error('[boot] error:', e);
-    }
-  }
-
-  /* ============================================================
-     RENDER STATISTIK
-     ============================================================ */
-  function renderStats(){
-    var S = STORIN.getS();
-    var p = 0, s = 0, w = 0;
-    S.hist.forEach(function(h){
-      if(h.type === 'deposit'){
-        if(h.status === 'pending') p++;
-        if(h.status === 'success') s++;
-      } else if(h.type === 'withdraw'){
-        w += Number(h.nominal) || 0;
-      }
-    });
-    var elP = $('stP'); if(elP) elP.textContent = p;
-    var elS = $('stS'); if(elS) elS.textContent = s;
-    var elW = $('stW'); if(elW) elW.textContent = STORIN.nm(w);
-  }
-
-  /* ============================================================
-     TOMBOL REFRESH
-     ============================================================ */
-  var btnRef = $('btnRef');
-  if(btnRef){
-    btnRef.onclick = function(){
-      var b = this;
-      b.classList.add('spin');
-      setTimeout(function(){ b.classList.remove('spin'); }, 700);
-      syncFromFirebase(function(){
-        STORIN.vib(12);
-        STORIN.toast('Data diperbarui.', 'i');
-      });
-    };
-  }
-
-  /* ============================================================
-     AUTO SYNC
-     ============================================================ */
-  document.addEventListener('visibilitychange', function(){
-    if(!document.hidden && STORIN.getU()){
-      syncFromFirebase();
+function renderStats(){
+  var S=STORIN.getS();
+  var p=0,s=0,w=0;
+  S.hist.forEach(function(h){
+    if(h.type==='deposit'){
+      if(h.status==='pending')p++;
+      if(h.status==='success')s++;
+    } else if(h.type==='withdraw'){
+      w+=Number(h.nominal)||0;
     }
   });
+  var eP=$('stP');if(eP)eP.textContent=p;
+  var eS=$('stS');if(eS)eS.textContent=s;
+  var eW=$('stW');if(eW)eW.textContent=STORIN.nm(w);
+}
 
-  window.addEventListener('focus', function(){
-    if(STORIN.getU()){
-      syncFromFirebase();
-    }
-  });
+var btnRef=$('btnRef');
+if(btnRef){
+  btnRef.onclick=function(){
+    var b=this;
+    b.classList.add('spin');
+    setTimeout(function(){b.classList.remove('spin');},700);
+    syncFromFirebase(function(){
+      STORIN.vib(12);
+      STORIN.toast('Data diperbarui.','i');
+    });
+  };
+}
 
+document.addEventListener('visibilitychange',function(){
+  if(!document.hidden&&STORIN.getU())syncFromFirebase();
+});
+window.addEventListener('focus',function(){
+  if(STORIN.getU())syncFromFirebase();
+});
 })();
 </script>
 </body>
