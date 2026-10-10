@@ -125,9 +125,15 @@
 
   /* ============================================================
      INIT — cek sesi login
+     FIX: harus panggil STORIN.setU() biar internal U ke-set
      ============================================================ */
   var savedUser = STORIN.loadU();
+
   if(savedUser){
+    STORIN.setU(savedUser);
+    // load state dari local
+    STORIN.loadS();
+
     document.getElementById('auth').classList.add('hide');
     document.getElementById('app').classList.remove('hidden');
     STORIN.buildDock('home');
@@ -322,11 +328,12 @@
   };
 
   /* ============================================================
-     SYNC FROM FIREBASE — selalu update saldo dari cloud
+     SYNC FROM FIREBASE
      ============================================================ */
   function syncFromFirebase(callback){
     var U = STORIN.getU();
     var S = STORIN.getS();
+
     if(!U){
       console.warn('[sync] user null, skip');
       if(callback) callback();
@@ -348,7 +355,6 @@
       S.used = Array.isArray(row.usedGmails) ? row.usedGmails : [];
       STORIN.saveS();
 
-      // Update UI
       var el = $('balVal');
       if(el) el.textContent = STORIN.nm(S.bal);
       renderStats();
@@ -361,7 +367,7 @@
   }
 
   /* ============================================================
-     BOOT — render Home
+     BOOT
      ============================================================ */
   function boot(){
     try{
@@ -382,14 +388,12 @@
       var yrEl = $('hYr');
       if(yrEl) yrEl.textContent = U.createdAt ? new Date(U.createdAt).getFullYear() : '2025';
 
-      // Tampilkan cache dulu biar gak blank
       var balEl = $('balVal');
       if(balEl) balEl.textContent = STORIN.nm(S.bal || 0);
       renderStats();
 
       console.log('[boot] sukses, cache saldo:', S.bal);
 
-      // Lalu fetch fresh dari Firebase
       syncFromFirebase();
     }catch(e){
       console.error('[boot] error:', e);
@@ -432,18 +436,16 @@
   }
 
   /* ============================================================
-     AUTO SYNC — pas balik ke halaman ini
+     AUTO SYNC
      ============================================================ */
   document.addEventListener('visibilitychange', function(){
     if(!document.hidden && STORIN.getU()){
-      console.log('[auto-sync] visibility change');
       syncFromFirebase();
     }
   });
 
   window.addEventListener('focus', function(){
     if(STORIN.getU()){
-      console.log('[auto-sync] window focus');
       syncFromFirebase();
     }
   });
