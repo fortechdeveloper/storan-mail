@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEBUG — GMAILCUAN 4DEV</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#0a0a14;color:#eef0f7;padding:16px;line-height:1.5;font-size:13px}
+  h1{font-size:16px;margin-bottom:12px;color:#c9a961}
+  .box{background:#14141f;border:1px solid #22222e;border-radius:10px;padding:12px;margin-bottom:10px}
+  .lbl{font-size:11px;color:#7b7f93;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+  .val{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;word-break:break-all;white-space:pre-wrap}
+  .ok{color:#4ade80}
+  .err{color:#f87171}
+  .warn{color:#fbbf24}
+  .info{color:#60a5fa}
+  .btn{background:#c9a961;color:#15120a;border:0;padding:12px;border-radius:8px;font-weight:700;width:100%;font-size:14px;margin-bottom:12px;cursor:pointer}
+  .btn:active{opacity:.8}
+  .spin{display:inline-block;width:12px;height:12px;border:2px solid #c9a961;border-top-color:transparent;border-radius:50%;animation:s .8s linear infinite;vertical-align:middle;margin-right:6px}
+  @keyframes s{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<h1>🔧 DEBUG GMAILCUAN 4DEV</h1>
+
+<button class="btn" id="btnRun">Jalankan Test</button>
+
+<div id="out"></div>
+
+<script>
+var out = document.getElementById('out');
+
+function log(label, status, detail){
+  var cls = status==='OK' ? 'ok' : status==='FAIL' ? 'err' : status==='WARN' ? 'warn' : 'info';
+  var html = '<div class="box">'
+    + '<div class="lbl">' + label + '</div>'
+    + '<div class="val ' + cls + '">' + detail + '</div>'
+    + '</div>';
+  out.insertAdjacentHTML('beforeend', html);
+}
+
+function clearOut(){ out.innerHTML = ''; }
+
+async function test(){
+  clearOut();
+  var startAll = Date.now();
+
+  /* 1. Domain check */
+  log('1. Domain Aktif', 'INFO', location.origin);
+
+  /* 2. Cek gmail-pool.txt */
+  try {
+    var t0 = Date.now();
+    var r = await fetch('/gmail-pool.txt?t=' + Date.now(), {cache:'no-store'});
+    var txt = await r.text();
+    var dur = Date.now() - t0;
+
+    if (!r.ok) {
+      log('2. gmail-pool.txt', 'FAIL', 'Status: ' + r.status + ' (HTTP error)');
+    } else if (txt.length < 20) {
+      log('2. gmail-pool.txt', 'FAIL', 'File ada tapi isinya kosong/aneh\nUkuran: ' + txt.length + ' byte\n\nIsi:\n' + txt.slice(0, 200));
+    } else {
+      var lines = txt.split(/\r?\n/).filter(l => l.trim() && l.indexOf('@') > -1);
+      if (lines.length === 0) {
+        log('2. gmail-pool.txt', 'FAIL', 'Gak ada gmail valid di file\n\nIsi (200 char pertama):\n' + txt.slice(0, 200));
+      } else {
+        log('2. gmail-pool.txt', 'OK', '✓ Ketemu ' + lines.length + ' gmail (' + dur + 'ms)\n\nContoh 3 pertama:\n' + lines.slice(0,3).join('\n'));
+      }
+    }
+  } catch(e) {
+    log('2. gmail-pool.txt', 'FAIL', 'Gagal fetch: ' + e.message);
+  }
+
+  /* 3. Cek /api/fb endpoint */
+  try {
+    var t1 = Date.now();
+    var r3 = await fetch('/api/fb', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({op:'get', path:'gmail_used'})
+    });
+    var data3 = await r3.json();
+    var dur3 = Date.now() - t1;
+
+    if (!r3.ok) {
+      log('3. API /api/fb', 'FAIL', 'HTTP ' + r3.status + ' (' + dur3 + 'ms)\n\nResponse:\n' + JSON.stringify(data3, null, 2));
+    } else if (!data3.ok) {
+      log('3. API /api/fb', 'FAIL', 'Response ok:false\n\nMsg: ' + (data3.msg || '-') + '\n\nDetail: ' + JSON.stringify(data3));
+    } else {
+      var usedCount = data3.data ? Object.keys(data3.data).length : 0;
+      log('3. API /api/fb', 'OK', '✓ Proxy Firebase jalan (' + dur3 + 'ms)\n\ngmail_used: ' + usedCount + ' entry');
+    }
+  } catch(e) {
+    log('3. API /api/fb', 'FAIL', 'Gagal fetch: ' + e.message);
+  }
+
+  /* 4. Cek /api/notify */
+  try {
+    var t4 = Date.now();
+    var r4 = await fetch('/api/notify', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({text: '🧪 Test notif dari /debug.html — ' + new Date().toLocaleString('id-ID')})
+    });
+    var data4 = await r4.json();
+    var dur4 = Date.now() - t4;
+
+    if (!r4.ok) {
+      log('4. API /api/notify', 'FAIL', 'HTTP ' + r4.status + '\n\n' + JSON.stringify(data4));
+    } else if (!data4.ok) {
+      log('4. API /api/notify', 'FAIL', 'Response ok:false\n\n' + JSON.stringify(data4));
+    } else {
+      log('4. API /api/notify', 'OK', '✓ Notif Telegram terkirim (' + dur4 + 'ms)\n\nCek HP lu — harusnya ada notif masuk');
+    }
+  } catch(e) {
+    log('4. API /api/notify', 'FAIL', 'Gagal fetch: ' + e.message);
+  }
+
+  /* 5. Cek reserve endpoint */
+  try {
+    var t5 = Date.now();
+    var r5 = await fetch('/api/fb', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({op:'get', path:'gmail_reserved'})
+    });
+    var data5 = await r5.json();
+    var dur5 = Date.now() - t5;
+
+    if (r5.ok && data5.ok) {
+      var resCount = data5.data ? Object.keys(data5.data).length : 0;
+      var now = Date.now();
+      var active = 0;
+      if (data5.data) {
+        Object.keys(data5.data).forEach(k => {
+          var it = data5.data[k];
+          if (it && it.time && (now - it.time) < 30*60*1000) active++;
+        });
+      }
+      log('5. gmail_reserved', 'OK', '✓ (' + dur5 + 'ms)\n\nTotal reserved: ' + resCount + '\nMasih aktif (< 30 mnt): ' + active);
+    } else {
+      log('5. gmail_reserved', 'FAIL', JSON.stringify(data5));
+    }
+  } catch(e) {
+    log('5. gmail_reserved', 'FAIL', e.message);
+  }
+
+  /* 6. Cek config di app.js sudah ke-load */
+  if (typeof STORIN !== 'undefined') {
+    log('6. app.js ter-load', 'OK', '✓ STORIN tersedia\n\nAPI tidak pakai FB_URL lagi (security upgrade aktif)');
+  } else {
+    log('6. app.js ter-load', 'WARN', '⚠ STORIN tidak ada (mungkin app.js belum load, atau ada error di app.js)');
+  }
+
+  /* 7. Cek login user */
+  try {
+    var u = localStorage.getItem('gmailcuan_u_v16');
+    if (u) {
+      var parsed = JSON.parse(u);
+      log('7. User Login', 'OK', '✓ Login sebagai: ' + (parsed.nama || '?') + '\nGmail: ' + (parsed.gmail || '?'));
+    } else {
+      log('7. User Login', 'WARN', '⚠ Belum login. Login dulu di /index.html');
+    }
+  } catch(e) {
+    log('7. User Login', 'WARN', '⚠ Tidak bisa baca user dari localStorage');
+  }
+
+  var totalDur = Date.now() - startAll;
+  log('SELESAI', 'INFO', 'Total waktu test: ' + totalDur + 'ms\n\nKalau ada yang FAIL, screenshot bagian itu & kirim ke FortechDev');
+}
+
+document.getElementById('btnRun').onclick = function(){
+  var btn = this;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spin"></span> Sedang test...';
+  test().then(function(){
+    btn.disabled = false;
+    btn.textContent = 'Jalankan Test Lagi';
+  }).catch(function(e){
+    btn.disabled = false;
+    btn.textContent = 'Jalankan Test Lagi';
+    log('ERROR', 'FAIL', e.message);
+  });
+};
+
+/* auto run */
+setTimeout(function(){ document.getElementById('btnRun').click(); }, 500);
+</script>
+</body>
+</html>
