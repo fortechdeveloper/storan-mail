@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#06060c">
-<title>STORIN.4TECH — Admin</title>
+<title>GMAILCUAN 4DEV — Admin</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body style="overflow:auto;">
@@ -59,17 +59,50 @@
 var $=STORIN.$,$$=STORIN.$$;
 var currentFilter='pending';
 var cachedPending={};
+var pollTimer=null;
 
+/* ---------- CEK SESI AWAL ---------- */
 var isAuth=localStorage.getItem('storin_admin')==='1';
 if(isAuth)showPanel();
 
+/* ---------- SHOW PANEL (dengan verify token) ---------- */
 function showPanel(){
-  $('adminLogin').classList.add('hidden');
-  $('adminPanel').classList.remove('hidden');
-  loadData();
-  setInterval(loadData,15000);
+  var token=STORIN.getAdminToken();
+  if(!token){
+    localStorage.removeItem('storin_admin');
+    return;
+  }
+  STORIN.showL('Memverifikasi sesi');
+  fetch('/api/admin-verify',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({token:token})
+  })
+  .then(function(r){return r.json();})
+  .then(function(res){
+    STORIN.hideL();
+    if(!res.ok){
+      localStorage.removeItem('storin_admin');
+      STORIN.setAdminToken(null);
+      STORIN.toast('Sesi habis. Login ulang.','w');
+      setTimeout(function(){location.reload();},1200);
+      return;
+    }
+    $('adminLogin').classList.add('hidden');
+    $('adminPanel').classList.remove('hidden');
+    loadData();
+    if(pollTimer)clearInterval(pollTimer);
+    pollTimer=setInterval(loadData,15000);
+  })
+  .catch(function(){
+    STORIN.hideL();
+    localStorage.removeItem('storin_admin');
+    STORIN.setAdminToken(null);
+    location.reload();
+  });
 }
 
+/* ---------- LOGIN ---------- */
 $('btnAdmLogin').onclick=function(){
   var p=($('admPass').value||'').trim();
   if(!p){STORIN.toast('Isi password dulu.','w');return;}
@@ -88,7 +121,7 @@ $('btnAdmLogin').onclick=function(){
       return;
     }
     localStorage.setItem('storin_admin','1');
-    localStorage.setItem('storin_admin_token',res.token);
+    STORIN.setAdminToken(res.token);
     STORIN.toast('Login berhasil.','s');
     showPanel();
   })
@@ -97,15 +130,28 @@ $('btnAdmLogin').onclick=function(){
     STORIN.toast('Gagal terhubung ke server.','e');
   });
 };
-$('admPass').addEventListener('keydown',function(e){if(e.key==='Enter')$('btnAdmLogin').click();});
+$('admPass').addEventListener('keydown',function(e){
+  if(e.key==='Enter')$('btnAdmLogin').click();
+});
 
+/* ---------- LOGOUT ---------- */
 $('btnAdmOut').onclick=function(){
   if(!confirm('Keluar dari panel admin?'))return;
-  localStorage.removeItem('storin_admin');
-  localStorage.removeItem('storin_admin_token');
-  location.reload();
+  var token=STORIN.getAdminToken();
+  fetch('/api/admin-verify',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({token:token,revoke:true})
+  })
+  .catch(function(){})
+  .then(function(){
+    localStorage.removeItem('storin_admin');
+    STORIN.setAdminToken(null);
+    location.reload();
+  });
 };
 
+/* ---------- FILTER ---------- */
 $$('.ch-i').forEach(function(c){
   c.onclick=function(){
     $$('.ch-i').forEach(function(x){x.classList.remove('on');});
@@ -115,7 +161,9 @@ $$('.ch-i').forEach(function(c){
   };
 });
 
+/* ---------- LOAD DATA ---------- */
 function loadData(){
+  if(document.hidden)return;
   STORIN.getPending().then(function(list){
     cachedPending=list||{};
     $('stPend').textContent=Object.keys(cachedPending).length;
@@ -123,6 +171,7 @@ function loadData(){
   });
 }
 
+/* ---------- RENDER ---------- */
 function render(){
   var box=$('txList');
   if(currentFilter==='history'){
@@ -196,6 +245,18 @@ function render(){
     };
   });
 }
+
+/* ---------- PAUSE POLLING SAAT TAB HIDDEN ---------- */
+document.addEventListener('visibilitychange',function(){
+  if(document.hidden){
+    if(pollTimer){clearInterval(pollTimer);pollTimer=null;}
+  }else{
+    if(localStorage.getItem('storin_admin')==='1'&&!pollTimer){
+      loadData();
+      pollTimer=setInterval(loadData,15000);
+    }
+  }
+});
 })();
 </script>
 </body>
