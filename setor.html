@@ -200,6 +200,12 @@ if(!U||!U.gmail){
 LOG('user', U.gmail, 'id', U.id);
 STORIN.buildDock('setor');
 
+/* ---------- RESET STATE GEN SETIAP BUKA HALAMAN ---------- */
+/* biar gak auto-munculin gmail tanpa user klik */
+S.gen=null;
+S.selPw=null;
+STORIN.saveS();
+
 function renderGen(){
   var e=$('genEmpty'),a=$('genActive');
   if(!e||!a){ERR('element genEmpty/genActive hilang');return;}
@@ -216,25 +222,6 @@ function renderGen(){
 }
 renderGen();
 
-/* cek reserve di firebase dengan aman */
-STORIN.getReservedList().then(function(rs){
-  try{
-    if(!rs||typeof rs!=='object')return;
-    var keys=Object.keys(rs);
-    for(var i=0;i<keys.length;i++){
-      var it=rs[keys[i]];
-      if(it&&it.userId===U.id&&it.gmail){
-        var age=Date.now()-(it.time||0);
-        if(age<STORIN.CONFIG.RESERVE_MS){
-          S.gen=it.gmail;
-          LOG('restore reserve', it.gmail);
-          renderGen();
-        }
-      }
-    }
-  }catch(e){ERR('getReservedList parse error',e);}
-}).catch(function(e){ERR('getReservedList fail',e);});
-
 /* ---------- AMBIL GMAIL ---------- */
 var btnAmbil=$('btnAmbil');
 if(!btnAmbil){ERR('btnAmbil tidak ada');}
@@ -246,29 +233,57 @@ else{
     LOG('btnAmbil clicked');
     STORIN.showL('Mencari Gmail tersedia');
 
-    STORIN.pickAvailableGmail().then(function(g){
-      LOG('pickAvailableGmail result:', g);
-      if(!g){
+    /* cek dulu: apakah user ini punya reserved aktif? */
+    STORIN.getReservedList().then(function(rs){
+      try{
+        if(rs&&typeof rs==='object'){
+          var keys=Object.keys(rs);
+          for(var i=0;i<keys.length;i++){
+            var it=rs[keys[i]];
+            if(it&&it.userId===U.id&&it.gmail){
+              var age=Date.now()-(it.time||0);
+              if(age<STORIN.CONFIG.RESERVE_MS){
+                LOG('pakai reserved lama', it.gmail);
+                S.gen=it.gmail;
+                S.selPw=null;
+                STORIN.saveS();
+                STORIN.hideL();
+                b.disabled=false;
+                renderGen();
+                STORIN.vib([15,30,15]);
+                STORIN.toast('Gmail sebelumnya masih aktif. Pakai ini ya.','i');
+                return;
+              }
+            }
+          }
+        }
+      }catch(e){ERR('cek reserved error',e);}
+
+      /* gak ada reserved aktif — ambil baru */
+      STORIN.pickAvailableGmail().then(function(g){
+        LOG('pickAvailableGmail result:', g);
+        if(!g){
+          STORIN.hideL();
+          b.disabled=false;
+          STORIN.toast('Stok Gmail kosong. Coba lagi nanti.','w');
+          return;
+        }
+        return STORIN.reserveGmail(g,U.id,U.gmail).then(function(){
+          S.gen=g;
+          S.selPw=null;
+          STORIN.saveS();
+          STORIN.hideL();
+          b.disabled=false;
+          renderGen();
+          STORIN.vib([15,30,15]);
+          STORIN.toast('Gmail berhasil diambil. Buat akunnya.','s');
+        });
+      }).catch(function(err){
+        ERR('btnAmbil error', err);
         STORIN.hideL();
         b.disabled=false;
-        STORIN.toast('Stok Gmail kosong. Coba lagi nanti.','w');
-        return null;
-      }
-      return STORIN.reserveGmail(g,U.id,U.gmail).then(function(){
-        S.gen=g;
-        S.selPw=null;
-        STORIN.saveS();
-        STORIN.hideL();
-        b.disabled=false;
-        renderGen();
-        STORIN.vib([15,30,15]);
-        STORIN.toast('Gmail berhasil diambil. Buat akunnya.','s');
+        STORIN.toast('Gagal ambil Gmail. Cek koneksi.','e');
       });
-    }).catch(function(err){
-      ERR('btnAmbil error', err);
-      STORIN.hideL();
-      b.disabled=false;
-      STORIN.toast('Gagal ambil Gmail. Cek koneksi.','e');
     });
   };
 }
