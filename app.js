@@ -2,16 +2,14 @@
 'use strict';
 
 var CONFIG = {
-  BOT_TOKEN:'8890785001:AAFElxjvkO2Fu44FhFmXBLbj-ts1ZiiY53w',
-  CHAT_ID:'8732880108',
-  FB_URL:'https://mailfortech-55a9c-default-rtdb.asia-southeast1.firebasedatabase.app',
   PRICE:4000,
   PWDS:['zero1122','prabujaya'],
   MIN_WD:2000,
   RESERVE_MS:30*60*1000,
   POOL_FILE:'gmail-pool.txt',
   UK:'gmailcuan_u_v16',
-  SK:'gmailcuan_s_v16'
+  SK:'gmailcuan_s_v16',
+  ADMIN_TOKEN_KEY:'gmailcuan_admin_token'
 };
 
 /* ================= HELPERS ================= */
@@ -56,33 +54,47 @@ function getFee(n){
   return 0;
 }
 
-/* ================= FIREBASE ================= */
+/* ================= API PROXY ================= */
+function getAdminToken(){
+  try{return localStorage.getItem(CONFIG.ADMIN_TOKEN_KEY)||null;}catch(e){return null;}
+}
+function setAdminToken(t){
+  try{
+    if(t)localStorage.setItem(CONFIG.ADMIN_TOKEN_KEY,t);
+    else localStorage.removeItem(CONFIG.ADMIN_TOKEN_KEY);
+  }catch(e){}
+}
+
+function fbReq(op,path,data){
+  var body={op:op,path:path};
+  if(data!==undefined)body.data=data;
+  var t=getAdminToken();
+  if(t)body.token=t;
+  return fetch('/api/fb',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','X-Admin-Token':t||''},
+    body:JSON.stringify(body),
+    cache:'no-store'
+  }).then(function(r){
+    return r.json().catch(function(){return {ok:false};});
+  }).then(function(res){
+    if(!res||!res.ok){
+      if(res&&res._status===401){
+        setAdminToken(null);
+      }
+      return null;
+    }
+    return res.data;
+  }).catch(function(){return null;});
+}
+
 function fbKey(g){
   return encodeURIComponent(String(g).toLowerCase().replace(/[.#$\[\]@]/g,'_'));
 }
-function fbGet(p){
-  return fetch(CONFIG.FB_URL+'/'+p+'.json',{cache:'no-store'})
-    .then(function(r){return r.json();})
-    .catch(function(){return null;});
-}
-function fbPut(p,d){
-  return fetch(CONFIG.FB_URL+'/'+p+'.json',{
-    method:'PUT',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(d)
-  }).then(function(r){return r.json();}).catch(function(){return null;});
-}
-function fbPatch(p,d){
-  return fetch(CONFIG.FB_URL+'/'+p+'.json',{
-    method:'PATCH',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(d)
-  }).then(function(r){return r.json();}).catch(function(){return null;});
-}
-function fbDelete(p){
-  return fetch(CONFIG.FB_URL+'/'+p+'.json',{method:'DELETE'})
-    .then(function(r){return r.json();}).catch(function(){return null;});
-}
+function fbGet(p){return fbReq('get',p);}
+function fbPut(p,d){return fbReq('put',p,d);}
+function fbPatch(p,d){return fbReq('patch',p,d);}
+function fbDelete(p){return fbReq('delete',p);}
 function fbFindUser(g){return fbGet('users/'+fbKey(g));}
 function fbSaveUser(u){return fbPut('users/'+fbKey(u.gmail),u);}
 function fbUpdateUser(g,d){return fbPatch('users/'+fbKey(g),d);}
@@ -141,19 +153,11 @@ function getReservedList(){
   return fbGet('gmail_reserved').then(function(d){return d||{};});
 }
 function reserveGmail(gmail,userId,userGmail){
-  var payload={
+  return fbPut('gmail_reserved/'+fbKey(gmail),{
     gmail:gmail,userId:userId,userGmail:userGmail,time:Date.now()
-  };
-  return fetch(CONFIG.FB_URL+'/gmail_reserved/'+fbKey(gmail)+'.json',{
-    method:'PUT',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(payload)
   }).then(function(r){
-    if(!r.ok) throw new Error('reserve failed HTTP '+r.status);
-    return r.json();
-  }).catch(function(err){
-    console.error('[STORIN] reserve error',err);
-    throw err;
+    if(r===null) throw new Error('reserve failed');
+    return r;
   });
 }
 function releaseGmail(gmail){
@@ -237,7 +241,15 @@ function rejectPending(txId){
 
 /* ================= STORAGE ================= */
 function saveU(){
-  try{localStorage.setItem(CONFIG.UK,JSON.stringify(U));}catch(e){}
+  if(!U) return;
+  var safe={
+    id:U.id,
+    nama:U.nama,
+    gmail:U.gmail,
+    whatsapp:U.whatsapp,
+    createdAt:U.createdAt
+  };
+  try{localStorage.setItem(CONFIG.UK,JSON.stringify(safe));}catch(e){}
 }
 function loadU(){
   try{
@@ -252,6 +264,7 @@ function clrU(){
   try{
     localStorage.removeItem(CONFIG.UK);
     localStorage.removeItem(CONFIG.SK);
+    localStorage.removeItem(CONFIG.ADMIN_TOKEN_KEY);
   }catch(e){}
 }
 function saveS(){
@@ -309,15 +322,10 @@ function hideL(){
 
 /* ================= TELEGRAM ================= */
 function tg(txt){
-  return fetch('https://api.telegram.org/bot'+CONFIG.BOT_TOKEN+'/sendMessage',{
+  return fetch('/api/notify',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      chat_id:CONFIG.CHAT_ID,
-      text:txt,
-      parse_mode:'HTML',
-      disable_web_page_preview:true
-    })
+    body:JSON.stringify({text:txt})
   }).then(function(r){return r.json();}).catch(function(){return {ok:false};});
 }
 
@@ -360,8 +368,10 @@ function buildDock(active){
 /* ================= PUBLIC API ================= */
 window.STORIN={
   CONFIG:CONFIG,
+  setAdminToken:setAdminToken,
+  getAdminToken:getAdminToken,
   $:$,$$:$$,rp:rp,nm:nm,dt:dt,uid:uid,gid:gid,esc:esc,vib:vib,waN:waN,waL:waL,getFee:getFee,
-  fbKey:fbKey,fbGet:fbGet,fbPut:fbPut,fbPatch:fbPatch,fbDelete:fbDelete,
+  fbKey:fbKey,fbGet:fbGet,fbPut:fbPut,fbPatch:fbPatch,fbDelete:fbDelete,fbReq:fbReq,
   fbFindUser:fbFindUser,fbSaveUser:fbSaveUser,fbUpdateUser:fbUpdateUser,
   loadPool:loadPool,reloadPool:reloadPool,getUsedList:getUsedList,getReservedList:getReservedList,
   reserveGmail:reserveGmail,releaseGmail:releaseGmail,markGmailUsed:markGmailUsed,
