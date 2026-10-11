@@ -1,30 +1,44 @@
-export default function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+/* =========================================================
+   api/admin-login.js — Admin login
+   ========================================================= */
+import { verifyPassword, createToken, rateLimit } from './_auth.js';
+
+export default async function handler(req, res) {
+  /* ---------- CORS ---------- */
+  const allowed = (process.env.ALLOWED_ORIGIN || '*')
+    .split(',').map(s => s.trim()).filter(Boolean);
+  const origin = req.headers.origin || '';
+
+  if (allowed[0] === '*' || allowed.includes('*')) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  } else if (allowed.some(o => origin === o || origin.startsWith(o))) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  } else {
+    return res.status(403).json({ ok: false, msg: 'Forbidden origin' });
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ ok: false, msg: 'Method not allowed' });
 
+  /* ---------- rate limit ---------- */
+  const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'unknown';
+  if (!rateLimit(ip)) {
+    return res.status(429).json({ ok: false, msg: 'Terlalu banyak percobaan. Coba lagi nanti.' });
+  }
+
+  /* ---------- verify ---------- */
   const { password } = req.body || {};
-  const adminPass = process.env.ADMIN_PASS;
-
-  if (!adminPass) return res.status(500).json({ ok: false, msg: 'Server misconfigured' });
-
-  const a = String(password || '');
-  const b = String(adminPass);
-  const maxLen = Math.max(a.length, b.length);
-  let diff = a.length ^ b.length;
-  for (let i = 0; i < maxLen; i++) {
-    diff |= (a.charCodeAt(i) || 0) ^ (b.charCodeAt(i) || 0);
+  if (!verifyPassword(password)) {
+    return res.status(401).json({ ok: false, msg: 'Password salah' });
   }
 
-  if (diff === 0) {
-    const token = Buffer.from(
-      Date.now() + ':' + Math.random().toString(36).slice(2)
-    ).toString('base64');
+  try {
+    const token = await createToken();
     return res.status(200).json({ ok: true, token });
+  } catch (e) {
+    console.error('[ADMIN LOGIN]', e.message);
+    return res.status(500).json({ ok: false, msg: 'Server error' });
   }
-
-  return res.status(401).json({ ok: false, msg: 'Password salah' });
 }
