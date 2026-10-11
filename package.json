@@ -1,0 +1,12 @@
+{
+  "name": "gmailcuan-4dev",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GMAILCUAN 4DEV — Setor Gmail Platform",
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
