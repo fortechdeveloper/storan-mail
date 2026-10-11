@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#06060c">
-<title>STORIN.4TECH — Withdraw</title>
+<title>GMAILCUAN 4DEV — Withdraw</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -26,7 +26,7 @@
           <polyline points="9 12 11.5 14.5 15.5 10"/>
         </svg>
       </div>
-      <div class="brand-n">STORIN<span>.4TECH</span></div>
+      <div class="brand-n">GMAILCUAN<span> 4DEV</span></div>
     </div>
     <button class="hdr-btn" onclick="document.getElementById('mp').classList.add('on')">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.2 2.4c-.5.2-.7.7-.7 1.2v.4"/><circle cx="12" cy="17" r="0.6" fill="currentColor" stroke="none"/></svg>
@@ -201,12 +201,16 @@ $('btnWd').onclick=function(){
   var b=this;b.disabled=true;
   STORIN.vib([20,40,20]);
   STORIN.showL('Memproses');
+
+  var walletLabel = (w==='gopay') ? 'GOPAY' : 'DANA';
+
   STORIN.tg(
-    '💵 PERMINTAAN WITHDRAW💵\n\n'+
-    '📍NAMA : '+(U.nama||na)+'\n'+
-    '📍LINK DIRECT WHATSAPP : '+STORIN.waL(U.whatsapp)+'\n'+
-    '💵JUMLAH  TANPA PPN:Rp'+n.toLocaleString('id-ID')+'\n\n'+
-    'HARAP SEGERA DIPROSES'
+    '💵PERMINTAAN WITHDRAW DITERIMA\n\n'+
+    '🫆 NAMA : '+na+'\n'+
+    '📍 NAMA WALLET : '+walletLabel+'\n'+
+    '📱 NOMOR TUJUAN : '+no+'\n'+
+    '🥊JUMLAH TANPA PPN : Rp'+n.toLocaleString('id-ID')+'\n'+
+    '🫂LINK DIRECT WHATSAPP : '+STORIN.waL(U.whatsapp)
   ).then(function(){
     S.bal-=t;
     var it={
