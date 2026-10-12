@@ -1,6 +1,6 @@
 /* =========================================================
    GMAILCUAN 4DEV — BATIK NUSANTARA EDITION
-   v20 — Video Wallpaper + Batik Pattern + Sogan Gold + Poster
+   v21 — Video Wallpaper + Batik Pattern + Sogan Gold + Poster Fix
    ========================================================= */
 
 /* ---------- ROOT TOKENS — PALET BATIK ---------- */
@@ -468,6 +468,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   display:flex;
   align-items:center;
   gap:8px;
+  width:100%;
 }
 .sec-t::before,
 .sec-t::after{
@@ -2103,7 +2104,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .hidden{display:none !important;}
 
 /* =========================================================
-   POPUP POSTER — jendela mengambang 3:4
+   POPUP POSTER — jendela mengambang
    ========================================================= */
 .poster-mb{
   position:fixed;
@@ -2112,7 +2113,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   display:none;
   align-items:center;
   justify-content:center;
-  background:rgba(21,11,5,.75);
+  background:rgba(21,11,5,.78);
   padding:20px;
   overscroll-behavior:contain;
   -webkit-backdrop-filter:blur(8px);
@@ -2125,52 +2126,40 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .poster-box{
   position:relative;
   width:min(85vw, 360px);
+  max-width:420px;
   aspect-ratio:3/4;
   border-radius:16px;
-  overflow:visible;
+  overflow:hidden;
+  background:#2a1810;
+  box-shadow:
+    0 0 0 3px var(--gold),
+    0 0 0 4px var(--gold-3),
+    0 0 40px rgba(212,175,55,.5),
+    0 20px 60px rgba(0,0,0,.85);
   animation:pmPop .35s var(--ease-out);
-  filter:drop-shadow(0 20px 50px rgba(0,0,0,.8)) drop-shadow(0 0 30px rgba(212,175,55,.25));
+  isolation:isolate;
+  transform:translateZ(0);
 }
 @keyframes pmPop{
   from{transform:scale(.85) translateY(20px);opacity:0;}
   to{transform:scale(1) translateY(0);opacity:1;}
 }
 
-.poster-box::before{
-  content:'';
-  position:absolute;
-  inset:-4px;
-  border-radius:20px;
-  background:linear-gradient(135deg,
-    var(--gold) 0%,
-    var(--gold-3) 25%,
-    var(--sogan-2) 50%,
-    var(--gold-3) 75%,
-    var(--gold) 100%);
-  z-index:0;
-  box-shadow:
-    inset 0 0 12px rgba(21,11,5,.5),
-    0 0 24px rgba(212,175,55,.4);
-}
-
-.poster-frame{
-  position:relative;
-  z-index:1;
-  width:100%;
-  height:100%;
-  border-radius:14px;
-  overflow:hidden;
-  background:#2a1810;
-  border:1px solid rgba(212,175,55,.6);
-  box-shadow:inset 0 0 30px rgba(21,11,5,.5);
-}
-
 .poster-img{
+  display:block;
   width:100%;
   height:100%;
   object-fit:cover;
-  display:block;
+  object-position:center;
+  background:#2a1810;
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+  will-change:transform;
+  opacity:0;
+  transition:opacity .25s ease;
 }
+.poster-img.ready{opacity:1;}
 
 .poster-close{
   position:absolute;
