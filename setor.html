@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#06060c">
+<meta name="theme-color" content="#150b05">
 <title>GMAILCUAN 4DEV — Setor</title>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -47,7 +47,7 @@
           <div class="rl-i"><div class="rl-n">1</div><div class="rl-t">Gmail harus <b>Fresh</b> (baru dibuat).</div></div>
           <div class="rl-i"><div class="rl-n">2</div><div class="rl-t">Nama Gmail <b>sama persis</b> dengan hasil sistem.</div></div>
           <div class="rl-i"><div class="rl-n">3</div><div class="rl-t">Tanggal lahir wajib <b>18+</b>.</div></div>
-          <div class="rl-i"><div class="rl-n">4</div><div class="rl-t">Password: <em>zero1122</em> atau <em>prabujaya</em>.</div></div>
+          <div class="rl-i"><div class="rl-n">4</div><div class="rl-t">Password: <em>hehe1122</em> atau <em>zero1122</em>.</div></div>
           <div class="rl-i"><div class="rl-n">5</div><div class="rl-t">Tidak boleh ditautkan pemulihan apapun.</div></div>
         </div>
       </div>
@@ -91,8 +91,8 @@
         <div class="pwd">
           <div class="pwd-l">Password (pilih salah satu)</div>
           <div class="pwd-g">
-            <div class="pwd-o"><span class="o">Opsi 1</span>zero1122</div>
-            <div class="pwd-o"><span class="o">Opsi 2</span>prabujaya</div>
+            <div class="pwd-o"><span class="o">Opsi 1</span>hehe1122</div>
+            <div class="pwd-o"><span class="o">Opsi 2</span>zero1122</div>
           </div>
         </div>
         <div class="note g">
@@ -124,14 +124,14 @@
     <div class="conf-g" id="confG">-</div>
     <div class="pwt">Pilih Password</div>
     <div class="pwg">
-      <button class="pw" data-pw="zero1122">
+      <button class="pw" data-pw="hehe1122">
         <div class="pw-l">Opsi 1</div>
-        <div class="pw-v">zero1122</div>
+        <div class="pw-v">hehe1122</div>
         <div class="pw-ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       </button>
-      <button class="pw" data-pw="prabujaya">
+      <button class="pw" data-pw="zero1122">
         <div class="pw-l">Opsi 2</div>
-        <div class="pw-v">prabujaya</div>
+        <div class="pw-v">zero1122</div>
         <div class="pw-ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       </button>
     </div>
@@ -161,7 +161,7 @@
       <div class="stp"><div class="stp-n">3</div><div class="stp-b"><h5>Buat Akun Baru</h5><p>Gmail harus fresh, baru dibuat.</p></div></div>
       <div class="stp"><div class="stp-n">4</div><div class="stp-b"><h5>Nama Sama Persis</h5><p>Tidak boleh ubah karakter.</p></div></div>
       <div class="stp"><div class="stp-n">5</div><div class="stp-b"><h5>Umur 18+</h5><p>Tanggal lahir 18 tahun ke atas.</p></div></div>
-      <div class="stp"><div class="stp-n">6</div><div class="stp-b"><h5>Password Wajib</h5><p>zero1122 atau prabujaya</p></div></div>
+      <div class="stp"><div class="stp-n">6</div><div class="stp-b"><h5>Password Wajib</h5><p>hehe1122 atau zero1122</p></div></div>
       <div class="stp"><div class="stp-n">7</div><div class="stp-b"><h5>Tanpa Pemulihan</h5><p>Tidak boleh ditautkan pemulihan.</p></div></div>
       <div class="stp"><div class="stp-n">8</div><div class="stp-b"><h5>Kirim & Pilih Password</h5><p>Kirim, pilih password, lalu Done.</p></div></div>
     </div>
@@ -200,8 +200,6 @@ if(!U||!U.gmail){
 LOG('user', U.gmail, 'id', U.id);
 STORIN.buildDock('setor');
 
-/* ---------- RESET STATE GEN SETIAP BUKA HALAMAN ---------- */
-/* biar gak auto-munculin gmail tanpa user klik */
 S.gen=null;
 S.selPw=null;
 STORIN.saveS();
@@ -222,7 +220,6 @@ function renderGen(){
 }
 renderGen();
 
-/* ---------- AMBIL GMAIL ---------- */
 var btnAmbil=$('btnAmbil');
 if(!btnAmbil){ERR('btnAmbil tidak ada');}
 else{
@@ -233,7 +230,6 @@ else{
     LOG('btnAmbil clicked');
     STORIN.showL('Mencari Gmail tersedia');
 
-    /* cek dulu: apakah user ini punya reserved aktif? */
     STORIN.getReservedList().then(function(rs){
       try{
         if(rs&&typeof rs==='object'){
@@ -259,7 +255,6 @@ else{
         }
       }catch(e){ERR('cek reserved error',e);}
 
-      /* gak ada reserved aktif — ambil baru */
       STORIN.pickAvailableGmail().then(function(g){
         LOG('pickAvailableGmail result:', g);
         if(!g){
@@ -288,7 +283,6 @@ else{
   };
 }
 
-/* ---------- BATAL ---------- */
 var btnBatal=$('btnBatal');
 if(btnBatal){
   btnBatal.onclick=function(){
@@ -305,7 +299,6 @@ if(btnBatal){
   };
 }
 
-/* ---------- COPY ---------- */
 var btnCopyG=$('btnCopyG');
 if(btnCopyG){
   btnCopyG.onclick=function(){
@@ -335,7 +328,6 @@ if(btnCopyG){
   };
 }
 
-/* ---------- KIRIM ---------- */
 var btnKirim=$('btnKirim');
 if(btnKirim){
   btnKirim.onclick=function(){
