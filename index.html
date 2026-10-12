@@ -17,6 +17,24 @@
 <div class="bg-grain"></div>
 <div class="bg-vignette"></div>
 
+<!-- ============ POPUP POSTER ============ -->
+<div class="poster-mb" id="posterMb">
+  <div class="poster-box">
+    <button class="poster-close" id="posterClose">
+      <svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+    </button>
+    <img class="poster-img" id="posterImg" src="poster-libur.jpg" alt="Pengumuman" loading="eager">
+    <div class="poster-foot">
+      <label class="poster-dismiss">
+        <input type="checkbox" id="posterDismiss">
+        <span>Jangan tampilkan lagi hari ini</span>
+      </label>
+      <button class="poster-ok" id="posterOk">OKE</button>
+    </div>
+  </div>
+</div>
+<!-- ============ END POPUP POSTER ============ -->
+
 <div class="auth" id="auth">
   <div class="auth-scroll">
     <div class="auth-head">
@@ -238,6 +256,53 @@
 (function(){
 'use strict';
 var $=STORIN.$;
+
+/* ============ POPUP POSTER LOGIC ============ */
+(function initPoster(){
+  try{
+    var KEY='gmailcuan_poster_dismissed';
+    var today=new Date().toISOString().slice(0,10);
+    var last=localStorage.getItem(KEY);
+    if(last===today){
+      /* udah dismiss hari ini, skip */
+      return;
+    }
+    var mb=$('posterMb');
+    var img=$('posterImg');
+    if(!mb||!img)return;
+
+    /* cek dulu apakah gambar ada */
+    var testImg=new Image();
+    testImg.onload=function(){
+      /* gambar ada, tampilkan popup */
+      mb.classList.add('on');
+    };
+    testImg.onerror=function(){
+      /* gambar gak ada, skip */
+      console.warn('[POSTER] poster-libur.jpg tidak ditemukan, skip popup');
+    };
+    testImg.src='poster-libur.jpg';
+
+    function closePoster(){
+      var cb=$('posterDismiss');
+      if(cb&&cb.checked){
+        try{localStorage.setItem(KEY,today);}catch(e){}
+      }
+      mb.classList.remove('on');
+    }
+
+    var btnClose=$('posterClose');
+    var btnOk=$('posterOk');
+    if(btnClose)btnClose.onclick=closePoster;
+    if(btnOk)btnOk.onclick=closePoster;
+
+    /* klik backdrop buat close */
+    mb.addEventListener('click',function(e){
+      if(e.target===mb)closePoster();
+    });
+  }catch(e){console.error('[POSTER]',e);}
+})();
+/* ============ END POPUP POSTER LOGIC ============ */
 
 var savedUser=STORIN.loadU();
 if(savedUser){
