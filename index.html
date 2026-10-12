@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#150b05">
 <title>GMAILCUAN 4DEV — Beranda</title>
 <link rel="stylesheet" href="style.css">
+<link rel="preload" as="image" href="poster-libur.jpg?v=3">
 </head>
 <body>
 
@@ -20,7 +21,7 @@
 <!-- ============ POPUP POSTER ============ -->
 <div class="poster-mb" id="posterMb">
   <div class="poster-box">
-    <img class="poster-img" id="posterImg" src="poster-libur.jpg?v=2" alt="Pengumuman">
+    <img class="poster-img" id="posterImg" src="poster-libur.jpg?v=3" alt="Pengumuman">
     <button class="poster-close" id="posterClose" aria-label="Tutup">
       <svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
     </button>
@@ -209,7 +210,7 @@
         </div>
         <div class="note" style="margin-bottom:0">
           <svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
-          <p>Password Gmail wajib: <b>zero1122</b> atau <b>prabujaya</b>.</p>
+          <p>Password Gmail wajib: <b>hehe1122</b> atau <b>zero1122</b>.</p>
         </div>
       </div>
       <div style="height:20px"></div>
@@ -240,7 +241,7 @@
       <div class="stp"><div class="stp-n">3</div><div class="stp-b"><h5>Buat Akun Baru</h5><p>Gmail harus fresh, baru dibuat.</p></div></div>
       <div class="stp"><div class="stp-n">4</div><div class="stp-b"><h5>Nama Sama Persis</h5><p>Tidak boleh ubah karakter.</p></div></div>
       <div class="stp"><div class="stp-n">5</div><div class="stp-b"><h5>Umur 18+</h5><p>Tanggal lahir 18 tahun ke atas.</p></div></div>
-      <div class="stp"><div class="stp-n">6</div><div class="stp-b"><h5>Password Wajib</h5><p>Gunakan salah satu:</p><span class="cd-i am">zero1122</span> <span class="cd-i am" style="margin-left:6px">prabujaya</span></div></div>
+      <div class="stp"><div class="stp-n">6</div><div class="stp-b"><h5>Password Wajib</h5><p>Gunakan salah satu:</p><span class="cd-i am">hehe1122</span> <span class="cd-i am" style="margin-left:6px">zero1122</span></div></div>
       <div class="stp"><div class="stp-n">7</div><div class="stp-b"><h5>Tanpa Pemulihan</h5><p>Tidak boleh ditautkan pemulihan.</p></div></div>
       <div class="stp"><div class="stp-n">8</div><div class="stp-b"><h5>Kirim & Pilih Password</h5><p>Kirim, pilih password, lalu Done.</p></div></div>
       <div class="stp"><div class="stp-n">9</div><div class="stp-b"><h5>Pantau & Cairkan</h5><p>Cek Riwayat dan lakukan withdraw.</p></div></div>
@@ -274,29 +275,21 @@ var $=STORIN.$;
       if(shown)return;
       shown=true;
       mb.classList.add('on');
-      console.log('[POSTER] shown:', img.src);
+      console.log('[POSTER] shown:', img.src, img.naturalWidth+'x'+img.naturalHeight);
     }
 
     if(img.complete && img.naturalWidth>0){
       show();
+    } else {
+      img.addEventListener('load', function(){
+        console.log('[POSTER] loaded', img.naturalWidth+'x'+img.naturalHeight);
+        show();
+      });
+      img.addEventListener('error', function(){
+        console.error('[POSTER] GAGAL LOAD: '+img.src);
+        mb.classList.remove('on');
+      });
     }
-
-    img.addEventListener('load', function(){
-      console.log('[POSTER] loaded', img.naturalWidth+'x'+img.naturalHeight);
-      show();
-    });
-
-    img.addEventListener('error', function(){
-      console.error('[POSTER] GAGAL LOAD: '+img.src);
-      console.error('[POSTER] Cek: file poster-libur.jpg ada di root repo?');
-      mb.classList.remove('on');
-    });
-
-    setTimeout(function(){
-      if(!shown){
-        console.warn('[POSTER] timeout 5s — gambar belum load');
-      }
-    }, 5000);
 
     function closePoster(){
       var cb=$('posterDismiss');
