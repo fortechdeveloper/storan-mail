@@ -20,10 +20,10 @@
 <!-- ============ POPUP POSTER ============ -->
 <div class="poster-mb" id="posterMb">
   <div class="poster-box">
-    <button class="poster-close" id="posterClose">
+    <img class="poster-img" id="posterImg" src="poster-libur.jpg" alt="Pengumuman">
+    <button class="poster-close" id="posterClose" aria-label="Tutup">
       <svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
     </button>
-    <img class="poster-img" id="posterImg" src="poster-libur.jpg" alt="Pengumuman" loading="eager">
     <div class="poster-foot">
       <label class="poster-dismiss">
         <input type="checkbox" id="posterDismiss">
@@ -263,25 +263,40 @@ var $=STORIN.$;
     var KEY='gmailcuan_poster_dismissed';
     var today=new Date().toISOString().slice(0,10);
     var last=localStorage.getItem(KEY);
-    if(last===today){
-      /* udah dismiss hari ini, skip */
-      return;
-    }
+    if(last===today)return;
+
     var mb=$('posterMb');
     var img=$('posterImg');
     if(!mb||!img)return;
 
-    /* cek dulu apakah gambar ada */
-    var testImg=new Image();
-    testImg.onload=function(){
-      /* gambar ada, tampilkan popup */
+    var shown=false;
+    function show(){
+      if(shown)return;
+      shown=true;
       mb.classList.add('on');
-    };
-    testImg.onerror=function(){
-      /* gambar gak ada, skip */
-      console.warn('[POSTER] poster-libur.jpg tidak ditemukan, skip popup');
-    };
-    testImg.src='poster-libur.jpg';
+      console.log('[POSTER] shown:', img.src);
+    }
+
+    if(img.complete && img.naturalWidth>0){
+      show();
+    }
+
+    img.addEventListener('load', function(){
+      console.log('[POSTER] loaded', img.naturalWidth+'x'+img.naturalHeight);
+      show();
+    });
+
+    img.addEventListener('error', function(){
+      console.error('[POSTER] GAGAL LOAD: '+img.src);
+      console.error('[POSTER] Cek: file poster-libur.jpg ada di root repo?');
+      mb.classList.remove('on');
+    });
+
+    setTimeout(function(){
+      if(!shown){
+        console.warn('[POSTER] timeout 5s — gambar belum load');
+      }
+    }, 5000);
 
     function closePoster(){
       var cb=$('posterDismiss');
@@ -295,8 +310,6 @@ var $=STORIN.$;
     var btnOk=$('posterOk');
     if(btnClose)btnClose.onclick=closePoster;
     if(btnOk)btnOk.onclick=closePoster;
-
-    /* klik backdrop buat close */
     mb.addEventListener('click',function(e){
       if(e.target===mb)closePoster();
     });
