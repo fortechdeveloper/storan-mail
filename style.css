@@ -1,44 +1,37 @@
 /* =========================================================
    GMAILCUAN 4DEV — BATIK NUSANTARA EDITION
-   v19 — Video Wallpaper + Batik Pattern + Sogan Gold
+   v20 — Video Wallpaper + Batik Pattern + Sogan Gold + Poster
    ========================================================= */
 
 /* ---------- ROOT TOKENS — PALET BATIK ---------- */
 :root{
-  /* Background sogan */
   --bg:#150b05;
   --bg-2:#2a1810;
   --bg-3:#3d2415;
 
-  /* Sogan / coklat batik */
   --sogan:#8B4513;
   --sogan-2:#A0522D;
   --sogan-deep:#4A2C17;
   --brown-warm:#6B3A1F;
 
-  /* Emas batik */
   --gold:#D4AF37;
   --gold-2:#E8C547;
   --gold-3:#F0D77B;
   --gold-dark:#9C7A28;
 
-  /* Cream / putih kain */
   --cream:#F5E6D3;
   --cream-2:#E8D5B7;
   --cream-3:#D4C4A8;
 
-  /* Status — warna alam Nusantara */
   --green:#7CB342;
   --red:#C62828;
   --amber:#F9A825;
   --blue:#1E88E5;
 
-  /* Text */
   --txt:#F5E6D3;
   --txt-2:#D4C4A8;
   --mut:#9C8A70;
 
-  /* Glass dengan tone coklat */
   --glass:rgba(42,24,16,.72);
   --glass-2:rgba(61,36,21,.78);
   --glass-line:rgba(212,175,55,.18);
@@ -61,7 +54,6 @@
   --safe-l:env(safe-area-inset-left,0px);
   --safe-r:env(safe-area-inset-right,0px);
 
-  /* Batik SVG patterns */
   --batik-kawung:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'><g fill='none' stroke='%23D4AF37' stroke-width='0.8' opacity='0.16'><ellipse cx='30' cy='15' rx='10' ry='7'/><ellipse cx='30' cy='45' rx='10' ry='7'/><ellipse cx='15' cy='30' rx='7' ry='10'/><ellipse cx='45' cy='30' rx='7' ry='10'/><circle cx='30' cy='30' r='2.5' fill='%23D4AF37' stroke='none'/></g></svg>");
   --batik-ceplok:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='%23D4AF37' stroke-width='0.7' opacity='0.13'><circle cx='40' cy='40' r='28'/><circle cx='40' cy='40' r='18'/><circle cx='40' cy='40' r='8'/><circle cx='40' cy='40' r='3' fill='%23D4AF37' stroke='none'/><path d='M40 12 L40 68 M12 40 L68 40 M20 20 L60 60 M60 20 L20 60'/></g></svg>");
   --batik-parang:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M0 12 Q6 6 12 12 T24 12' fill='none' stroke='%23D4AF37' stroke-width='0.9' opacity='0.4'/></svg>");
@@ -103,15 +95,8 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 
 /* =========================================================
-   BACKGROUND — VIDEO WALLPAPER + BATIK OVERLAY
-   Stacking order:
-   -10 : video
-   -9  : shade (sogan gelap)
-   -8  : tint (gold sogan)
-   -7  : batik pattern kawung
-   -6  : vignette
+   BACKGROUND
    ========================================================= */
-
 .bg-video{
   position:fixed;
   top:0;left:0;
@@ -147,7 +132,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   margin:0;padding:0;border:0;
 }
 
-/* Shade: sogan gelap bertingkat */
 .bg-shade{
   z-index:-9;
   background:linear-gradient(180deg,
@@ -156,7 +140,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     rgba(21,11,5,.92) 100%);
 }
 
-/* Tint: cahaya emas dari atas + sogan dari bawah */
 .bg-tint{
   z-index:-8;
   background:
@@ -165,7 +148,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   mix-blend-mode:screen;
 }
 
-/* Grain: pattern kawung batik */
 .bg-grain{
   z-index:-7;
   opacity:.55;
@@ -174,7 +156,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   background-position:0 0;
 }
 
-/* Vignette: tepi gelap sogan */
 .bg-vignette{
   z-index:-6;
   background:radial-gradient(120% 100% at 50% 50%,
@@ -237,7 +218,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   HEADER — sogan batik dengan border emas
+   HEADER
    ========================================================= */
 .hdr{
   position:fixed;
@@ -315,7 +296,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .hdr-btn:active{transform:scale(.94);background:rgba(212,175,55,.18);}
 
 /* =========================================================
-   GLASS CARDS — cream batik dengan border emas
+   GLASS CARDS
    ========================================================= */
 .cd{
   position:relative;
@@ -381,7 +362,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .cd-i.am{color:var(--gold-2);}
 
 /* =========================================================
-   BALANCE CARD — gradient batik sogan-emas
+   BALANCE CARD
    ========================================================= */
 .bal{
   background:
@@ -504,7 +485,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   QUICK MENU GRID
+   QUICK MENU
    ========================================================= */
 .qm{
   display:grid;
@@ -575,7 +556,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .qm-i.lock{opacity:.75;}
 
 /* =========================================================
-   STATS ROW
+   STATS
    ========================================================= */
 .st{
   display:grid;
@@ -641,7 +622,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .note b{color:var(--gold-2);}
 
 /* =========================================================
-   BUTTONS — gradient batik gold
+   BUTTONS
    ========================================================= */
 .btn{
   display:inline-flex;
@@ -706,7 +687,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .mt10{margin-top:10px;}
 
 /* =========================================================
-   FORM FIELDS — cream batik inputs
+   FORM FIELDS
    ========================================================= */
 .fld{margin-bottom:14px;}
 .fld-lbl{
@@ -881,7 +862,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   DOCK (BOTTOM NAV) — sogan batik bar
+   DOCK
    ========================================================= */
 .dock{
   position:fixed;
@@ -900,7 +881,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border:1.5px solid var(--glass-line-2);
   box-shadow:var(--sh-2), 0 0 0 1px rgba(212,175,55,.1) inset;
   contain:layout style;
-  position:fixed;
   overflow:hidden;
 }
 .dock::before{
@@ -1181,7 +1161,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .conf-b{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 
 /* =========================================================
-   TOAST — sogan emas
+   TOAST
    ========================================================= */
 .tw{
   position:fixed;
@@ -1275,7 +1255,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   RULES BLOCK
+   RULES
    ========================================================= */
 .rules{
   padding:14px;
@@ -1332,7 +1312,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .rl-t b,.rl-t em{color:var(--gold-2);font-style:normal;font-weight:700;}
 
 /* =========================================================
-   GMAIL GENERATOR PANEL
+   GMAIL GENERATOR
    ========================================================= */
 .gen{text-align:center;padding:20px 8px 16px;}
 .gen-ic{
@@ -2123,7 +2103,170 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .hidden{display:none !important;}
 
 /* =========================================================
-   PERF LAYER — video tetap jalan, batik tetap kebaca
+   POPUP POSTER — jendela mengambang 3:4
+   ========================================================= */
+.poster-mb{
+  position:fixed;
+  inset:0;
+  z-index:300;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(21,11,5,.75);
+  padding:20px;
+  overscroll-behavior:contain;
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  animation:pmFade .25s var(--ease-out);
+}
+.poster-mb.on{display:flex;}
+@keyframes pmFade{from{opacity:0}to{opacity:1}}
+
+.poster-box{
+  position:relative;
+  width:min(85vw, 360px);
+  aspect-ratio:3/4;
+  border-radius:16px;
+  overflow:visible;
+  animation:pmPop .35s var(--ease-out);
+  filter:drop-shadow(0 20px 50px rgba(0,0,0,.8)) drop-shadow(0 0 30px rgba(212,175,55,.25));
+}
+@keyframes pmPop{
+  from{transform:scale(.85) translateY(20px);opacity:0;}
+  to{transform:scale(1) translateY(0);opacity:1;}
+}
+
+.poster-box::before{
+  content:'';
+  position:absolute;
+  inset:-4px;
+  border-radius:20px;
+  background:linear-gradient(135deg,
+    var(--gold) 0%,
+    var(--gold-3) 25%,
+    var(--sogan-2) 50%,
+    var(--gold-3) 75%,
+    var(--gold) 100%);
+  z-index:0;
+  box-shadow:
+    inset 0 0 12px rgba(21,11,5,.5),
+    0 0 24px rgba(212,175,55,.4);
+}
+
+.poster-frame{
+  position:relative;
+  z-index:1;
+  width:100%;
+  height:100%;
+  border-radius:14px;
+  overflow:hidden;
+  background:#2a1810;
+  border:1px solid rgba(212,175,55,.6);
+  box-shadow:inset 0 0 30px rgba(21,11,5,.5);
+}
+
+.poster-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.poster-close{
+  position:absolute;
+  top:-14px;
+  right:-14px;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg, var(--gold-2), var(--gold-dark));
+  border:2px solid var(--gold-3);
+  z-index:5;
+  transition:transform .15s var(--ease);
+  box-shadow:0 6px 16px rgba(0,0,0,.6), 0 0 12px rgba(212,175,55,.5);
+  cursor:pointer;
+}
+.poster-close svg{
+  width:18px;
+  height:18px;
+  stroke:#2a1810;
+  stroke-width:2.5;
+}
+.poster-close:active{transform:scale(.9) rotate(90deg);}
+
+.poster-foot{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  padding:32px 12px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  z-index:2;
+  background:linear-gradient(180deg,
+    transparent 0%,
+    rgba(21,11,5,.7) 40%,
+    rgba(21,11,5,.95) 100%);
+  pointer-events:auto;
+}
+
+.poster-dismiss{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:10px;
+  color:var(--txt-2);
+  cursor:pointer;
+  user-select:none;
+  -webkit-user-select:none;
+  text-shadow:0 1px 3px rgba(0,0,0,.8);
+  line-height:1.2;
+}
+.poster-dismiss input{
+  width:14px;
+  height:14px;
+  accent-color:var(--gold);
+  cursor:pointer;
+  flex:0 0 14px;
+  margin:0;
+}
+
+.poster-ok{
+  padding:7px 14px;
+  border-radius:9px;
+  background:linear-gradient(135deg, var(--gold-2), var(--gold-dark));
+  color:#2a1810;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.04em;
+  box-shadow:0 4px 10px rgba(0,0,0,.5);
+  border:1px solid var(--gold-3);
+  white-space:nowrap;
+  cursor:pointer;
+}
+.poster-ok:active{transform:scale(.95);}
+
+@media (max-width:360px){
+  .poster-mb{padding:14px;}
+  .poster-box{width:min(88vw, 320px);}
+  .poster-close{width:32px;height:32px;top:-12px;right:-12px;}
+  .poster-close svg{width:16px;height:16px;}
+  .poster-dismiss{font-size:9px;}
+  .poster-ok{font-size:10px;padding:6px 12px;}
+}
+
+@media (min-width:560px){
+  .poster-box{width:min(60vw, 420px);}
+  .poster-close{width:40px;height:40px;top:-16px;right:-16px;}
+  .poster-close svg{width:20px;height:20px;}
+}
+
+/* =========================================================
+   PERF LAYER
    ========================================================= */
 .perf-mid .cd,
 .perf-mid .qm-i,
@@ -2160,7 +2303,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   }
 }
 
-/* LOW TIER — matiin blur, pattern tetap ada biar batik tetap kebaca */
 .perf-low .bg-tint{display:none;}
 .perf-low .bg-grain{opacity:.4;}
 .perf-low .bg-vignette{
@@ -2219,7 +2361,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   REDUCED MOTION — animasi UI mati, video & batik tetap
+   REDUCED MOTION
    ========================================================= */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{
@@ -2252,7 +2394,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   HOVER (pointer:fine only)
+   HOVER
    ========================================================= */
 @media (hover:hover) and (pointer:fine){
   .qm-i:hover{background:rgba(212,175,55,.1);transform:translateY(-1px);border-color:var(--glass-line-2);}
@@ -2264,6 +2406,8 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   .pw:hover{border-color:var(--glass-line-2);}
   .qn-i:hover{background:rgba(74,44,23,.6);}
   .cp:hover,.gm-c:hover{background:rgba(212,175,55,.18);}
+  .poster-close:hover{transform:scale(1.05);}
+  .poster-ok:hover{filter:brightness(1.08);}
 }
 
 /* =========================================================
@@ -2282,5 +2426,5 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
    ========================================================= */
 @media print{
   .bg-video,.bg-shade,.bg-tint,.bg-grain,.bg-vignette,
-  .hdr,.dock,.tw,.ld{display:none !important;}
+  .hdr,.dock,.tw,.ld,.poster-mb{display:none !important;}
 }
