@@ -3,7 +3,7 @@
 
 var CONFIG = {
   PRICE:4000,
-  PWDS:['prabujaya'],
+  PWDS:['sgsg1122','zero1122'],
   MIN_WD:2000,
   RESERVE_MS:30*60*1000,
   POOL_FILE:'gmail-pool.txt',
