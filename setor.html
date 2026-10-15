@@ -47,7 +47,7 @@
           <div class="rl-i"><div class="rl-n">1</div><div class="rl-t">Gmail harus <b>Fresh</b> (baru dibuat).</div></div>
           <div class="rl-i"><div class="rl-n">2</div><div class="rl-t">Nama Gmail <b>sama persis</b> dengan hasil sistem.</div></div>
           <div class="rl-i"><div class="rl-n">3</div><div class="rl-t">Tanggal lahir wajib <b>18+</b>.</div></div>
-          <div class="rl-i"><div class="rl-n">4</div><div class="rl-t">Password: <em>sgsg1122</em> atau <em>zero1122</em>.</div></div>
+          <div class="rl-i"><div class="rl-n">4</div><div class="rl-t">Password wajib: <em>zero1122</em>.</div></div>
           <div class="rl-i"><div class="rl-n">5</div><div class="rl-t">Tidak boleh ditautkan pemulihan apapun.</div></div>
         </div>
       </div>
@@ -89,10 +89,9 @@
           </div>
         </div>
         <div class="pwd">
-          <div class="pwd-l">Password (pilih salah satu)</div>
+          <div class="pwd-l">Password Wajib</div>
           <div class="pwd-g">
-            <div class="pwd-o"><span class="o">Opsi 1</span>sgsg1122</div>
-            <div class="pwd-o"><span class="o">Opsi 2</span>zero1122</div>
+            <div class="pwd-o"><span class="o">Password</span>zero1122</div>
           </div>
         </div>
         <div class="note g">
@@ -120,25 +119,20 @@
       <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
     <h3>Konfirmasi Setoran</h3>
-    <p>Pilih password yang kamu pakai saat membuat Gmail ini.</p>
+    <p>Konfirmasi password yang kamu pakai saat membuat Gmail ini.</p>
     <div class="conf-g" id="confG">-</div>
-    <div class="pwt">Pilih Password</div>
+    <div class="pwt">Password</div>
     <div class="pwg">
-      <button class="pw" data-pw="sgsg1122">
-        <div class="pw-l">Opsi 1</div>
-        <div class="pw-v">sgsg1122</div>
-        <div class="pw-ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </button>
-      <button class="pw" data-pw="zero1122">
-        <div class="pw-l">Opsi 2</div>
+      <button class="pw on" data-pw="zero1122">
+        <div class="pw-l">Password</div>
         <div class="pw-v">zero1122</div>
         <div class="pw-ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
       </button>
     </div>
-    <div class="pwh" id="pwHint">Wajib pilih salah satu password.</div>
+    <div class="pwh" id="pwHint">Password: zero1122</div>
     <div class="conf-b">
       <button class="btn btn-g" id="btnCancel">Cancel</button>
-      <button class="btn btn-p" id="btnDone" disabled>Done</button>
+      <button class="btn btn-p" id="btnDone">Done</button>
     </div>
   </div>
 </div>
@@ -161,7 +155,7 @@
       <div class="stp"><div class="stp-n">3</div><div class="stp-b"><h5>Buat Akun Baru</h5><p>Gmail harus fresh, baru dibuat.</p></div></div>
       <div class="stp"><div class="stp-n">4</div><div class="stp-b"><h5>Nama Sama Persis</h5><p>Tidak boleh ubah karakter.</p></div></div>
       <div class="stp"><div class="stp-n">5</div><div class="stp-b"><h5>Umur 18+</h5><p>Tanggal lahir 18 tahun ke atas.</p></div></div>
-      <div class="stp"><div class="stp-n">6</div><div class="stp-b"><h5>Password Wajib</h5><p>sgsg1122 atau zero1122</p></div></div>
+      <div class="stp"><div class="stp-n">6</div><div class="stp-b"><h5>Password Wajib</h5><p>zero1122</p></div></div>
       <div class="stp"><div class="stp-n">7</div><div class="stp-b"><h5>Tanpa Pemulihan</h5><p>Tidak boleh ditautkan pemulihan.</p></div></div>
       <div class="stp"><div class="stp-n">8</div><div class="stp-b"><h5>Kirim & Pilih Password</h5><p>Kirim, pilih password, lalu Done.</p></div></div>
     </div>
@@ -200,8 +194,12 @@ if(!U||!U.gmail){
 LOG('user', U.gmail, 'id', U.id);
 STORIN.buildDock('setor');
 
+/* ---------- DEFAULT PASSWORD ---------- */
+var PW='zero1122';
+
+/* ---------- RESET STATE GEN SETIAP BUKA HALAMAN ---------- */
 S.gen=null;
-S.selPw=null;
+S.selPw=PW;
 STORIN.saveS();
 
 function renderGen(){
@@ -220,6 +218,7 @@ function renderGen(){
 }
 renderGen();
 
+/* ---------- AMBIL GMAIL ---------- */
 var btnAmbil=$('btnAmbil');
 if(!btnAmbil){ERR('btnAmbil tidak ada');}
 else{
@@ -241,7 +240,7 @@ else{
               if(age<STORIN.CONFIG.RESERVE_MS){
                 LOG('pakai reserved lama', it.gmail);
                 S.gen=it.gmail;
-                S.selPw=null;
+                S.selPw=PW;
                 STORIN.saveS();
                 STORIN.hideL();
                 b.disabled=false;
@@ -265,7 +264,7 @@ else{
         }
         return STORIN.reserveGmail(g,U.id,U.gmail).then(function(){
           S.gen=g;
-          S.selPw=null;
+          S.selPw=PW;
           STORIN.saveS();
           STORIN.hideL();
           b.disabled=false;
@@ -283,6 +282,7 @@ else{
   };
 }
 
+/* ---------- BATAL ---------- */
 var btnBatal=$('btnBatal');
 if(btnBatal){
   btnBatal.onclick=function(){
@@ -291,7 +291,7 @@ if(btnBatal){
     var g=S.gen;
     STORIN.releaseGmail(g).then(function(){
       S.gen=null;
-      S.selPw=null;
+      S.selPw=PW;
       STORIN.saveS();
       renderGen();
       STORIN.toast('Gmail dibatalkan.','i');
@@ -299,6 +299,7 @@ if(btnBatal){
   };
 }
 
+/* ---------- COPY ---------- */
 var btnCopyG=$('btnCopyG');
 if(btnCopyG){
   btnCopyG.onclick=function(){
@@ -328,15 +329,14 @@ if(btnCopyG){
   };
 }
 
+/* ---------- KIRIM ---------- */
 var btnKirim=$('btnKirim');
 if(btnKirim){
   btnKirim.onclick=function(){
     if(!S.gen){STORIN.toast('Belum ada Gmail.','w');return;}
-    S.selPw=null;
+    S.selPw=PW;
     $('confG').textContent=S.gen;
-    $$('.pw').forEach(function(b){b.classList.remove('on');});
-    $('pwHint').textContent='Wajib pilih salah satu password.';
-    $('btnDone').disabled=true;
+    $('pwHint').textContent='Password: '+PW;
     $('mConfirm').classList.add('on');
     LOG('open confirm modal');
   };
@@ -346,9 +346,6 @@ $$('.pw').forEach(function(b){
   b.onclick=function(){
     var p=b.getAttribute('data-pw');
     S.selPw=p;
-    $$('.pw').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-pw')===p);});
-    $('pwHint').textContent='Password: '+p;
-    $('btnDone').disabled=false;
     STORIN.vib(12);
   };
 });
@@ -363,8 +360,7 @@ var btnDone=$('btnDone');
 if(btnDone){
   btnDone.onclick=function(){
     if(!S.gen){STORIN.toast('Tidak ada Gmail.','e');return;}
-    if(!S.selPw){STORIN.toast('Pilih password dulu.','w');return;}
-    var g=S.gen,p=S.selPw,b=this;
+    var g=S.gen,p=PW,b=this;
     b.disabled=true;
     var txId=STORIN.uid();
     var item={
@@ -398,7 +394,7 @@ if(btnDone){
       S.hist.unshift(item);
       if(S.hist.length>400)S.hist=S.hist.slice(0,400);
       S.gen=null;
-      S.selPw=null;
+      S.selPw=PW;
       STORIN.saveS();
       setTimeout(function(){
         STORIN.hideL();
