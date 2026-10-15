@@ -1,7 +1,9 @@
 /* =========================================================
    GMAILCUAN 4DEV — CLAY + GLASS MORPHISM EDITION
-   v22 — Video Wallpaper + Soft Clay 3D + Glass Blur
+   v23 — Font: Bebas Neue + Inter
    ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 /* ---------- ROOT TOKENS ---------- */
 :root{
@@ -9,43 +11,36 @@
   --bg-2:#2a1810;
   --bg-3:#3d2415;
 
-  /* Clay palette — soft sogan */
   --sogan:#8B4513;
   --sogan-2:#A0522D;
   --sogan-deep:#4A2C17;
   --sogan-light:#C98A5F;
   --brown-warm:#6B3A1F;
 
-  /* Gold soft */
   --gold:#D4AF37;
   --gold-2:#E8C547;
   --gold-3:#F0D77B;
   --gold-dark:#9C7A28;
 
-  /* Cream */
   --cream:#F5E6D3;
   --cream-2:#E8D5B7;
   --cream-3:#D4C4A8;
 
-  /* Status */
   --green:#7CB342;
   --red:#C62828;
   --amber:#F9A825;
   --blue:#1E88E5;
 
-  /* Text */
   --txt:#F5E6D3;
   --txt-2:#D4C4A8;
   --mut:#9C8A70;
 
-  /* Glass surfaces */
   --glass:rgba(74,44,23,.55);
   --glass-2:rgba(93,55,28,.62);
   --glass-3:rgba(58,34,20,.72);
   --glass-line:rgba(240,215,123,.16);
   --glass-line-2:rgba(240,215,123,.28);
 
-  /* Clay shadow system */
   --clay-out:
     0 12px 24px rgba(0,0,0,.35),
     0 6px 12px rgba(0,0,0,.25),
@@ -87,7 +82,7 @@ html{
   overscroll-behavior-y:none;
 }
 body{
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   font-size:14px;
   line-height:1.5;
   color:var(--txt);
@@ -101,7 +96,7 @@ body{
   touch-action:manipulation;
 }
 body.lock{overflow:hidden;}
-input,button,select,textarea{font-family:inherit;font-size:inherit;color:inherit;}
+input,button,select,textarea{font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:inherit;color:inherit;}
 button{border:0;background:none;cursor:pointer;padding:0;}
 a{color:inherit;text-decoration:none;}
 img,svg{display:block;max-width:100%;}
@@ -165,7 +160,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   mix-blend-mode:screen;
 }
 
-/* Subtle soft clay noise */
 .bg-grain{
   z-index:-7;
   opacity:.35;
@@ -211,6 +205,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .pg{padding-top:6px;}
 
 .pg-eye{
+  font-family:'Inter',sans-serif;
   font-size:11px;
   letter-spacing:.16em;
   text-transform:uppercase;
@@ -221,25 +216,26 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 .pg-t{
-  font-size:26px;
-  font-weight:800;
-  line-height:1.2;
-  letter-spacing:-.01em;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:30px;
+  font-weight:400;
+  line-height:1.05;
+  letter-spacing:.06em;
   margin:0 0 6px;
-  font-family:Georgia,"Times New Roman",serif;
   color:var(--cream);
   text-shadow:0 2px 12px rgba(0,0,0,.5);
 }
 .pg-t span{color:var(--gold-2);}
 
 .pg-d{
+  font-family:'Inter',sans-serif;
   font-size:13px;
   color:var(--txt-2);
   margin:0 0 20px;
 }
 
 /* =========================================================
-   HEADER — Clay floating bar
+   HEADER
    ========================================================= */
 .hdr{
   position:fixed;
@@ -279,10 +275,10 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .brand-m svg{width:20px;height:20px;stroke:#3d2415;stroke-width:2.2;}
 .brand-n{
-  font-size:14px;
-  font-weight:800;
-  letter-spacing:.04em;
-  font-family:Georgia,"Times New Roman",serif;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:17px;
+  font-weight:400;
+  letter-spacing:.08em;
   color:var(--cream);
   text-shadow:0 1px 3px rgba(0,0,0,.4);
 }
@@ -312,7 +308,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   CLAY CARDS — soft 3D blobs dengan glass blur
+   CLAY CARDS
    ========================================================= */
 .cd{
   position:relative;
@@ -364,8 +360,8 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .cd-ic svg{width:20px;height:20px;stroke:var(--gold-2);}
 .cd-ic.t svg{stroke:var(--gold-2);}
-.cd-t{font-size:15px;font-weight:700;color:var(--cream);text-shadow:0 1px 2px rgba(0,0,0,.3);}
-.cd-s{font-size:12px;color:var(--mut);margin-top:2px;}
+.cd-t{font-family:'Inter',sans-serif;font-size:15px;font-weight:700;color:var(--cream);text-shadow:0 1px 2px rgba(0,0,0,.3);}
+.cd-s{font-family:'Inter',sans-serif;font-size:12px;color:var(--mut);margin-top:2px;}
 .cd-i{
   display:inline-block;
   font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -384,7 +380,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .cd-i.am{color:var(--gold-2);}
 
 /* =========================================================
-   BALANCE CARD — big clay blob
+   BALANCE CARD
    ========================================================= */
 .bal{
   background:
@@ -402,6 +398,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .bal-lbl{
   display:flex;align-items:center;gap:8px;
+  font-family:'Inter',sans-serif;
   font-size:11px;
   letter-spacing:.14em;
   text-transform:uppercase;
@@ -411,24 +408,25 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .bal-lbl svg{width:16px;height:16px;stroke:var(--gold-2);filter:drop-shadow(0 0 6px rgba(212,175,55,.5));}
 .bal-amt{
   margin:12px 0 16px;
-  font-size:38px;
-  font-weight:900;
-  letter-spacing:-.02em;
-  line-height:1.1;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:44px;
+  font-weight:400;
+  letter-spacing:.02em;
+  line-height:1;
   display:flex;
   align-items:baseline;
-  gap:6px;
+  gap:8px;
   font-variant-numeric:tabular-nums;
   color:var(--gold-3);
   text-shadow:
     0 0 24px rgba(212,175,55,.5),
     0 2px 4px rgba(0,0,0,.6),
     0 -1px 2px rgba(0,0,0,.4);
-  font-family:Georgia,"Times New Roman",serif;
 }
 .bal-amt .rp{
-  font-size:18px;
-  font-weight:700;
+  font-size:20px;
+  font-weight:400;
+  letter-spacing:.06em;
   color:var(--gold-2);
 }
 .bal-bot{
@@ -450,8 +448,9 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     transparent);
 }
 .bal-m{flex:1;}
-.bal-m .k{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:600;}
+.bal-m .k{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);font-weight:600;}
 .bal-m .v{
+  font-family:'Inter',sans-serif;
   font-size:12px;font-weight:600;
   font-variant-numeric:tabular-nums;
   margin-top:3px;
@@ -495,6 +494,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   margin:22px 0 12px;
 }
 .sec-t{
+  font-family:'Inter',sans-serif;
   font-size:12px;
   letter-spacing:.14em;
   text-transform:uppercase;
@@ -520,7 +520,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   QUICK MENU — clay buttons grid
+   QUICK MENU
    ========================================================= */
 .qm{
   display:grid;
@@ -588,10 +588,11 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .qm-ic.t svg{stroke:var(--gold-2);}
 .qm-ic.x{opacity:.55;}
 .qm-ic.x svg{stroke:var(--mut);}
-.qm-l{font-size:11px;font-weight:700;line-height:1.2;color:var(--cream);letter-spacing:.02em;}
+.qm-l{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;line-height:1.2;color:var(--cream);letter-spacing:.02em;}
 .qm-b{
   position:absolute;
   top:8px;right:8px;
+  font-family:'Inter',sans-serif;
   font-size:9px;
   letter-spacing:.06em;
   padding:3px 7px;
@@ -632,14 +633,17 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   backdrop-filter:blur(10px) saturate(130%);
 }
 .st-i .n{
-  font-size:22px;font-weight:900;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:26px;
+  font-weight:400;
   font-variant-numeric:tabular-nums;
-  letter-spacing:-.02em;
+  letter-spacing:.04em;
   color:var(--gold-3);
   text-shadow:0 0 14px rgba(212,175,55,.4), 0 2px 3px rgba(0,0,0,.5);
 }
 .st-i.t .n{color:var(--green);text-shadow:0 0 14px rgba(124,179,66,.4), 0 2px 3px rgba(0,0,0,.5);}
 .st-i .l{
+  font-family:'Inter',sans-serif;
   font-size:10px;
   letter-spacing:.1em;
   text-transform:uppercase;
@@ -661,6 +665,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     rgba(0,0,0,.25),
     rgba(255,255,255,.03));
   border:1px solid var(--glass-line);
+  font-family:'Inter',sans-serif;
   font-size:12px;
   line-height:1.55;
   color:var(--txt-2);
@@ -677,10 +682,10 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .note.g svg{stroke:var(--green);}
 .note p{margin:0;}
-.note b{color:var(--gold-2);}
+.note b{color:var(--gold-2);font-weight:700;}
 
 /* =========================================================
-   BUTTONS — clay pill
+   BUTTONS
    ========================================================= */
 .btn{
   display:inline-flex;
@@ -690,6 +695,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   width:100%;
   padding:16px 20px;
   border-radius:var(--r-md);
+  font-family:'Inter',sans-serif;
   font-size:14px;
   font-weight:700;
   letter-spacing:.02em;
@@ -759,10 +765,11 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .mt10{margin-top:12px;}
 
 /* =========================================================
-   FORM FIELDS — clay inset inputs
+   FORM FIELDS
    ========================================================= */
 .fld{margin-bottom:16px;}
 .fld-lbl{
+  font-family:'Inter',sans-serif;
   font-size:11px;
   letter-spacing:.12em;
   text-transform:uppercase;
@@ -781,6 +788,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     rgba(255,255,255,.03));
   border:1px solid var(--glass-line);
   color:var(--cream);
+  font-family:'Inter',sans-serif;
   font-size:14px;
   transition:box-shadow .15s var(--ease), border-color .15s var(--ease);
   box-shadow:
@@ -805,7 +813,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .fld-ic svg{width:16px;height:16px;stroke:var(--mut);}
 
 /* =========================================================
-   TABS — clay segmented
+   TABS
    ========================================================= */
 .tabs{
   display:grid;
@@ -825,6 +833,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .tab-b{
   padding:12px;
   border-radius:calc(var(--r-md) - 6px);
+  font-family:'Inter',sans-serif;
   font-size:13px;
   font-weight:700;
   color:var(--mut);
@@ -872,16 +881,16 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .auth-logo svg{width:40px;height:40px;stroke:#3d2415;stroke-width:2.4;filter:drop-shadow(0 1px 2px rgba(255,255,255,.3));}
 .auth-title{
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:.02em;
-  line-height:1.1;
-  font-family:Georgia,"Times New Roman",serif;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:36px;
+  font-weight:400;
+  letter-spacing:.06em;
+  line-height:1;
   color:var(--cream);
   text-shadow:0 2px 12px rgba(212,175,55,.3), 0 2px 4px rgba(0,0,0,.5);
 }
 .auth-title span{color:var(--gold-2);}
-.auth-sub{font-size:13px;color:var(--txt-2);margin-top:8px;}
+.auth-sub{font-family:'Inter',sans-serif;font-size:13px;color:var(--txt-2);margin-top:8px;}
 .auth-card{
   background:linear-gradient(145deg,
     rgba(93,55,28,.7),
@@ -900,7 +909,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 
 /* =========================================================
-   DOCK — floating clay bar
+   DOCK
    ========================================================= */
 .dock{
   position:fixed;
@@ -947,7 +956,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   transition:all .2s var(--ease);
 }
 .tb-ic svg{width:20px;height:20px;stroke:var(--mut);transition:stroke .2s var(--ease);}
-.tb-l{font-size:9px;font-weight:700;color:var(--mut);letter-spacing:.04em;}
+.tb-l{font-family:'Inter',sans-serif;font-size:9px;font-weight:700;color:var(--mut);letter-spacing:.04em;}
 .tb.on .tb-ic{
   background:linear-gradient(145deg,
     rgba(240,215,123,.22),
@@ -980,7 +989,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .tb-c:active .tb-ic{transform:translateY(-4px);}
 
 /* =========================================================
-   MODAL / BOTTOM SHEET — clay panel
+   MODAL / BOTTOM SHEET
    ========================================================= */
 .mb{
   position:fixed;
@@ -1039,9 +1048,12 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .mdl-h h3{
   display:flex;align-items:center;gap:10px;
-  font-size:16px;font-weight:800;margin:0;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:20px;
+  font-weight:400;
+  letter-spacing:.06em;
+  margin:0;
   color:var(--cream);
-  font-family:Georgia,"Times New Roman",serif;
   text-shadow:0 1px 2px rgba(0,0,0,.4);
 }
 .mdl-h svg{width:20px;height:20px;stroke:var(--gold-2);}
@@ -1082,6 +1094,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   display:grid;place-items:center;
   background:linear-gradient(145deg, var(--gold-2), var(--gold-dark));
   color:#3d2415;
+  font-family:'Inter',sans-serif;
   font-size:13px;
   font-weight:900;
   box-shadow:
@@ -1089,8 +1102,8 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     inset 2px 2px 3px rgba(255,255,255,.5),
     inset -2px -2px 4px rgba(0,0,0,.2);
 }
-.stp-b h5{margin:0 0 4px;font-size:13px;font-weight:700;color:var(--cream);}
-.stp-b p{margin:0;font-size:12px;color:var(--mut);line-height:1.5;}
+.stp-b h5{margin:0 0 4px;font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--cream);}
+.stp-b p{margin:0;font-family:'Inter',sans-serif;font-size:12px;color:var(--mut);line-height:1.5;}
 
 /* =========================================================
    CONFIRM SHEET
@@ -1129,8 +1142,16 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border:1px solid rgba(255,255,255,.3);
 }
 .conf-ic svg{width:34px;height:34px;stroke:#3d2415;stroke-width:2.8;}
-.conf h3{margin:0 0 8px;font-size:19px;font-weight:800;color:var(--cream);font-family:Georgia,"Times New Roman",serif;text-shadow:0 1px 3px rgba(0,0,0,.4);}
-.conf > p{margin:0 0 16px;font-size:13px;color:var(--txt-2);}
+.conf h3{
+  margin:0 0 8px;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:24px;
+  font-weight:400;
+  letter-spacing:.06em;
+  color:var(--cream);
+  text-shadow:0 1px 3px rgba(0,0,0,.4);
+}
+.conf > p{margin:0 0 16px;font-family:'Inter',sans-serif;font-size:13px;color:var(--txt-2);}
 .conf-g{
   font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   font-size:13px;
@@ -1148,6 +1169,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     inset -2px -2px 4px rgba(255,255,255,.05);
 }
 .pwt{
+  font-family:'Inter',sans-serif;
   font-size:11px;
   letter-spacing:.12em;
   text-transform:uppercase;
@@ -1182,7 +1204,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     inset -2px -2px 4px rgba(0,0,0,.25),
     0 0 0 3px rgba(212,175,55,.15);
 }
-.pw-l{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:700;}
+.pw-l{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);font-weight:700;}
 .pw-v{
   font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   font-size:14px;
@@ -1206,6 +1228,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .pw.on .pw-ck{display:grid;}
 .pw-ck svg{width:13px;height:13px;stroke:#3d2415;stroke-width:3;}
 .pwh{
+  font-family:'Inter',sans-serif;
   font-size:12px;
   color:var(--mut);
   margin-bottom:16px;
@@ -1214,7 +1237,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .conf-b{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 
 /* =========================================================
-   TOAST — floating clay chip
+   TOAST
    ========================================================= */
 .tw{
   position:fixed;
@@ -1265,7 +1288,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     inset -1px -1px 2px rgba(0,0,0,.25);
 }
 .tst-ic svg{width:16px;height:16px;}
-.tst-m{flex:1;font-size:13px;line-height:1.4;color:var(--cream);}
+.tst-m{flex:1;font-family:'Inter',sans-serif;font-size:13px;line-height:1.4;color:var(--cream);}
 .tst.s .tst-ic{background:linear-gradient(145deg, rgba(124,179,66,.3), rgba(124,179,66,.15));}
 .tst.s .tst-ic svg{stroke:var(--green);}
 .tst.e .tst-ic{background:linear-gradient(145deg, rgba(198,40,40,.3), rgba(198,40,40,.15));}
@@ -1318,6 +1341,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   filter:drop-shadow(0 0 6px rgba(212,175,55,.5));
 }
 .ld p{
+  font-family:'Inter',sans-serif;
   font-size:12px;
   color:var(--txt-2);
   letter-spacing:.08em;
@@ -1352,16 +1376,19 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .rules-h svg{width:18px;height:18px;stroke:var(--gold);}
 .rules-h h4{
-  margin:0;font-size:14px;font-weight:800;
+  margin:0;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:18px;
+  font-weight:400;
+  letter-spacing:.06em;
   color:var(--gold-2);
-  letter-spacing:.04em;
-  font-family:Georgia,"Times New Roman",serif;
 }
 .rl{display:flex;flex-direction:column;gap:10px;}
 .rl-i{
   display:flex;
   gap:12px;
   align-items:flex-start;
+  font-family:'Inter',sans-serif;
   font-size:12px;
   line-height:1.55;
 }
@@ -1374,6 +1401,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     rgba(139,69,19,.18));
   border:1px solid var(--glass-line-2);
   color:var(--gold-2);
+  font-family:'Inter',sans-serif;
   font-size:11px;
   font-weight:800;
   box-shadow:
@@ -1405,16 +1433,20 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .gen-ic svg{width:32px;height:32px;stroke:var(--gold-2);filter:drop-shadow(0 0 8px rgba(212,175,55,.5));}
 .gen h3{
-  margin:0 0 8px;font-size:17px;font-weight:800;
+  margin:0 0 8px;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:22px;
+  font-weight:400;
+  letter-spacing:.06em;
   color:var(--cream);
-  font-family:Georgia,"Times New Roman",serif;
   text-shadow:0 1px 3px rgba(0,0,0,.4);
 }
-.gen p{margin:0;font-size:12px;color:var(--mut);line-height:1.55;}
+.gen p{margin:0;font-family:'Inter',sans-serif;font-size:12px;color:var(--mut);line-height:1.55;}
 
 .gm{margin-bottom:16px;}
 .gm-l{
   display:flex;align-items:center;gap:8px;
+  font-family:'Inter',sans-serif;
   font-size:11px;
   letter-spacing:.1em;
   text-transform:uppercase;
@@ -1477,6 +1509,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 
 .pwd{margin-bottom:16px;}
 .pwd-l{
+  font-family:'Inter',sans-serif;
   font-size:11px;
   letter-spacing:.1em;
   text-transform:uppercase;
@@ -1502,7 +1535,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .pwd-o .o{
   display:block;
-  font-family:inherit;
+  font-family:'Inter',sans-serif;
   font-size:9px;
   letter-spacing:.12em;
   text-transform:uppercase;
@@ -1528,6 +1561,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   flex:0 0 auto;
   padding:10px 16px;
   border-radius:999px;
+  font-family:'Inter',sans-serif;
   font-size:12px;
   font-weight:700;
   color:var(--mut);
@@ -1592,8 +1626,9 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .hs-ic.w{background:linear-gradient(145deg, rgba(212,175,55,.28), rgba(212,175,55,.12));}
 .hs-ic.w svg{stroke:var(--gold-2);}
 .hs-m{flex:1;min-width:0;}
-.hs-t{font-size:13px;font-weight:700;color:var(--cream);}
+.hs-t{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--cream);}
 .hs-s{
+  font-family:'Inter',sans-serif;
   font-size:11px;
   color:var(--mut);
   margin-top:3px;
@@ -1601,9 +1636,10 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   text-overflow:ellipsis;
   white-space:nowrap;
 }
-.hs-d{font-size:10px;color:var(--mut);margin-top:4px;}
+.hs-d{font-family:'Inter',sans-serif;font-size:10px;color:var(--mut);margin-top:4px;}
 .hs-r{text-align:right;flex:0 0 auto;}
 .hs-a{
+  font-family:'Inter',sans-serif;
   font-size:14px;
   font-weight:800;
   font-variant-numeric:tabular-nums;
@@ -1612,6 +1648,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .hs-a.m{color:var(--gold-2);}
 .pl{
   display:inline-block;
+  font-family:'Inter',sans-serif;
   font-size:9px;
   letter-spacing:.08em;
   text-transform:uppercase;
@@ -1643,8 +1680,8 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     inset -3px -3px 8px rgba(0,0,0,.3);
 }
 .emp-ic svg{width:30px;height:30px;stroke:var(--mut);}
-.emp h4{margin:0 0 8px;font-size:15px;font-weight:700;color:var(--txt-2);}
-.emp p{margin:0;font-size:12px;color:var(--mut);line-height:1.55;}
+.emp h4{margin:0 0 8px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;color:var(--txt-2);}
+.emp p{margin:0;font-family:'Inter',sans-serif;font-size:12px;color:var(--mut);line-height:1.55;}
 
 /* =========================================================
    WITHDRAW FORM EXTRAS
@@ -1654,6 +1691,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   display:flex;
   align-items:center;
   justify-content:space-between;
+  font-family:'Inter',sans-serif;
   font-size:11px;
   letter-spacing:.1em;
   text-transform:uppercase;
@@ -1662,6 +1700,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   margin-bottom:8px;
 }
 .fld2-lbl .h{
+  font-family:'Inter',sans-serif;
   font-size:10px;
   letter-spacing:0;
   text-transform:none;
@@ -1677,6 +1716,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     rgba(255,255,255,.03));
   border:1px solid var(--glass-line);
   color:var(--cream);
+  font-family:'Inter',sans-serif;
   font-size:14px;
   transition:box-shadow .15s var(--ease), border-color .15s var(--ease);
   box-shadow:
@@ -1705,6 +1745,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .qn-i{
   padding:11px 6px;
   border-radius:12px;
+  font-family:'Inter',sans-serif;
   font-size:12px;
   font-weight:700;
   color:var(--txt-2);
@@ -1752,6 +1793,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   gap:8px;
   padding:12px;
   border-radius:calc(var(--r-md) - 6px);
+  font-family:'Inter',sans-serif;
   font-size:12px;
   font-weight:700;
   color:var(--mut);
@@ -1784,6 +1826,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   align-items:center;
   justify-content:space-between;
   padding:6px 0;
+  font-family:'Inter',sans-serif;
   font-size:12px;
 }
 .fee-r .l{color:var(--mut);}
@@ -1829,21 +1872,33 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
     radial-gradient(circle at 30% 25%, var(--gold-3), transparent 65%),
     linear-gradient(145deg, var(--gold-2), var(--gold-dark));
   color:#3d2415;
-  font-size:28px;
-  font-weight:900;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:32px;
+  font-weight:400;
+  letter-spacing:0;
   box-shadow:
     0 10px 22px rgba(212,175,55,.45),
     0 4px 10px rgba(0,0,0,.3),
     inset 3px 3px 5px rgba(255,255,255,.5),
     inset -3px -3px 6px rgba(0,0,0,.25);
-  font-family:Georgia,"Times New Roman",serif;
   border:1px solid rgba(255,255,255,.3);
 }
 .pf-in{flex:1;min-width:0;}
-.pf-n{font-size:17px;font-weight:800;color:var(--cream);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:Georgia,"Times New Roman",serif;text-shadow:0 1px 3px rgba(0,0,0,.4);}
-.pf-e{font-size:12px;color:var(--txt-2);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pf-n{
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:22px;
+  font-weight:400;
+  letter-spacing:.04em;
+  color:var(--cream);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  text-shadow:0 1px 3px rgba(0,0,0,.4);
+}
+.pf-e{font-family:'Inter',sans-serif;font-size:12px;color:var(--txt-2);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
 .pf-b{
   display:inline-block;
+  font-family:'Inter',sans-serif;
   font-size:10px;
   letter-spacing:.08em;
   text-transform:uppercase;
@@ -1883,14 +1938,16 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   backdrop-filter:blur(10px) saturate(130%);
 }
 .as-i .n{
-  font-size:20px;
-  font-weight:900;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:24px;
+  font-weight:400;
   font-variant-numeric:tabular-nums;
-  letter-spacing:-.02em;
+  letter-spacing:.04em;
   color:var(--gold-3);
   text-shadow:0 0 12px rgba(212,175,55,.4), 0 2px 3px rgba(0,0,0,.5);
 }
 .as-i .l{
+  font-family:'Inter',sans-serif;
   font-size:10px;
   letter-spacing:.1em;
   text-transform:uppercase;
@@ -1929,6 +1986,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   display:flex;
   align-items:center;
   gap:10px;
+  font-family:'Inter',sans-serif;
   font-size:12px;
   color:var(--mut);
   font-weight:700;
@@ -1937,6 +1995,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .pfl-l svg{width:15px;height:15px;stroke:var(--gold);}
 .pfl-w{display:flex;align-items:center;gap:8px;min-width:0;}
 .pfl-v{
+  font-family:'Inter',sans-serif;
   font-size:13px;
   font-weight:700;
   text-align:right;
@@ -2005,15 +2064,15 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .adm-login h2{
   margin:0 0 8px;
-  font-size:22px;
-  font-weight:900;
-  letter-spacing:.06em;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:30px;
+  font-weight:400;
+  letter-spacing:.08em;
   color:var(--cream);
-  font-family:Georgia,"Times New Roman",serif;
   text-shadow:0 2px 8px rgba(0,0,0,.4);
 }
 .adm-login h2 span{color:var(--gold-2);}
-.adm-login > p{margin:0 0 20px;font-size:12px;color:var(--mut);}
+.adm-login > p{margin:0 0 20px;font-family:'Inter',sans-serif;font-size:12px;color:var(--mut);}
 
 .adm-hdr{
   position:sticky;
@@ -2035,14 +2094,15 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 .adm-hdr h1{
   margin:0;
-  font-size:16px;
-  font-weight:900;
-  letter-spacing:.08em;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:22px;
+  font-weight:400;
+  letter-spacing:.1em;
   color:var(--cream);
-  font-family:Georgia,"Times New Roman",serif;
 }
 .adm-hdr h1 span{color:var(--gold-2);}
 .adm-logout{
+  font-family:'Inter',sans-serif;
   font-size:12px;
   padding:9px 14px;
   border-radius:12px;
@@ -2090,13 +2150,16 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   backdrop-filter:blur(10px) saturate(130%);
 }
 .adm-stat .n{
-  font-size:26px;
-  font-weight:900;
+  font-family:'Bebas Neue','Anton',Impact,sans-serif;
+  font-size:32px;
+  font-weight:400;
   font-variant-numeric:tabular-nums;
+  letter-spacing:.04em;
   color:var(--gold-2);
   text-shadow:0 0 14px rgba(212,175,55,.4), 0 2px 3px rgba(0,0,0,.5);
 }
 .adm-stat .l{
+  font-family:'Inter',sans-serif;
   font-size:10px;
   letter-spacing:.1em;
   text-transform:uppercase;
@@ -2140,7 +2203,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   white-space:nowrap;
   max-width:60%;
 }
-.tx-time{font-size:10px;color:var(--mut);flex:0 0 auto;}
+.tx-time{font-family:'Inter',sans-serif;font-size:10px;color:var(--mut);flex:0 0 auto;}
 .tx-gmail{
   font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   font-size:12px;
@@ -2167,6 +2230,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   display:flex;
   justify-content:space-between;
   gap:8px;
+  font-family:'Inter',sans-serif;
   font-size:12px;
   min-width:0;
 }
@@ -2183,6 +2247,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .tx-btn button{
   padding:13px;
   border-radius:13px;
+  font-family:'Inter',sans-serif;
   font-size:13px;
   font-weight:800;
   transition:all .12s var(--ease);
@@ -2213,6 +2278,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .adm-empty{
   padding:50px 20px;
   text-align:center;
+  font-family:'Inter',sans-serif;
   font-size:13px;
   color:var(--mut);
   border-radius:var(--r-lg);
@@ -2228,7 +2294,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 .hidden{display:none !important;}
 
 /* =========================================================
-   POPUP POSTER — clay floating window
+   POPUP POSTER
    ========================================================= */
 .poster-mb{
   position:fixed;
@@ -2264,7 +2330,6 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   to{transform:scale(1) translateY(0);opacity:1;}
 }
 
-/* Clay frame */
 .poster-box::before{
   content:'';
   position:absolute;
@@ -2353,6 +2418,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   display:flex;
   align-items:center;
   gap:8px;
+  font-family:'Inter',sans-serif;
   font-size:10px;
   color:var(--txt-2);
   cursor:pointer;
@@ -2375,6 +2441,7 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
   border-radius:12px;
   background:linear-gradient(145deg, var(--gold-2), var(--gold-dark));
   color:#3d2415;
+  font-family:'Inter',sans-serif;
   font-size:11px;
   font-weight:800;
   letter-spacing:.04em;
@@ -2509,8 +2576,11 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
    RESPONSIVE
    ========================================================= */
 @media (max-width:360px){
-  .bal-amt{font-size:30px;}
-  .pg-t{font-size:22px;}
+  .bal-amt{font-size:34px;}
+  .pg-t{font-size:24px;}
+  .auth-title{font-size:28px;}
+  .pf-n{font-size:18px;}
+  .brand-n{font-size:15px;}
   .qm{grid-template-columns:repeat(3,1fr);gap:10px;}
   .qm-i{padding:12px 6px;}
   .qm-ic{width:40px;height:40px;}
@@ -2521,8 +2591,9 @@ svg{stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-l
 }
 @media (min-width:560px){
   body{font-size:15px;}
-  .pg-t{font-size:30px;}
-  .bal-amt{font-size:42px;}
+  .pg-t{font-size:34px;}
+  .bal-amt{font-size:48px;}
+  .auth-title{font-size:42px;}
 }
 
 /* =========================================================
