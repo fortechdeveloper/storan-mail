@@ -1,10 +1,11 @@
 /* =========================================================
-   api/_auth.js — Admin auth + token (persistent di Firebase)
+   api/_auth.js — Auth admin (token disimpan di VPS)
    ========================================================= */
 import crypto from 'crypto';
-import { getDb } from './_firebase.js';
 
-const TOKEN_TTL = 12 * 60 * 60 * 1000; /* 12 jam */
+const TOKEN_TTL = 12 * 60 * 60 * 1000;
+const VPS_URL = 'http://152.42.241.48:38471/db';
+const VPS_SECRET = process.env.VPS_SECRET || 'gmailcuan-vps-secret-2026';
 
 function timingSafeEqual(a, b) {
   a = String(a || '');
@@ -17,6 +18,18 @@ function timingSafeEqual(a, b) {
   return diff === 0;
 }
 
+async function vpsReq(op, path, data) {
+  const r = await fetch(VPS_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-VPS-Secret': VPS_SECRET
+    },
+    body: JSON.stringify({ op, path, data })
+  });
+  return r.json();
+}
+
 export function verifyPassword(password) {
   const adminPass = process.env.ADMIN_PASS;
   if (!adminPass) return false;
@@ -27,36 +40,32 @@ export function verifyPassword(password) {
 export async function createToken() {
   const token = crypto.randomBytes(24).toString('base64')
     .replace(/[^a-zA-Z0-9]/g, '').slice(0, 32);
-  const db = getDb();
-  await db.ref('admin_tokens/' + token).set({ createdAt: Date.now() });
+
+  await vpsReq('put', 'admin_tokens/' + token, { createdAt: Date.now() });
   return token;
 }
 
 export async function checkToken(token) {
   if (!token) return false;
   try {
-    const db = getDb();
-    const snap = await db.ref('admin_tokens/' + token).once('value');
-    const val = snap.val();
+    const res = await vpsReq('get', 'admin_tokens/' + token);
+    const val = res && res.data;
     if (!val) return false;
     if (Date.now() - (val.createdAt || 0) > TOKEN_TTL) {
-      await db.ref('admin_tokens/' + token).remove();
+      await vpsReq('delete', 'admin_tokens/' + token);
       return false;
     }
     return true;
   } catch (e) {
-    console.error('[AUTH] checkToken error', e.message);
+    console.error('[AUTH]', e.message);
     return false;
   }
 }
 
 export async function revokeToken(token) {
   try {
-    const db = getDb();
-    await db.ref('admin_tokens/' + token).remove();
-  } catch (e) {
-    /* ignore */
-  }
+    await vpsReq('delete', 'admin_tokens/' + token);
+  } catch (e) {}
 }
 
 const ATTEMPTS = new Map();
